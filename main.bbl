@@ -1,0 +1,15 @@
+\newcommand{\noopsort}[1]{} \newcommand{\printfirst}[2]{#1}
+  \newcommand{\singleletter}[1]{#1} \newcommand{\switchargs}[2]{#2#1}
+\begin{thebibliography}{1}
+
+\bibitem{CLRS09}
+Thomas~H. Cormen, Charles~E. Leiserson, Ronald~L. Rivest, and Clifford Stein.
+\newblock {\em Introduction Introduction to Algorithms}.
+\newblock MIT Press, Cambridge, MA, third edition edition, 2009.
+
+\bibitem{Dij59}
+E.~W. Dijkstra.
+\newblock A note on two problems in connections with graphs.
+\newblock {\em Numerische Mathematik}, 1:269--271, 1959.
+
+\end{thebibliography}

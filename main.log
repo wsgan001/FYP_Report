@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.22)  14 MAR 2017 12:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.22)  14 MAR 2017 15:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -60,10 +60,10 @@ LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
 )<<t1.cmap>>)
 Enter file names to process, (chap1,chap2 ...), or `all' to process all files:
 
-\files=cover
-Including only cover.
+\files=all
+Including all files.
 (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
-(./appa.aux) (./appb.aux) (./biblio.aux))
+(./appa.aux) (./appb.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
@@ -88,30 +88,211 @@ LaTeX Font Info:    ... okay on input line 45.
 
 ] (./abstract.tex) [3
 
-]
-[4
+] [4
 
-]) [5] (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux) (
-./appa.aux) (./appb.aux) (./biblio.aux)) ) 
+]) [5]
+\openout2 = `contents.aux'.
+
+
+(./contents.tex [6
+
+
+
+] (./main.toc<<ot1.cmap>><<oml.cmap>><<oms.cmap>>
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 2.
+<<omx.cmap>>
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 2.
+)
+\tf@toc=\write3
+\openout3 = `main.toc'.
+
+ [7] [8
+
+] (./main.lof)
+\tf@lof=\write4
+\openout4 = `main.lof'.
+
+ [9] [10
+
+] (./main.lot)
+\tf@lot=\write5
+\openout5 = `main.lot'.
+
+) [11]
+\openout2 = `chap1.aux'.
+
+ (./chap1.tex [12
+
+
+
+]
+Chapter 1.
+
+LaTeX Warning: Citation `patterson:risc' on page 13 undefined on input line 31.
+
+
+
+LaTeX Warning: Citation `rad83' on page 13 undefined on input line 31.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [13]
+
+LaTeX Warning: Citation `ellis:bulldog' on page 14 undefined on input line 39.
+
+
+LaTeX Warning: Citation `pet87' on page 14 undefined on input line 39.
+
+
+LaTeX Warning: Citation `coutant:precision-compilers' on page 14 undefined on i
+nput line 39.
+
+
+LaTeX Warning: Citation `gib86' on page 14 undefined on input line 43.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [14]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 75.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 75.
+
+
+LaTeX Warning: Reference `exponent-format' on page 15 undefined on input line 7
+5.
+
+
+LaTeX Warning: Reference `mantissa-format' on page 15 undefined on input line 7
+5.
+
+
+LaTeX Warning: Reference `unnorm-math' on page 15 undefined on input line 76.
+
+
+LaTeX Warning: Citation `thornton:cdc6600' on page 15 undefined on input line 9
+1.
+
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 91.
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+) [15]
+
+LaTeX Warning: Reference `opt:be' on page 16 undefined on input line 130.
+
+[16]
+
+LaTeX Warning: Reference `range-tracking' on page 17 undefined on input line 15
+9.
+
+
+Underfull \vbox (badness 3735) has occurred while \output is active []
+
+ [17]
+
+LaTeX Warning: Citation `magenheimer:precision' on page 18 undefined on input l
+ine 203.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [18]
+
+LaTeX Warning: Citation `byte:i860' on page 19 undefined on input line 213.
+
+
+LaTeX Warning: Citation `ellis:bulldog' on page 19 undefined on input line 226.
+
+
+
+LaTeX Warning: Citation `colwell:vliw' on page 19 undefined on input line 226.
+
+[19]
+
+LaTeX Warning: Citation `gib86' on page 20 undefined on input line 247.
+
+) [20]
+\openout2 = `chap2.aux'.
+
+
+No file chap2.tex.
+\openout2 = `appa.aux'.
+
+(./appa.tex
+Appendix A.
+[21
+
+
+
+
+
+])
+\openout2 = `appb.aux'.
+
+ (./appb.tex [22
+
+
+
+
+]
+Appendix B.
+[23] [24] [25])
+\openout2 = `biblio.aux'.
+
+ (./biblio.tex (./main.bbl [26
+
+
+
+
+
+])) [27] (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
+ (./appa.aux) (./appb.aux)
+(./biblio.aux))
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 707 strings out of 493014
- 7052 string characters out of 6133351
- 59319 words of memory out of 5000000
- 4261 multiletter control sequences out of 15000+600000
- 8559 words of font info for 21 fonts, out of 8000000 for 9000
+ 845 strings out of 493014
+ 9110 string characters out of 6133351
+ 61051 words of memory out of 5000000
+ 4322 multiletter control sequences out of 15000+600000
+ 18208 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,4n,21p,353b,166s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/f
-onts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2016/texmf-dist/fon
-ts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2016/texmf-dist/fonts
-/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2016/texmf-dist/fonts/t
-ype1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2016/texmf-dist/fonts/typ
-e1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1
-/public/cm-super/sfrm1728.pfb>
-Output written on main.pdf (5 pages, 85198 bytes).
+ 28i,8n,23p,353b,249s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
+</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></
+usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></us
+r/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
+local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/lo
+cal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local
+/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
+live/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texli
+ve/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive
+/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2
+016/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/201
+6/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2016/
+texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2016/te
+xmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2016/texm
+f-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2016/texmf-
+dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2016/texmf-di
+st/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2016/texmf-dist
+/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2016/texmf-dist/f
+onts/type1/public/cm-super/sfsl1200.pfb></usr/local/texlive/2016/texmf-dist/fon
+ts/type1/public/cm-super/sfti1200.pfb></usr/local/texlive/2016/texmf-dist/fonts
+/type1/public/cm-super/sftt1000.pfb>
+Output written on main.pdf (27 pages, 315368 bytes).
 PDF statistics:
- 42 PDF objects out of 1000 (max. 8388607)
- 28 compressed objects within 1 object stream
+ 186 PDF objects out of 1000 (max. 8388607)
+ 128 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 5 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
