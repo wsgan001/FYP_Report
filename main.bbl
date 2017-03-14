@@ -12,4 +12,10 @@ E.~W. Dijkstra.
 \newblock A note on two problems in connections with graphs.
 \newblock {\em Numerische Mathematik}, 1:269--271, 1959.
 
+\bibitem{TDR10}
+Jing Yuan, Yu~Zheng, Chengyang Zhang, Wenlei Xie, Xing Xie, Guangzhong Sun, and
+  Yan Huang.
+\newblock T-drive: Driving directions based on taxi trajectories.
+\newblock ACM SIGSPATIAL GIS 2010, November 2010.
+
 \end{thebibliography}

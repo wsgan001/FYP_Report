@@ -31,6 +31,11 @@
 %% some PDF conversions mess up the ligatures.  -LB, 1/22/2014
 \usepackage{cmap}
 \usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
 \pagestyle{headings}
 
 %% This bit allows you to either specify only the files which you wish to
@@ -41,6 +46,9 @@
 process all files:}
 \def\all{all}
 \ifx\files\all \typeout{Including all files.} \else \typeout{Including only \files.} \includeonly{\files} \fi
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
 
 \begin{document}
 

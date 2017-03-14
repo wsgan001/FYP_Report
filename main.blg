@@ -7,57 +7,55 @@ A level-1 auxiliary file: chap1.aux
 A level-1 auxiliary file: chap2.aux
 A level-1 auxiliary file: appa.aux
 A level-1 auxiliary file: appb.aux
+A level-1 auxiliary file: biblio.aux
 The style file: plain.bst
 Database file #1: main.bib
-Warning--I didn't find a database entry for "patterson:risc"
-Warning--I didn't find a database entry for "rad83"
-Warning--I didn't find a database entry for "ellis:bulldog"
-Warning--I didn't find a database entry for "pet87"
-Warning--I didn't find a database entry for "coutant:precision-compilers"
-Warning--I didn't find a database entry for "gib86"
 Warning--I didn't find a database entry for "thornton:cdc6600"
 Warning--I didn't find a database entry for "magenheimer:precision"
 Warning--I didn't find a database entry for "byte:i860"
+Warning--I didn't find a database entry for "ellis:bulldog"
 Warning--I didn't find a database entry for "colwell:vliw"
-You've used 2 entries,
+Warning--I didn't find a database entry for "gib86"
+Warning--empty booktitle in TDR10
+You've used 3 entries,
             2118 wiz_defined-function locations,
-            528 strings with 4567 characters,
-and the built_in function-call counts, 631 in all, are:
-= -- 58
-> -- 30
+            531 strings with 4720 characters,
+and the built_in function-call counts, 1058 in all, are:
+= -- 92
+> -- 68
 < -- 0
-+ -- 13
-- -- 10
-* -- 44
-:= -- 115
-add.period$ -- 6
-call.type$ -- 2
-change.case$ -- 11
++ -- 28
+- -- 24
+* -- 80
+:= -- 190
+add.period$ -- 9
+call.type$ -- 3
+change.case$ -- 21
 chr.to.int$ -- 0
-cite$ -- 2
-duplicate$ -- 23
-empty$ -- 49
-format.name$ -- 10
-if$ -- 127
+cite$ -- 4
+duplicate$ -- 36
+empty$ -- 75
+format.name$ -- 24
+if$ -- 210
 int.to.chr$ -- 0
-int.to.str$ -- 2
-missing$ -- 3
-newline$ -- 14
-num.names$ -- 4
-pop$ -- 11
+int.to.str$ -- 3
+missing$ -- 4
+newline$ -- 19
+num.names$ -- 6
+pop$ -- 25
 preamble$ -- 2
-purify$ -- 9
+purify$ -- 18
 quote$ -- 0
-skip$ -- 12
+skip$ -- 19
 stack$ -- 0
-substring$ -- 32
-swap$ -- 2
+substring$ -- 37
+swap$ -- 3
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 6
-warning$ -- 0
-while$ -- 5
-width$ -- 3
-write$ -- 26
-(There were 10 warnings)
+type$ -- 10
+warning$ -- 1
+while$ -- 7
+width$ -- 4
+write$ -- 36
+(There were 7 warnings)
