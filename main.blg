@@ -10,51 +10,48 @@ A level-1 auxiliary file: appb.aux
 A level-1 auxiliary file: biblio.aux
 The style file: plain.bst
 Database file #1: main.bib
-Warning--I didn't find a database entry for "magenheimer:precision"
-Warning--I didn't find a database entry for "byte:i860"
-Warning--I didn't find a database entry for "ellis:bulldog"
-Warning--I didn't find a database entry for "colwell:vliw"
-Warning--I didn't find a database entry for "gib86"
+Warning--entry type for "GSHF17" isn't style-file defined
+--line 17 of file main.bib
 Warning--empty booktitle in TDR10
-You've used 4 entries,
+You've used 7 entries,
             2118 wiz_defined-function locations,
-            538 strings with 4953 characters,
-and the built_in function-call counts, 1506 in all, are:
-= -- 139
-> -- 81
+            550 strings with 5316 characters,
+and the built_in function-call counts, 2456 in all, are:
+= -- 222
+> -- 144
 < -- 1
-+ -- 34
-- -- 28
-* -- 106
-:= -- 252
-add.period$ -- 12
-call.type$ -- 4
-change.case$ -- 26
++ -- 59
+- -- 50
+* -- 172
+:= -- 415
+add.period$ -- 21
+call.type$ -- 7
+change.case$ -- 46
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 59
-empty$ -- 114
-format.name$ -- 28
-if$ -- 317
+cite$ -- 8
+duplicate$ -- 94
+empty$ -- 190
+format.name$ -- 50
+if$ -- 514
 int.to.chr$ -- 0
-int.to.str$ -- 4
-missing$ -- 5
-newline$ -- 24
-num.names$ -- 8
-pop$ -- 33
+int.to.str$ -- 7
+missing$ -- 7
+newline$ -- 38
+num.names$ -- 14
+pop$ -- 65
 preamble$ -- 2
-purify$ -- 22
+purify$ -- 39
 quote$ -- 0
-skip$ -- 38
+skip$ -- 57
 stack$ -- 0
-substring$ -- 71
-swap$ -- 13
+substring$ -- 86
+swap$ -- 17
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 14
+type$ -- 26
 warning$ -- 1
-while$ -- 11
-width$ -- 5
-write$ -- 48
-(There were 6 warnings)
+while$ -- 17
+width$ -- 8
+write$ -- 78
+(There were 2 warnings)

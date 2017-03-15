@@ -8,9 +8,13 @@
 
 Finding a practically shortest route on a large road network in a metropolis is not only of algorithmic interests, but also of economic and environmental values. Less travelling time means less fuel consumptions and less carbon emissions. However, finding shortest routes can be challenging, especially when the road traffic is known to be \emph{time-dependent} or \emph{dynamic}, namely, when the road conditions change with respect to time. It may take 10 minutes on average to traverse a particular road at 10a.m, but it is possible that the expected travel time increases to 20 minutes at 5p.m. Moreover, two different roads may have different time-varying patterns. For instance, one road may have a peak traveling time at 12p.m but the other may have two peaks at 8 a.m. and 6 p.m., respectively.
 
-The generalised time-dependent shortest path problem can be formally defined as follows.
+The formal definition of a dynamic road network is given as follows.
+\begin{defn}[\emph{Dynamic road network}]
+A dynamic road network is a weighted, directed graph $G=(V,E)$ where $E$ represents a set of road segments and $V$ denotes the set of intersections of these road segments. It has a weight function $w : E,t \rightarrow \mathbb{R}$, where $t$ represents an instant in time. 
+\end{defn}
+With the definition of a dynamic road network, the generalised time-dependent shortest path problem can be formally defined as follows.
 \begin{defn}[\emph{Generalised time-dependent shortest path problem}]
-In a weighted, directed graph $G=(V,E)$ representing a road network with a weight function $w : E,t \rightarrow \mathbb{R}$, given a source node $u$, a destination node $v$ and a departure time $t$ from $u$, find a path $p$ that satisfies:
+In a dynamic road network $G=(V,E)$, given a source node $u$, a destination node $v$ and a departure time $t$ from $u$, find a path $p$ that satisfies:
 \begin{equation}
 w(p)=\delta(u,v)=
 \begin{cases}

@@ -12,6 +12,12 @@ E.~W. Dijkstra.
 \newblock A note on two problems in connections with graphs.
 \newblock {\em Numerische Mathematik}, 1:269--271, 1959.
 
+\bibitem{MAP09}
+Yin Lou, Chengyang Zhang, Yu~Zheng, Xing Xie, Wei Wang, and Yan Huang.
+\newblock Map-matching for low-sampling-rate gps trajectories.
+\newblock In {\em ACM SIGSPATIAL GIS 2009}. ACM SIGSPATIAL GIS 2009, November
+  2009.
+
 \bibitem{FP15}
 Frank van Diggelen and Per Enge.
 \newblock The world's first gps mooc and worldwide laboratory using
@@ -20,10 +26,20 @@ Frank van Diggelen and Per Enge.
   The Satellite Division of the Institute of Navigation (ION GNSS+ 2015)},
   pages 361--369, Tampa, Florida, September 2015.
 
+\bibitem{GSHF17}
+Wikipedia.
+\newblock Restrictions on geographic data in china, March 2017.
+
 \bibitem{TDR10}
 Jing Yuan, Yu~Zheng, Chengyang Zhang, Wenlei Xie, Xing Xie, Guangzhong Sun, and
   Yan Huang.
 \newblock T-drive: Driving directions based on taxi trajectories.
 \newblock ACM SIGSPATIAL GIS 2010, November 2010.
+
+\bibitem{BPLL13}
+Bing Zhu, Peter Huang, Leo Guibas, and Lin Zhang.
+\newblock Urban population migration pattern mining based on taxi trajectories.
+\newblock In {\em Mobile Sensing Workshop at CPSWeek 2013}, Philadelphia, April
+  2013.
 
 \end{thebibliography}
