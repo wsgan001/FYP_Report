@@ -4,13 +4,21 @@
 
 \bibitem{CLRS09}
 Thomas~H. Cormen, Charles~E. Leiserson, Ronald~L. Rivest, and Clifford Stein.
-\newblock {\em Introduction Introduction to Algorithms}.
+\newblock {\em Introduction to Algorithms}.
 \newblock MIT Press, Cambridge, MA, third edition edition, 2009.
 
 \bibitem{Dij59}
 E.~W. Dijkstra.
 \newblock A note on two problems in connections with graphs.
 \newblock {\em Numerische Mathematik}, 1:269--271, 1959.
+
+\bibitem{FP15}
+Frank van Diggelen and Per Enge.
+\newblock The world's first gps mooc and worldwide laboratory using
+  smartphones.
+\newblock In {\em Proceedings of the 28th International Technical Meeting of
+  The Satellite Division of the Institute of Navigation (ION GNSS+ 2015)},
+  pages 361--369, Tampa, Florida, September 2015.
 
 \bibitem{TDR10}
 Jing Yuan, Yu~Zheng, Chengyang Zhang, Wenlei Xie, Xing Xie, Guangzhong Sun, and
