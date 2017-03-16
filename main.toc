@@ -8,6 +8,6 @@
 \contentsline {chapter}{\numberline {2}Preliminary Data Processing}{19}
 \contentsline {section}{\numberline {2.1}Data Collecting and Cleaning}{19}
 \contentsline {section}{\numberline {2.2}Reverse Geocoding}{20}
-\contentsline {section}{\numberline {2.3}Outlier detection}{22}
-\contentsline {chapter}{\numberline {A}Tables}{23}
-\contentsline {chapter}{\numberline {B}Figures}{25}
+\contentsline {section}{\numberline {2.3}Outlier Detecting}{22}
+\contentsline {chapter}{\numberline {A}Tables}{25}
+\contentsline {chapter}{\numberline {B}Figures}{27}

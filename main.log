@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.22)  16 MAR 2017 13:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.22)  16 MAR 2017 22:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -209,38 +209,39 @@ Package: etoolbox 2015/08/02 v2.2a e-TeX tools for LaTeX (JAW)
 ))
 Enter file names to process, (chap1,chap2 ...), or `all' to process all files:
 
-\files=all
-Including all files.
+\files=chap2
+Including only chap2.
 \c@defn=\count110
+\c@theorem=\count111
 (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
 (./appa.aux) (./appb.aux) (./biblio.aux))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
 
 (/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count111
+\scratchcounter=\count112
 \scratchdimen=\dimen118
 \scratchbox=\box33
-\nofMPsegments=\count112
-\nofMParguments=\count113
+\nofMPsegments=\count113
+\nofMParguments=\count114
 \everyMPshowfont=\toks27
-\MPscratchCnt=\count114
+\MPscratchCnt=\count115
 \MPscratchDim=\dimen119
-\MPnumerator=\count115
-\makeMPintoPDFobject=\count116
+\MPnumerator=\count116
+\makeMPintoPDFobject=\count117
 \everyMPtoPDFconversion=\toks28
 ) (/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2016/05/10 v0.21 Utility functions of pdfTeX for LuaTeX (HO
@@ -289,96 +290,38 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\openout2 = `cover.aux'.
-
-
-(./cover.tex [1
-
-
-
-{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2
-
-] (./abstract.tex) [3
-
-] [4
-
-]) [5]
-\openout2 = `contents.aux'.
-
- (./contents.tex [6
-
-
-
-] (./main.toc<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
-LaTeX Font Info:    Try loading font information for U+msa on input line 2.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Try loading font information for U+msb on input line 2.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
-\tf@toc=\write3
-\openout3 = `main.toc'.
-
- [7] [8
-
-]
-(./main.lof)
-\tf@lof=\write4
-\openout4 = `main.lof'.
-
- [9] [10
-
-] (./main.lot)
-\tf@lot=\write5
-\openout5 = `main.lot'.
-
-) [11]
-\openout2 = `chap1.aux'.
-
- (./chap1.tex [12
-
-
-
-]
-Chapter 1.
-[13]
-Overfull \hbox (2.72488pt too wide) in paragraph at lines 34--35
-[]\T1/cmr/m/n/12 Chapter four de-scribes the data pre-processing and presents a
- novel neu-ral network-
- []
-
-[14]
-Underfull \vbox (badness 1968) has occurred while \output is active []
-
- [15]
-<images/low_sample_rate.png, id=74, 290.0436pt x 129.6042pt>
-File: images/low_sample_rate.png Graphic file (type png)
-
-<use images/low_sample_rate.png>
-Package pdftex.def Info: images/low_sample_rate.png used on input line 54.
-(pdftex.def)             Requested size: 290.04288pt x 129.60387pt.
- [16 <./images/low_sample_rate.png>]) [17]
 \openout2 = `chap2.aux'.
 
 
-(./chap2.tex [18
+(./chap2.tex [18{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdft
+ex.map}
+
+
+
 
 
 
 ]
 Chapter 2.
-[19] [20] <images/basic_architecture.png, id=94, 321.8424pt x 81.906pt>
+<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
+LaTeX Font Info:    Try loading font information for U+msa on input line 9.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 9.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [19] [20]
+<images/basic_architecture.png, id=28, 321.8424pt x 81.906pt>
 File: images/basic_architecture.png Graphic file (type png)
 
 <use images/basic_architecture.png>
 Package pdftex.def Info: images/basic_architecture.png used on input line 54.
 (pdftex.def)             Requested size: 321.84161pt x 81.90579pt.
  [21 <./images/basic_architecture.png>]
-<images/ajax_architecture.png, id=99, 438.438pt x 81.906pt>
+<images/ajax_architecture.png, id=34, 438.438pt x 81.906pt>
 File: images/ajax_architecture.png Graphic file (type png)
 
 <use images/ajax_architecture.png>
@@ -389,70 +332,40 @@ Overfull \hbox (4.81693pt too wide) in paragraph at lines 62--64
  [][] 
  []
 
-) [22 <./images/ajax_architecture.png>]
-\openout2 = `appa.aux'.
+[22 <./images/ajax_architecture.png>] [23]
+Overfull \hbox (1.19711pt too wide) in paragraph at lines 88--89
+\T1/cmr/m/n/12 graph-i-cally by a point on a 2-D plane with BD09_LAT as the $\O
+ML/cmm/m/it/12 x$ \T1/cmr/m/n/12 axis and BD09_LONG
+ []
 
- (./appa.tex
-Appendix A.
-[23
-
-
-
-])
-\openout2 = `appb.aux'.
-
- (./appb.tex [24
-
-
-
-
-]
-Appendix B.
-[25] [26] [27])
-\openout2 = `biblio.aux'.
-
- (./biblio.tex (./main.bbl [28
-
-
-
-
-
-])) [29] (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
- (./appa.aux) (./appb.aux)
-(./biblio.aux)) ) 
+) [24] (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
+(./appa.aux) (./appb.aux) (./biblio.aux)) ) 
 Here is how much of TeX's memory you used:
- 3625 strings out of 493014
- 46620 string characters out of 6133351
- 112373 words of memory out of 5000000
- 6962 multiletter control sequences out of 15000+600000
- 21493 words of font info for 55 fonts, out of 8000000 for 9000
+ 3585 strings out of 493014
+ 46095 string characters out of 6133351
+ 112524 words of memory out of 5000000
+ 6957 multiletter control sequences out of 15000+600000
+ 18415 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,12n,26p,844b,266s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/c
-m-super-t1.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
-.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
-am10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbol
-s/msbm10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sf
-bx1200.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx
-1440.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx17
-28.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx2488
-.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0700.p
-fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb
-></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><
-/usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></u
-sr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr
-/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/l
-ocal/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfsl1200.pfb></usr/loc
-al/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on main.pdf (29 pages, 444154 bytes).
+ 38i,9n,26p,797b,239s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/
+fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2016/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2016/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2016/texmf-dist/fonts/ty
+pe1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2016/texmf-dist/fonts/type
+1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/
+public/cm-super/sfbx2488.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pu
+blic/cm-super/sfrm0700.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
+ic/cm-super/sfrm0800.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public
+/cm-super/sfrm1000.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/c
+m-super/sfrm1200.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-
+super/sfsl1200.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-su
+per/sfti1200.pfb>
+Output written on main.pdf (7 pages, 217531 bytes).
 PDF statistics:
- 191 PDF objects out of 1000 (max. 8388607)
- 127 compressed objects within 2 object streams
+ 87 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

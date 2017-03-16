@@ -47,6 +47,27 @@ After the coordinates were converted from WGS-84 format to BD-09 format, Baidu M
 \caption{Augmented system architecture}\label{Fig:ajax_architecture}
 \end{figure}
 
-Executed in a web browser environment, AJAX sent HTTP POST requests to the Apache HTTP server to fetch the converted coordinates in BD-09 format which were subsequently sent to the Baidu Maps Web API server \emph{asynchronously} via HTTP GET requests. Once the server responded with the name of the road segment, AJAX updated the database by sending another HTTP POST request to the Apache HTTP server. The asynchronous nature of this architecture, however, caused a few problems which are addressed in Section~\ref{outlier_detection}. 
+Executed in a web browser environment, AJAX sent HTTP POST requests to the Apache HTTP server to fetch the converted coordinates in BD-09 format which were subsequently sent to the Baidu Maps Web API server \emph{asynchronously} via HTTP GET requests. Once the server responded with the name of the road segment, AJAX updated the database by sending another HTTP POST request to the Apache HTTP server. The asynchronous nature of this architecture, however, caused a few problems which are addressed in Section~\ref{outlier_detecting}. 
 
-\section{Outlier detection}\label{outlier_detection}
+\section{Outlier Detecting}\label{outlier_detecting}
+The Baidu Maps Web API for reverse geocoding is stable and fast, but does not work with no errors. Sometimes, a GPS data point may refer to a location between a main road and a side road when plotted or it is just mapped to a street that Baidu Maps does not recognise. In neither case will Baidu Maps Web API produce a correct reverse geocoding. Moreover, the reverse geocoding process is asynchronous, which means that it is being performed in the background in parallel with the main application thread. Therefore, it is inevitable that some street names may get lost when the records are being updated or a record is updated with a wrong street name. 
+
+A record with this kind of error is known as an \emph{outlier} and must be removed. This project proposes a novel outlier detection method based on unsupervised learning. The rationale behind this method is based on the following theorem.
+
+\begin{defn}[\emph{Reasonable reverse geocoder}]
+A reasonable reverse geocoder always gives its best matching from a GPS data point to a street whenever possible and has an accuracy at least 50\%.
+\end{defn}
+
+\begin{theorem}[\emph{Majority Clustering Theorem}]
+If a \emph{reasonable reverse geocoder} is used to reverse geocode a set of GPS data points which are mapped to a particular street \emph{in reality}, then, when plotted on a map, majority (at least 50\%) of the points must be clustered together to form a rough shape that is similar to the shape of the street that they are supposed to be mapped to. 
+\end{theorem}
+
+\begin{proof}
+Proof by contradiction. Assume, for the sake of contradiction, majority (at least 50\%) of the data points that are \emph{indeed} located on the same street are scattered arbitrarily on a map after being reverse geocoded by a reasonable reverse geocoder. In particular, when plotted on a map, majority of them do not form a similar shape to that of the street they are supposed to be mapped to. Then, the majority must have been erroneously mapped to some other streets because no single street can cover the whole city. Thus, the reasonable reverse geocoder has only achieved an accuracy less 50\%, which contradicts the definition of a reasonable reverse geocoder. 
+\end{proof}
+
+Apparently, Baidu Maps Web API is a reasonable reverse geocoder because it is designed to be used by developers working Baidu Maps and has an accuracy larger than 50\%. Therefore, if a set of points belong to a particular street, after reverse geocoded by Baidu Maps Web API, majority of them should be clustered to assume a rough shape of that street. Based on this realisation, an unsupervised learning technique --- clustering can be used to separate the correctly mapped data points from outliers. 
+
+Many clustering techniques are available. Since each record can be represented graphically by a point on a 2-D plane with BD09\_LAT as the $x$ axis and BD09\_LONG as the $y$ axis, a \textbf{self-organising feature map}\cite{TK82} seems to be an appropriate technique to use. 
+
+A self-organising feature map is a type of artificial neural network. It consists of a pre-defined number of interconnected neurons randomly scattered among the data points at the begin of training. A neuron gradually moves to the centroid of the data cluster it represents as the training goes. Once the training stops, all data points near to a particular neuron, in terms of Euclidean distance\footnote{Other distance measures are also possible}, are assigned to the cluster that neuron represents. 
