@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.22)  15 MAR 2017 22:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.22)  16 MAR 2017 13:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -209,8 +209,8 @@ Package: etoolbox 2015/08/02 v2.2a e-TeX tools for LaTeX (JAW)
 ))
 Enter file names to process, (chap1,chap2 ...), or `all' to process all files:
 
-\files=chap2
-Including only chap2.
+\files=all
+Including all files.
 \c@defn=\count110
 (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
 (./appa.aux) (./appb.aux) (./biblio.aux))
@@ -289,68 +289,170 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
+\openout2 = `cover.aux'.
+
+
+(./cover.tex [1
+
+
+
+{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2
+
+] (./abstract.tex) [3
+
+] [4
+
+]) [5]
+\openout2 = `contents.aux'.
+
+ (./contents.tex [6
+
+
+
+] (./main.toc<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
+LaTeX Font Info:    Try loading font information for U+msa on input line 2.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 2.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+))
+\tf@toc=\write3
+\openout3 = `main.toc'.
+
+ [7] [8
+
+]
+(./main.lof)
+\tf@lof=\write4
+\openout4 = `main.lof'.
+
+ [9] [10
+
+] (./main.lot)
+\tf@lot=\write5
+\openout5 = `main.lot'.
+
+) [11]
+\openout2 = `chap1.aux'.
+
+ (./chap1.tex [12
+
+
+
+]
+Chapter 1.
+[13]
+Overfull \hbox (2.72488pt too wide) in paragraph at lines 34--35
+[]\T1/cmr/m/n/12 Chapter four de-scribes the data pre-processing and presents a
+ novel neu-ral network-
+ []
+
+[14]
+Underfull \vbox (badness 1968) has occurred while \output is active []
+
+ [15]
+<images/low_sample_rate.png, id=74, 290.0436pt x 129.6042pt>
+File: images/low_sample_rate.png Graphic file (type png)
+
+<use images/low_sample_rate.png>
+Package pdftex.def Info: images/low_sample_rate.png used on input line 54.
+(pdftex.def)             Requested size: 290.04288pt x 129.60387pt.
+ [16 <./images/low_sample_rate.png>]) [17]
 \openout2 = `chap2.aux'.
 
 
-(./chap2.tex [18{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdft
-ex.map}
-
-
-
+(./chap2.tex [18
 
 
 
 ]
 Chapter 2.
-<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
-LaTeX Font Info:    Try loading font information for U+msa on input line 13.
+[19] [20] <images/basic_architecture.png, id=94, 321.8424pt x 81.906pt>
+File: images/basic_architecture.png Graphic file (type png)
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Try loading font information for U+msb on input line 13.
+<use images/basic_architecture.png>
+Package pdftex.def Info: images/basic_architecture.png used on input line 54.
+(pdftex.def)             Requested size: 321.84161pt x 81.90579pt.
+ [21 <./images/basic_architecture.png>]
+<images/ajax_architecture.png, id=99, 438.438pt x 81.906pt>
+File: images/ajax_architecture.png Graphic file (type png)
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [19] [20]
-<images/architecture.png, id=28, 436.029pt x 97.8054pt>
-File: images/architecture.png Graphic file (type png)
+<use images/ajax_architecture.png>
+Package pdftex.def Info: images/ajax_architecture.png used on input line 62.
+(pdftex.def)             Requested size: 438.43692pt x 81.90579pt.
 
-<use images/architecture.png>
-Package pdftex.def Info: images/architecture.png used on input line 40.
-(pdftex.def)             Requested size: 436.02792pt x 97.80515pt.
-
-Overfull \hbox (2.40793pt too wide) in paragraph at lines 40--42
+Overfull \hbox (4.81693pt too wide) in paragraph at lines 62--64
  [][] 
  []
 
-) [21 <./images/architecture.png>] (./main.aux (./cover.aux) (./contents.aux)
-(./chap1.aux) (./chap2.aux) (./appa.aux) (./appb.aux) (./biblio.aux)) ) 
+) [22 <./images/ajax_architecture.png>]
+\openout2 = `appa.aux'.
+
+ (./appa.tex
+Appendix A.
+[23
+
+
+
+])
+\openout2 = `appb.aux'.
+
+ (./appb.tex [24
+
+
+
+
+]
+Appendix B.
+[25] [26] [27])
+\openout2 = `biblio.aux'.
+
+ (./biblio.tex (./main.bbl [28
+
+
+
+
+
+])) [29] (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
+ (./appa.aux) (./appb.aux)
+(./biblio.aux)) ) 
 Here is how much of TeX's memory you used:
- 3570 strings out of 493014
- 45778 string characters out of 6133351
- 112349 words of memory out of 5000000
- 6943 multiletter control sequences out of 15000+600000
- 18415 words of font info for 51 fonts, out of 8000000 for 9000
+ 3625 strings out of 493014
+ 46620 string characters out of 6133351
+ 112373 words of memory out of 5000000
+ 6962 multiletter control sequences out of 15000+600000
+ 21493 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,9n,26p,797b,239s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/lo
-cal/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/loca
-l/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/
-texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/tex
-live/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texli
-ve/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive
-/2016/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2
-016/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/201
-6/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2016/
-texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2016/te
-xmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2016/texm
-f-dist/fonts/type1/public/cm-super/sfsl1200.pfb></usr/local/texlive/2016/texmf-
-dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on main.pdf (4 pages, 154811 bytes).
+ 38i,12n,26p,844b,266s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/c
+m-super-t1.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmmi12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
+am10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbol
+s/msbm10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sf
+bx1200.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx
+1440.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx17
+28.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx2488
+.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0700.p
+fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb
+></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></u
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr
+/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/l
+ocal/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfsl1200.pfb></usr/loc
+al/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on main.pdf (29 pages, 444154 bytes).
 PDF statistics:
- 70 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
+ 191 PDF objects out of 1000 (max. 8388607)
+ 127 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
