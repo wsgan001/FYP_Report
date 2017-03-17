@@ -11,47 +11,47 @@ A level-1 auxiliary file: biblio.aux
 The style file: plain.bst
 Database file #1: main.bib
 Warning--entry type for "GSHF17" isn't style-file defined
---line 26 of file main.bib
+--line 36 of file main.bib
 Warning--empty booktitle in TDR10
-You've used 8 entries,
+You've used 9 entries,
             2118 wiz_defined-function locations,
-            557 strings with 5434 characters,
-and the built_in function-call counts, 2832 in all, are:
-= -- 262
-> -- 151
-< -- 2
-+ -- 62
-- -- 52
-* -- 192
-:= -- 470
-add.period$ -- 24
-call.type$ -- 8
-change.case$ -- 50
+            565 strings with 5537 characters,
+and the built_in function-call counts, 3279 in all, are:
+= -- 305
+> -- 165
+< -- 4
++ -- 67
+- -- 56
+* -- 219
+:= -- 531
+add.period$ -- 27
+call.type$ -- 9
+change.case$ -- 54
 chr.to.int$ -- 0
-cite$ -- 9
-duplicate$ -- 112
-empty$ -- 223
-format.name$ -- 52
-if$ -- 602
+cite$ -- 10
+duplicate$ -- 136
+empty$ -- 264
+format.name$ -- 56
+if$ -- 709
 int.to.chr$ -- 0
-int.to.str$ -- 8
-missing$ -- 8
-newline$ -- 43
-num.names$ -- 16
-pop$ -- 70
+int.to.str$ -- 9
+missing$ -- 9
+newline$ -- 48
+num.names$ -- 19
+pop$ -- 79
 preamble$ -- 2
-purify$ -- 42
+purify$ -- 46
 quote$ -- 0
-skip$ -- 72
+skip$ -- 91
 stack$ -- 0
-substring$ -- 123
-swap$ -- 25
-text.length$ -- 2
+substring$ -- 156
+swap$ -- 36
+text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 30
+type$ -- 32
 warning$ -- 1
-while$ -- 21
-width$ -- 9
-write$ -- 89
+while$ -- 25
+width$ -- 10
+write$ -- 100
 (There were 2 warnings)

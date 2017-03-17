@@ -1,9 +1,3 @@
-%% This is an example first chapter.  You should put chapter/appendix that you
-%% write into a separate file, and add a line \include{yourfilename} to
-%% main.tex, where `yourfilename.tex' is the name of the chapter/appendix file.
-%% You can process specific files by typing their names in at the 
-%% \files=
-%% prompt when you run the file main.tex through LaTeX.
 \chapter{Preliminary Data Processing}
 \section{Data Collecting and Cleaning}
 The taxi GPS data used in this project is collected from the Computational Sensing Lab\cite{BPLL13} at Tsinghua University, Beijing, China. The data set contains approximately 83 million time-stamped taxi GPS records collected from 8,602 taxis in Beijing, from 1 May 2009 to 30 May 2009. The original data set consists of seven fields as shown in Table~\ref{Ta:orig_field}. The GPS coordinates in the data set are defined in the WGS-84\footnote{World Geodetic System} standard coordinate system, which is the reference coordinate system used by the GPS.
@@ -50,24 +44,54 @@ After the coordinates were converted from WGS-84 format to BD-09 format, Baidu M
 Executed in a web browser environment, AJAX sent HTTP POST requests to the Apache HTTP server to fetch the converted coordinates in BD-09 format which were subsequently sent to the Baidu Maps Web API server \emph{asynchronously} via HTTP GET requests. Once the server responded with the name of the road segment, AJAX updated the database by sending another HTTP POST request to the Apache HTTP server. The asynchronous nature of this architecture, however, caused a few problems which are addressed in Section~\ref{outlier_detecting}. 
 
 \section{Outlier Detecting}\label{outlier_detecting}
-The Baidu Maps Web API for reverse geocoding is stable and fast, but does not work with no errors. Sometimes, a GPS data point may refer to a location between a main road and a side road when plotted or it is just mapped to a street that Baidu Maps does not recognise. In neither case will Baidu Maps Web API produce a correct reverse geocoding. Moreover, the reverse geocoding process is asynchronous, which means that it is being performed in the background in parallel with the main application thread. Therefore, it is inevitable that some street names may get lost when the records are being updated or a record is updated with a wrong street name. 
+\subsection{Motivation for Outlier Detection}
+The Baidu Maps Web API for reverse geocoding is stable and fast, but does not produce no errors. Sometimes, a GPS data point may be mapped to a main road but actually it is on the side road, which is one of the limitations mentioned in Section~\ref{Sec:limitation} or it is actually mapped to a street that Baidu Maps does not recognise. In neither case will Baidu Maps produce a correct reverse geocoding. Moreover, the reverse geocoding process is asynchronous, which means that it is being performed in the background in parallel with the main application thread. Therefore, it is inevitable that some street names may get lost when the records are being updated or a record is updated with a wrong street name. Figure~\ref{Fig:exmp_outlier} shows a drastic example.
 
-A record with this kind of error is known as an \emph{outlier} and must be removed. This project proposes a novel outlier detection method based on unsupervised learning. The rationale behind this method is based on the following theorem.
+\begin{figure}[h]
+\includegraphics{long_lat_plot}
+\centering
+\caption{Example of outliers}\label{Fig:exmp_outlier}
+\end{figure}
 
-\begin{defn}[\emph{Reasonable reverse geocoder}]
-A reasonable reverse geocoder always gives its best matching from a GPS data point to a street whenever possible and has an accuracy at least 50\%.
+In this example, the Baidu Maps believes that all data points plotted belong to a particular street. But when plotted on a 2-D plane, these data points almost represent the \emph{entire} road network in Beijing. The actual, correct street is represented in the figure as the \emph{thickest} line on the right half of the figure with a longitude ranging from 116.45\textdegree~to 116.65\textdegree.~Erroneous records like those not on the thickest line are known as \emph{outliers} and must be properly identified and removed. This project proposes a novel outlier detection approach based on unsupervised learning whose principle behind is based on Theorem~\ref{Theorem: majority_clustering}.
+
+\begin{defn}[\emph{Reasonable reverse geocoder}]\label{Def:reasonable_geocoder}
+A reasonable reverse geocoder always gives its best matching from a GPS data point to a street whenever possible and has an accuracy more than 50\%.
 \end{defn}
 
-\begin{theorem}[\emph{Majority Clustering Theorem}]
-If a \emph{reasonable reverse geocoder} is used to reverse geocode a set of GPS data points which are mapped to a particular street \emph{in reality}, then, when plotted on a map, majority (at least 50\%) of the points must be clustered together to form a rough shape that is similar to the shape of the street that they are supposed to be mapped to. 
+\begin{theorem}[\emph{Majority Clustering Theorem}]\label{Theorem: majority_clustering}
+If a \emph{reasonable reverse geocoder} is used to reverse geocode a set of GPS data points which are mapped to a particular street \emph{in reality}, then, when plotted on a 2-D plane, majority (more than 50\%) of the points must be clustered together to form a rough shape that is similar to the shape of the street that they are supposed to be mapped to. 
 \end{theorem}
 
 \begin{proof}
-Proof by contradiction. Assume, for the sake of contradiction, majority (at least 50\%) of the data points that are \emph{indeed} located on the same street are scattered arbitrarily on a map after being reverse geocoded by a reasonable reverse geocoder. In particular, when plotted on a map, majority of them do not form a similar shape to that of the street they are supposed to be mapped to. Then, the majority must have been erroneously mapped to some other streets because no single street can cover the whole city. Thus, the reasonable reverse geocoder has only achieved an accuracy less 50\%, which contradicts the definition of a reasonable reverse geocoder. 
+Proof by contradiction. Assume, for the purpose of contradiction, majority (more than 50\%) of the data points that are \emph{indeed} located on the same street are scattered arbitrarily on a 2-D plane after being reverse-geocoded by a reasonable reverse geocoder. In particular, when plotted on a 2-D plane, majority of them do not form a similar shape to that of the street they are supposed to be mapped to. Then, the majority must have been erroneously mapped to some other streets because no single street covers the whole city area. Thus, the reasonable reverse geocoder has only achieved an accuracy less 50\%, which contradicts the Definition~\ref{Def:reasonable_geocoder} of a reasonable reverse geocoder. 
 \end{proof}
 
-Apparently, Baidu Maps Web API is a reasonable reverse geocoder because it is designed to be used by developers working Baidu Maps and has an accuracy larger than 50\%. Therefore, if a set of points belong to a particular street, after reverse geocoded by Baidu Maps Web API, majority of them should be clustered to assume a rough shape of that street. Based on this realisation, an unsupervised learning technique --- clustering can be used to separate the correctly mapped data points from outliers. 
+\subsection{Outlier Identification}
+Apparently, Baidu Maps provides a reasonable reverse geocoder because it is of industrial-grade quality and has an accuracy larger than 50\%. Therefore, if a set of points belong to a particular street, after reverse-geocoded by Baidu Maps, majority of them should be clustered to assume a rough shape of that street according to Theorem~\ref{Theorem: majority_clustering}. Based on that, an unsupervised learning technique --- clustering can be used to separate the correctly mapped data points from outliers. 
 
-Many clustering techniques are available. Since each record can be represented graphically by a point on a 2-D plane with BD09\_LAT as the $x$ axis and BD09\_LONG as the $y$ axis, a \textbf{self-organising feature map}\cite{TK82} seems to be an appropriate technique to use. 
+Many clustering techniques are available\cite{LO05}. Since each record can be represented graphically by a point on a 2-D plane with BD09\_LAT as the $x$ axis and BD09\_LONG as the $y$ axis, a \textbf{self-organising feature map}\cite{TK82} seems to be an appropriate technique to use. 
 
 A self-organising feature map is a type of artificial neural network. It consists of a pre-defined number of interconnected neurons randomly scattered among the data points at the begin of training. A neuron gradually moves to the centroid of the data cluster it represents as the training goes. Once the training stops, all data points near to a particular neuron, in terms of Euclidean distance\footnote{Other distance measures are also possible}, are assigned to the cluster that neuron represents. 
+
+\begin{figure}[h]
+\includegraphics{sofm_weights}
+\centering
+\caption{Neuron positions after training}\label{Fig:sofm_position}
+\end{figure}
+
+Once the centroid of each cluster had been calculated, a distance threshold was set to identify and remove outliers so that whenever the minimum distance between a data point and all centroids is above the threshold, that data point will be considered as an outlier and removed. The python-like pseudocode in Listing~\ref{List:code_outlier} describes this idea. 
+
+For this project, two thresholds were set: 30 metres and 50 metres. This was to ensure that there was sufficient data for estimating travel time while the estimates were as least affected as possible by outliers. If the threshold is set to a too small value, the remaining data may not be sufficient for subsequent machine learning tasks; on the other hand, however, if the threshold is set to a too big value, the accuracy of the final results will be subject to the excessive outliers. 
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language = Python, caption = {Pseudocode for outlier detection}, label = {List:code_outlier}]
+for record in records:
+	min_distance = math.inf
+	for centroid in centroids:
+		min_distance = min(min_distance, \
+			get_distance(record, centroid))
+	if min_distance > threshold:
+		remove(records, record)
+\end{lstlisting}
+\end{minipage}

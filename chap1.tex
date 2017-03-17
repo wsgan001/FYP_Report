@@ -42,7 +42,7 @@ Taxi drivers or any experienced car drivers, more often than not, possess some \
 
 However, mining their GPS trajectories can reveal such knowledge to some extent. In a metropolis such as Beijing or New York, taxi drivers are required by regulations to install GPS devices on their cars and to send time-stamped GPS information to a central reporting agency periodically for management and security reasons. Such information typically includes latitudes, longitudes, instantaneous speeds and heading directions. Therefore, the GPS data is readily available and little effort is needed to collect it. By means of mapping to a real road network all GPS data points of a particular taxi during a specific period of time, a GPS trajectory can be obtained to represent the driver's intelligence. 
 
-\section{Practical limitations}
+\section{Practical limitations} \label{Sec:limitation}
 There are some practical limitations that are worth mentioning. 
 \subsubsection{Arbitrary sources and destinations}
 In a typical map-query use case, a user is able to select an arbitrary source to start with and an arbitrary destination to go to. But this may not be possible in the GPS-based approach, since the taxi GPS trajectories do not necessarily cover every part of a city's map. It is likely that there are no trajectories passing through the source and the destination.
@@ -61,12 +61,7 @@ The taxi is known to have traversed from point $a$ to point $b$. But there are f
 After decades of development, the GPS service has achieved great accuracy, but it is still not completely error-free. A report\cite{FP15} in 2015 showed that GPS-enabled smartphones typically have an accuracy of 5 metres \emph{under open sky}. But in a metropolis like Beijing, the actual accuracy may be lower than this value due to the reflection of signals amongst high buildings. Moreover, the data set used in this project was collected in 2009 when GPS devices had lower accuracy than that of today's.
 
 The limited accuracy in GPS devices makes the exact mapping from a GPS data point to a street impossible. In Beijing, there is usually a side road running in parallel with a main road. Due to that limited accuracy, the taxi might be \emph{actually} on the side road but the GPS data point is shown on the main road, or vice versa. 
-% This is an example of how you would use tgrind to include an example
-% of source code; it is commented out in this template since the code
-% example file does not exist.  To use it, you need to remove the '%' on the
-% beginning of the line, and insert your own information in the call.
-%
-%\tagrind[htbp]{code/pmn.s.tex}{Post Multiply Normalization}{opt:pmn}
+
 \section{Related work}
 The incentive for carrying out this project comes from a similar project\cite{TDR10}, and similar procedures are followed in this project but with some modifications. 
 
