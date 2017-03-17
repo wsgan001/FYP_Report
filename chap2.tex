@@ -1,6 +1,6 @@
 \chapter{Preliminary Data Processing}
-\section{Data Collecting and Cleaning}
-The taxi GPS data used in this project is collected from the Computational Sensing Lab\cite{BPLL13} at Tsinghua University, Beijing, China. The data set contains approximately 83 million time-stamped taxi GPS records collected from 8,602 taxis in Beijing, from 1 May 2009 to 30 May 2009. The original data set consists of seven fields as shown in Table~\ref{Ta:orig_field}. The GPS coordinates in the data set are defined in the WGS-84\footnote{World Geodetic System} standard coordinate system, which is the reference coordinate system used by the GPS.
+\section{Data Collection and Cleaning}
+The taxi GPS data used in this project is collected from the Computational Sensing Lab\cite{BPLL13} at Tsinghua University, Beijing, China. The data set contains approximately 83 million time-stamped taxi GPS records collected from 8,602 taxis in Beijing, from 1 May 2009 to 30 May 2009. The original data set consists of seven fields as shown in Table~\ref{Ta:orig_field}. Longitude and latitude in the data set are defined in the WGS-84\footnote{World Geodetic System} standard coordinate system, which is the reference coordinate system used by the GPS.
 
 \begin{table}
 \centering
@@ -8,16 +8,22 @@ The taxi GPS data used in this project is collected from the Computational Sensi
 CUID & ID for each taxi \\ \hlineUNIX\_EPOCH & Unix timestamp in milliseconds since 1 January 1970\\ \hlineGPS\_LONG & Longitude encoded in WGS-84 multiplied by $10^{5}$\\ \hlineGPS\_LAT & Latitude encoded in WGS-84 multiplied by $10^{5}$ \\ \hlineHEAD & Heading direction in degrees with 0 denoting North\\ \hlineSPEED & Instantaneous speed in metres/second (m/s)\\ \hlineOCCUPIED & Binary indicator of whether the taxi is hired (1) or not (0)\\ \hline\end{tabular}\caption{Fields in the original data set}\label{Ta:orig_field}
 \end{table}
 
-The original data set comes in a binary file format. After the data was decoded and imported into a MySQL database, the first step in cleaning data was to delete all records with zero value in the SPEED field, since when a taxi is stationary it yields no valuable information about the \emph{trajectory} it is moving along. While being stationary could be due to a traffic jam, this kind of information is well captured by the time difference between the previous \emph{non-stationary} data point and the next \emph{non-stationary} data point. 
+The original data set came in a binary file format. After the data set was decoded and imported into a MySQL database, the first step in data cleaning was \textbf{to delete all records with zero value in the SPEED field}, since when a taxi is stationary it yields no valuable information about the \emph{trajectory} it is moving along. While being stationary could be due to a traffic jam, this kind of information is well captured by the time difference between the last \emph{non-stationary} data point and the next \emph{non-stationary} data point. 
 
-Moreover, all records must have a \emph{unique} pair of CUID and UNIX\_EPOCH fields, since it is not possible for a taxi to appear in two different locations at the same moment in time. This is possibly due to some errors in aggregating the original data set.
+In addition, all records must have a \emph{unique} pair of CUID and UNIX\_EPOCH fields, since it is not possible for a taxi to appear in two different locations at the same moment in time. This kind of error is likely due to some errors in aggregating the original data set.
 
 \section{Reverse Geocoding}
-After the data set was cleaned, the next step was to map each GPS data point to a road segment, which is also known as \emph{reverse geocoding}. A number of algorithms\cite{MAP09} have been proposed for this purpose, but most of them require an additional GIS\footnote{Geographic Information System} database of the road network in Beijing. This project adopted an alternative strategy which leverages on the existing public API\footnote{Application Programming Interface} for reverse geocoding. 
+After the data set was cleaned, the next step was to map each GPS data point to a road segment, which is also known as \emph{reverse geocoding}. A number of algorithms\cite{MAP09} have been proposed for this purpose, but most of them require an additional GIS\footnote{Geographic Information System} database of the road network in Beijing. This project adopted an alternative strategy which leveraged on the existing public APIs\footnote{Application Programming Interface} for reverse geocoding. 
 
-Currently, a number of online mapping platforms provide reverse geocoding services as part of their developer APIs. Amongst others, Google Maps and Baidu Maps offer relatively stable and fast reverse geocoding services. However, due to the ``China GPS shift problem''\cite{GSHF17} where coordinates encoded in WGS-84 standard are required by regulations to be shifted by a large and variable amount when displayed on a street map, Google Maps is not able to display a GPS data point correctly. 
+Currently, a number of online mapping platforms provide reverse geocoding services as part of their developer APIs. Amongst others, Google Maps and Baidu Maps offer relatively stable and fast reverse geocoding services. However, due to the ``China GPS shift problem''\cite{GSHF17} where coordinates encoded in WGS-84 format are required by regulations to be shifted by a large and variable amount when displayed on a street map, Google Maps is not able to display a GPS data point correctly because it only supports WGS-84 formats. Figure~\ref{Fig:gps_shift} illustrates the effect of such shift, with the correct location displayed on the right. 
 
-Baidu Maps, on the other hand, has been using their own coordinate system called BD-09 which is an improved version of the Chinese official coordinate system, GCJ-02. Baidu provides a set of APIs to convert WGS-84 coordinates into BD-09 ones. To store the converted coordinates as well as the street names obtained from reverse geocoding, four new fields were added to the original data set as shown in Table~\ref{Ta:addtional_field}.
+\begin{figure}[h]
+\includegraphics{gps_shift}
+\centering
+\caption{China GPS shift problem}\label{Fig:gps_shift}
+\end{figure}
+
+Baidu Maps, on the other hand, has been using their own coordinate system, BD-09, which is an improved version of the Chinese official coordinate system, GCJ-02. Baidu provides a set of APIs to convert WGS-84 coordinates into BD-09 ones. Therefore, to reverse-geocode the data points, the coordinates must be converted to BD-09 format. To store the converted coordinates as well as the street names obtained from reverse geocoding, four new fields were added to the original data set as shown in Table~\ref{Ta:addtional_field}.
 
 \begin{table}
 \centering
@@ -25,7 +31,7 @@ Baidu Maps, on the other hand, has been using their own coordinate system called
 DataUnitID & Nominal primary key for each record \\ \hlineBD09\_LONG & Longitude encoded in BD-09 format\\ \hlineBD09\_LAT & Latitude encoded in BD-09 format\\ \hlineSTREET & Street name\\ \hline\end{tabular}\caption{Additional fields added to data set}\label{Ta:addtional_field}
 \end{table}
 
-In order to use Baidu APIs for reverse geocoding, the following system architecture was set up as shown in Figure~\ref{Fig:basic_architecture}. The Apache HTTP server hides the MySQL database and sends HTTP POST request to Baidu Maps Web API to get converted coordinates. Then it updates the database through PHP \emph{mysqli} utilitity. 
+In order to use Baidu APIs for coordinate conversion, the following system architecture was set up as shown in Figure~\ref{Fig:basic_architecture}. The Apache HTTP server hides the MySQL database and sends HTTP POST request to Baidu Maps Web API to get converted coordinates. Then it updates the database through PHP \emph{mysqli} utilitity. 
 
 \begin{figure}[h]
 \includegraphics{basic_architecture}
@@ -43,7 +49,7 @@ After the coordinates were converted from WGS-84 format to BD-09 format, Baidu M
 
 Executed in a web browser environment, AJAX sent HTTP POST requests to the Apache HTTP server to fetch the converted coordinates in BD-09 format which were subsequently sent to the Baidu Maps Web API server \emph{asynchronously} via HTTP GET requests. Once the server responded with the name of the road segment, AJAX updated the database by sending another HTTP POST request to the Apache HTTP server. The asynchronous nature of this architecture, however, caused a few problems which are addressed in Section~\ref{outlier_detecting}. 
 
-\section{Outlier Detecting}\label{outlier_detecting}
+\section{Outlier Detection}\label{outlier_detecting}
 \subsection{Motivation for Outlier Detection}
 The Baidu Maps Web API for reverse geocoding is stable and fast, but does not produce no errors. Sometimes, a GPS data point may be mapped to a main road but actually it is on the side road, which is one of the limitations mentioned in Section~\ref{Sec:limitation} or it is actually mapped to a street that Baidu Maps does not recognise. In neither case will Baidu Maps produce a correct reverse geocoding. Moreover, the reverse geocoding process is asynchronous, which means that it is being performed in the background in parallel with the main application thread. Therefore, it is inevitable that some street names may get lost when the records are being updated or a record is updated with a wrong street name. Figure~\ref{Fig:exmp_outlier} shows a drastic example.
 
@@ -86,21 +92,23 @@ A self-organising feature map is a form of artificial neural network. It consist
 \caption{Neuron positions after training}\label{Fig:sofm_weights}
 \end{figure}
 
-It is clear from the figure that while some neurons represent the clusters of outliers, majority of the neurons are clustered to \emph{cover} the correct street they should represent. A $10\times10$ SOFM was used in this project, so there were at most 100 neurons or equivalently, 100 clusters. Each cluster had a different size. To ensure a thorough removal of the outliers, \textbf{only the top 50\% largest clusters were considered as clusters of correct data points. All other clusters were deemed as clusters of outliers}. 
+It is clear from the figure that while some neurons represent the clusters of outliers, majority of the neurons are clustered to \emph{cover} the correct street they should represent. A $10\times10$ SOFM was used in this project, so there were at most 100 neurons or equivalently, 100 clusters. Each cluster had a different size. To ensure a thorough removal of the outliers, \textbf{only the top 50\% largest clusters were considered as clusters of correct data points which are called ``legal clusters''. All other clusters were deemed as clusters of outliers}. 
 
 \subsection{Outlier Removal}
-Once the centroid of each cluster had been calculated, a distance threshold was set to identify and remove outliers so that whenever the minimum distance between a data point and all centroids is above the threshold, that data point will be considered as an outlier and removed. The python-like pseudocode in Listing~\ref{List:code_outlier} describes this idea. 
+Once the legal clusters were identified, a distance threshold was set to remove outliers so that \textbf{whenever the minimum distance between a data point and all centroids of the legal clusters was above the threshold, that data point would be considered as an outlier and removed}. The python-like pseudocode in Listing~\ref{List:code_outlier} describes this idea in details. 
 
-For this project, two thresholds were set: 30 metres and 50 metres. This was to ensure that there was sufficient data for estimating travel time while the estimates were as least affected as possible by outliers. If the threshold is set to a too small value, the remaining data may not be sufficient for subsequent machine learning tasks; on the other hand, however, if the threshold is set to a too big value, the accuracy of the final results will be subject to the excessive outliers. 
+For this project, two thresholds were selected: 30 metres and 50 metres. The thresholds were set in a way that it ensured there was sufficient data for subsequent machine learning tasks while the estimates were as least affected as possible by outliers. If the threshold were set to a too small value, the remaining data could not have been sufficient; on the other hand, however, if the threshold were set to a too big value, the accuracy of the final results would have been subject to outliers. 
 
-\begin{minipage}{\linewidth}
-\begin{lstlisting}[language = Python, caption = {Pseudocode for outlier detection}, label = {List:code_outlier}]
+%\begin{minipage}{\linewidth}
+\begin{lstlisting}[language = Python, caption = {Pseudocode for outlier detection}, label = {List:code_outlier} ,frame=single, numbers=left,stepnumber=1]
 for record in records:
-	min_distance = math.inf
+	min_distance = math.inf // infinity
 	for centroid in centroids:
 		min_distance = min(min_distance, \
 			get_distance(record, centroid))
 	if min_distance > threshold:
 		remove(records, record)
 \end{lstlisting}
-\end{minipage}
+%\end{minipage}
+
+After the outliers were removed, two data sets remained. They are hereinafter referred to as \emph{bjtaxigps\_30m}, where outliers were filtered by a threshold of 30 metres and \emph{bjtaxigps\_50m}, where outliers were filtered by a threshold of 50 metres, respectively. bjtaxigps\_30m contains approximately 51 million records while bjtaxigps\_50m has 59 million. All algorithms described hereinafter are applicable to both data sets. 

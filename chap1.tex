@@ -27,15 +27,7 @@ where $w(p)$ is the weight of the path $p$ and defined as sum of the weights of 
 
 A typical Bellman-Ford\cite{CLRS09} or Dijkstra's algorithm\cite{Dij59} for finding shortest paths assume the cost of traversing each edge in the abstract graph is constant with respect to time and therefore, do not work on time-de\-pendent road networks without appropriate modifications. Fortunately, most online mapping services such as Google Maps or Apple Maps are able to recommend shortest routes by incorporating real-time traffic information. This project seeks to investigate an alternative approach of finding shortest routes on a dynamic road network based on mining a GPS\footnote{Global Positioning System} trajectory database aggregated from thousands of taxis in Beijing, China.
 
-Chapter two defines several important concepts used in this project. 
-
-Chapter three gives an overview of the GPS-based approach.
-
-Chapter four describes the data pre-processing and presents a novel neural network-based outliner detection method.
-
-Chapter five elaborates the process of building a landmark graph and estimating the expected travel time of each landmark graph edge.
-
-Chapter six introduces the method of evaluating the estimated tralvel time from Chapter five.
+Chapter two describes the preliminary data processing. Chapter three introduces the approach for building a landmark graph. Chapter four explains how to estimate the travel time for each landmark graph edge. Chapter five presents methods for evaluating travel time estimations. 
 
 \section{Motivations for mining taxi GPS trajectories}
 Taxi drivers or any experienced car drivers, more often than not, possess some \emph{implicit} knowledge or intuitions about which route from source $u$ to destination $v$ is the best in terms of travelling time at a particular moment. Such knowledge or intuitions come from everyday experiences. For example, a taxi driver may observe that there are always traffic jams during 6 p.m. to 7 p.m. on a particular street and hence avoids travelling on that street during that period whenever possible. But observations of this kind, albeit valuable, are just too subtle to be captured by any general algorithms and oftentimes, even the drivers themselves may not be aware of that.
