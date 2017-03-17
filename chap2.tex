@@ -70,16 +70,25 @@ Proof by contradiction. Assume, for the purpose of contradiction, majority (more
 \subsection{Outlier Identification}
 Apparently, Baidu Maps provides a reasonable reverse geocoder because it is of industrial-grade quality and has an accuracy larger than 50\%. Therefore, if a set of points belong to a particular street, after reverse-geocoded by Baidu Maps, majority of them should be clustered to assume a rough shape of that street according to Theorem~\ref{Theorem: majority_clustering}. Based on that, an unsupervised learning technique --- clustering can be used to separate the correctly mapped data points from outliers. 
 
-Many clustering techniques are available\cite{LO05}. Since each record can be represented graphically by a point on a 2-D plane with BD09\_LAT as the $x$ axis and BD09\_LONG as the $y$ axis, a \textbf{self-organising feature map}\cite{TK82} seems to be an appropriate technique to use. 
+Many clustering techniques are available\cite{LO05}. Since each record can be represented graphically by a point on a 2-D plane with longitute as the $x$ axis and latitude as the $y$ axis, a \textbf{self-organising feature map}\cite{TK82}(SOFM) seems to be an appropriate technique to use. 
 
-A self-organising feature map is a type of artificial neural network. It consists of a pre-defined number of interconnected neurons randomly scattered among the data points at the begin of training. A neuron gradually moves to the centroid of the data cluster it represents as the training goes. Once the training stops, all data points near to a particular neuron, in terms of Euclidean distance\footnote{Other distance measures are also possible}, are assigned to the cluster that neuron represents. 
+\begin{figure}[h]
+\includegraphics{neighbour_connections}
+\centering
+\caption{An example of SOFM}\label{Fig:neighbour_connections}
+\end{figure}
+
+A self-organising feature map is a form of artificial neural network. It consists of a pre-defined number of interconnected neurons distributed over a 2-D plane as shown in Figure~\ref{Fig:neighbour_connections}. Prior to training, the neurons are randomly scattered among the data points and gradually move to the centroids of the data clusters they represent as they learn the \emph{features} of the training data. Upon termination of the training, all data points near to a particular neuron, in terms of Euclidean distance\footnote{Other distance measures are also possible.}, are assigned to the cluster that neuron represents. Figure~\ref{Fig:sofm_weights} shows the results after the clustering is completed. 
 
 \begin{figure}[h]
 \includegraphics{sofm_weights}
 \centering
-\caption{Neuron positions after training}\label{Fig:sofm_position}
+\caption{Neuron positions after training}\label{Fig:sofm_weights}
 \end{figure}
 
+It is clear from the figure that while some neurons represent the clusters of outliers, majority of the neurons are clustered to \emph{cover} the correct street they should represent. A $10\times10$ SOFM was used in this project, so there were at most 100 neurons or equivalently, 100 clusters. Each cluster had a different size. To ensure a thorough removal of the outliers, \textbf{only the top 50\% largest clusters were considered as clusters of correct data points. All other clusters were deemed as clusters of outliers}. 
+
+\subsection{Outlier Removal}
 Once the centroid of each cluster had been calculated, a distance threshold was set to identify and remove outliers so that whenever the minimum distance between a data point and all centroids is above the threshold, that data point will be considered as an outlier and removed. The python-like pseudocode in Listing~\ref{List:code_outlier} describes this idea. 
 
 For this project, two thresholds were set: 30 metres and 50 metres. This was to ensure that there was sufficient data for estimating travel time while the estimates were as least affected as possible by outliers. If the threshold is set to a too small value, the remaining data may not be sufficient for subsequent machine learning tasks; on the other hand, however, if the threshold is set to a too big value, the accuracy of the final results will be subject to the excessive outliers. 

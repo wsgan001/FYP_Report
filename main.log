@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.22)  17 MAR 2017 16:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.22)  17 MAR 2017 17:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -432,57 +432,62 @@ File: image/long_lat_plot.png Graphic file (type png)
 Package pdftex.def Info: image/long_lat_plot.png used on input line 68.
 (pdftex.def)             Requested size: 421.57396pt x 316.18047pt.
  [23 <./image/long_lat_plot.png (PNG copy)>]
-[24] <image/sofm_weights.png, id=49, 421.575pt x 316.18124pt>
+[24] <image/neighbour_connections.png, id=49, 421.575pt x 316.18124pt>
+File: image/neighbour_connections.png Graphic file (type png)
+
+<use image/neighbour_connections.png>
+Package pdftex.def Info: image/neighbour_connections.png used on input line 93.
+
+(pdftex.def)             Requested size: 421.57396pt x 316.18047pt.
+ [25 <./image/neighbour_connections.png (PNG copy)>] <image/sofm_weights.png, i
+d=54, 421.575pt x 316.18124pt>
 File: image/sofm_weights.png Graphic file (type png)
 
 <use image/sofm_weights.png>
-Package pdftex.def Info: image/sofm_weights.png used on input line 95.
+Package pdftex.def Info: image/sofm_weights.png used on input line 101.
 (pdftex.def)             Requested size: 421.57396pt x 316.18047pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
+ [26 <./image/sofm_weights.png (PNG copy)>]
 (/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 ))
-Overfull \hbox (17.62482pt too wide) in paragraph at lines 104--69
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 110--69
 []$[]$ 
  []
 
+[27] (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
+(./appa.aux) (./appb.aux) (./biblio.aux))
 
-Underfull \vbox (badness 1776) has occurred while \output is active []
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
- [25]
-[26 <./image/sofm_weights.png (PNG copy)>] (./main.aux (./cover.aux)
-(./contents.aux) (./chap1.aux) (./chap2.aux) (./appa.aux) (./appb.aux)
-(./biblio.aux)) ) 
+ ) 
 Here is how much of TeX's memory you used:
- 4936 strings out of 493014
- 66555 string characters out of 6133351
- 150981 words of memory out of 5000000
- 8291 multiletter control sequences out of 15000+600000
+ 4942 strings out of 493014
+ 66749 string characters out of 6133351
+ 149350 words of memory out of 5000000
+ 8296 multiletter control sequences out of 15000+600000
  21985 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,9n,44p,815b,1118s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/c
-m-super-ts1.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm
--super-t1.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx120
-0.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1440.
-pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pf
-b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb>
-</usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></
-usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></us
-r/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/
-local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/lo
-cal/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfsl1200.pfb></usr/loca
-l/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on main.pdf (9 pages, 359946 bytes).
+ 38i,9n,44p,937b,1120s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
+}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}<
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></
+usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
+r/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/l
+ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
+cal/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/loca
+l/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/
+texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texl
+ive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texliv
+e/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/
+2016/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/20
+16/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2016
+/texmf-dist/fonts/type1/public/cm-super/sfsl1200.pfb></usr/local/texlive/2016/t
+exmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on main.pdf (10 pages, 388770 bytes).
 PDF statistics:
- 102 PDF objects out of 1000 (max. 8388607)
- 66 compressed objects within 1 object stream
+ 110 PDF objects out of 1000 (max. 8388607)
+ 71 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
