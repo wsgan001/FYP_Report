@@ -95,9 +95,7 @@ A self-organising feature map is a form of artificial neural network. It consist
 It is clear from the figure that while some neurons represent the clusters of outliers, majority of the neurons are clustered to \emph{cover} the correct street they should represent. A $10\times10$ SOFM was used in this project, so there were at most 100 neurons or equivalently, 100 clusters. Each cluster had a different size. To ensure a thorough removal of the outliers, \textbf{only the top 50\% largest clusters were considered as clusters of correct data points which are called ``legal clusters''. All other clusters were deemed as clusters of outliers}. 
 
 \subsection{Outlier Removal}
-Once the legal clusters were identified, a distance threshold was set to remove outliers so that \textbf{whenever the minimum distance between a data point and all centroids of the legal clusters was above the threshold, that data point would be considered as an outlier and removed}. The python-like pseudocode in Listing~\ref{List:code_outlier} describes this idea in details. 
-
-For this project, two thresholds were selected: 30 metres and 50 metres. The thresholds were set in a way that it ensured there was sufficient data for subsequent machine learning tasks while the estimates were as least affected as possible by outliers. If the threshold were set to a too small value, the remaining data could not have been sufficient; on the other hand, however, if the threshold were set to a too big value, the accuracy of the final results would have been subject to outliers. 
+Once the legal clusters were identified, a distance threshold was set to remove outliers so that \textbf{whenever the minimum distance between a data point and all centroids of the legal clusters was above the threshold, that data point would be considered as an outlier and removed}. The python-like pseudocode in Listing~\ref{List:code_outlier} describes this idea with more clarity.
 
 %\begin{minipage}{\linewidth}
 \begin{lstlisting}[language = Python, caption = {Pseudocode for outlier detection}, label = {List:code_outlier} ,frame=single, numbers=left,stepnumber=1]
@@ -111,4 +109,31 @@ for record in records:
 \end{lstlisting}
 %\end{minipage}
 
-After the outliers were removed, two data sets remained. They are hereinafter referred to as \emph{bjtaxigps\_30m}, where outliers were filtered by a threshold of 30 metres and \emph{bjtaxigps\_50m}, where outliers were filtered by a threshold of 50 metres, respectively. bjtaxigps\_30m contains approximately 51 million records while bjtaxigps\_50m has 59 million. All algorithms described hereinafter are applicable to both data sets. 
+However, the \emph{distance} between a data point and a centroid is not as straightforward as Euclidean distance. A centroid, to some extent, can be imagined as a \emph{real} point on the Earth's surface. To calculate the distance between a data point and a centroid is to calculate the spherical distance which is given by the haversine formula in Theorem~\ref{Theorem: haversine}. 
+
+\begin{theorem}[\emph{Haversine Formula}]\label{Theorem: haversine}
+Given two points $P(\lambda_1,\varphi_1)$ and $Q(\lambda_2,\varphi_2)$ on the surface of a sphere, where $\lambda$ and $\varphi$ represent longitude and latitude in radians, their spherical distance (the distance along a great circle of the sphere) is given by\cite{FI06}
+\begin{equation}
+d = 2R\arcsin{\sqrt{\sin^2\frac{\varphi_2 - \varphi_1}{2} + \cos\varphi_1\cos\varphi_2\sin^2\frac{\lambda_2 - \lambda_1}{2}}} 
+\end{equation}
+where $R$ is the radius of the sphere. 
+\end{theorem}
+
+Since the Earth is not a perfect sphere, $R$ varies with latitude. Theorem~\ref{Theorem: radius_latitide} suggests how to calculate the Earth radius at any latitude. 
+
+\begin{theorem}[\emph{Radius at any Latitude}]\label{Theorem: radius_latitide}
+Given a latitude $\varphi$ in radians, a polar radius $R_{p}$ and an equatorial radius $R_{e}$, the sphere's radius at that latitude is given by\cite{NASA16}
+\begin{equation}
+R(\varphi) = \sqrt{\frac{R_{e}^4\cos^2\varphi + R_{p}^4\sin^2\varphi}{R_{e}^2\cos^2\varphi + R_{p}^2\sin^2\varphi}}
+\end{equation}
+\end{theorem}
+
+It is known that $R_{e} = 6,378,137$ metres and $R_{p} = 6,356,752$ metres on the Earth and that Beijing's latitude is about 39\textdegree N. Therefore, the distance between a data point and a centroid can be calculated. For this project, two thresholds were selected: 30 metres and 50 metres. The thresholds were set in a way that it ensured there was sufficient data for subsequent machine learning tasks while the estimates were as least affected as possible by outliers. If the threshold were set to a too small value, the remaining data could not have been sufficient; on the other hand, however, if the threshold were set to a too big value, the accuracy of the final results would have been subject to outliers. 
+
+\begin{figure}[h]
+\includegraphics{30m_50m}
+\centering
+\caption{Plot of data points after outlier removal}\label{Fig:after_removal}
+\end{figure}
+
+After the outliers were removed, two data sets remained. They are hereinafter referred to as \emph{bjtaxigps\_30m}, where outliers were filtered by a threshold of 30 metres and \emph{bjtaxigps\_50m}, where outliers were filtered by a threshold of 50 metres, respectively. bjtaxigps\_30m contains approximately 51 million records while bjtaxigps\_50m has 59 million. All algorithms described hereinafter are applicable to both data sets. Figure~\ref{Fig:after_removal} gives a plot of the data points from both data sets. Clearly, the data points are now contained in a much smaller area and roughly form a shape similar to that of the street they are mapped to. 

@@ -10,48 +10,50 @@ A level-1 auxiliary file: appb.aux
 A level-1 auxiliary file: biblio.aux
 The style file: plain.bst
 Database file #1: main.bib
+Warning--entry type for "NASA16" isn't style-file defined
+--line 17 of file main.bib
 Warning--entry type for "GSHF17" isn't style-file defined
---line 36 of file main.bib
+--line 53 of file main.bib
 Warning--empty booktitle in TDR10
-You've used 9 entries,
+You've used 11 entries,
             2118 wiz_defined-function locations,
-            565 strings with 5537 characters,
-and the built_in function-call counts, 3279 in all, are:
-= -- 305
-> -- 165
+            576 strings with 5686 characters,
+and the built_in function-call counts, 3641 in all, are:
+= -- 337
+> -- 173
 < -- 4
-+ -- 67
-- -- 56
-* -- 219
-:= -- 531
-add.period$ -- 27
-call.type$ -- 9
-change.case$ -- 54
++ -- 71
+- -- 58
+* -- 234
+:= -- 587
+add.period$ -- 31
+call.type$ -- 11
+change.case$ -- 61
 chr.to.int$ -- 0
-cite$ -- 10
-duplicate$ -- 136
-empty$ -- 264
-format.name$ -- 56
-if$ -- 709
+cite$ -- 12
+duplicate$ -- 154
+empty$ -- 308
+format.name$ -- 58
+if$ -- 790
 int.to.chr$ -- 0
-int.to.str$ -- 9
+int.to.str$ -- 11
 missing$ -- 9
-newline$ -- 48
-num.names$ -- 19
-pop$ -- 79
+newline$ -- 56
+num.names$ -- 21
+pop$ -- 93
 preamble$ -- 2
-purify$ -- 46
+purify$ -- 52
 quote$ -- 0
-skip$ -- 91
+skip$ -- 103
 stack$ -- 0
-substring$ -- 156
-swap$ -- 36
+substring$ -- 167
+swap$ -- 38
 text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 32
+type$ -- 39
 warning$ -- 1
-while$ -- 25
-width$ -- 10
-write$ -- 100
-(There were 2 warnings)
+while$ -- 27
+width$ -- 13
+write$ -- 116
+(There were 3 warnings)

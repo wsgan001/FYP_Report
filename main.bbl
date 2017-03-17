@@ -1,6 +1,6 @@
 \newcommand{\noopsort}[1]{} \newcommand{\printfirst}[2]{#1}
   \newcommand{\singleletter}[1]{#1} \newcommand{\switchargs}[2]{#2#1}
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{CLRS09}
 Thomas~H. Cormen, Charles~E. Leiserson, Ronald~L. Rivest, and Clifford Stein.
@@ -23,6 +23,10 @@ Yin Lou, Chengyang Zhang, Yu~Zheng, Xing Xie, Wei Wang, and Yan Huang.
 \newblock In {\em ACM SIGSPATIAL GIS 2009}. ACM SIGSPATIAL GIS 2009, November
   2009.
 
+\bibitem{FI06}
+NorthEast SAS Users Group.
+\newblock {\em Calculating Geographic Distance: Concepts and Methods}, 2006.
+
 \bibitem{LO05}
 Lior Rokach and Oded Maimon, editors.
 \newblock {\em Data Mining and Knowledge Discovery Handbook}, chapter~15, pages
@@ -40,6 +44,10 @@ Frank van Diggelen and Per Enge.
 \bibitem{GSHF17}
 Wikipedia.
 \newblock Restrictions on geographic data in china, March 2017.
+
+\bibitem{NASA16}
+David~R. Williams.
+\newblock Earth fact sheet, December 2016.
 
 \bibitem{TDR10}
 Jing Yuan, Yu~Zheng, Chengyang Zhang, Wenlei Xie, Xing Xie, Guangzhong Sun, and

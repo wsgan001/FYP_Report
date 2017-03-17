@@ -12,5 +12,5 @@
 \contentsline {subsection}{\numberline {2.3.1}Motivation for Outlier Detection}{23}
 \contentsline {subsection}{\numberline {2.3.2}Outlier Identification}{25}
 \contentsline {subsection}{\numberline {2.3.3}Outlier Removal}{27}
-\contentsline {chapter}{\numberline {A}Tables}{29}
-\contentsline {chapter}{\numberline {B}Figures}{31}
+\contentsline {chapter}{\numberline {A}Tables}{31}
+\contentsline {chapter}{\numberline {B}Figures}{33}
