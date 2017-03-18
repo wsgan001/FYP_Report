@@ -2,7 +2,8 @@
 \begin{defn}[\emph{Landmark}]\label{Def:ldmk}
 A landmark is a road segment that is frequently traversed by taxi drivers according to the taxi GPS trajectory database. \cite{TDR10}
 \end{defn}
-The concept of a landmark is proposed primarily for two reasons. First, as mentioned in the Section~\ref{Sec:limitation}, the taxi GPS trajectories do not necessarily cover every road segment in a city's road network and the low-sampling-rate problem makes determining the exact route on which a taxi traversed difficult. Therefore, it is not possible to estimate the time cost for each road segment. However, ignoring the length of a road segment and considering it as an abstract ``landmark'' make estimating the travel time between two \emph{landmarks} viable. 
+
+The concept of a landmark is proposed primarily for two reasons. First, as mentioned in Section~\ref{Sec:limitation}, the taxi GPS trajectories do not necessarily cover every road segment in a city's road network and the low-sampling-rate problem makes determining the exact route on which a taxi traversed difficult. Therefore, it is not possible to estimate the time cost for each road segment. However, ignoring the length of a road segment and considering it as an abstract ``landmark'' make estimating the travel time between two \emph{landmarks} viable. 
 
 Moreover, the notion of landmarks closely follows the way how drivers remember the driving routes in daily life\cite{TDR10}. For instance, a driving route could be described as ``go straight on the 4th Avenue, turn right at the 7th Street and exit at the Smith Road''. Drivers tend to use familiar road segments as landmarks to guide their directions.
 
@@ -51,14 +52,15 @@ for recd in records:
 
 It is noteworthy that although the middle five records with OCCUPIED = 1 come chronologically after the first three records, they are nevertheless assigned a smaller TRIP\_ID. This is due to an adjustment made to the actual implementation of the algorithm. The \emph{actual} algorithm operates in two stages. It first identifies trips for all records with OCCUPIED = 1; only in the second stage does it identify trips for records with OCCUPIED = 0. The rationale for this arrangement is to give priority to the records with passengers aboard, because \textbf{these records are guaranteed to belong to one trip}. In fact, the second condition for identifying trips in Definition~\ref{Def:trip} is more of a heuristic rather than a theorem. It is meant to provide sufficient data for subsequent machine learning tasks with reasonable accuracy.
 
-\section{Landmark Counting}
-Definition~\ref{Def:trip} states that whether recognising a particular road segment as a landmark or not is based on some notions of frequency. Only if a road segment is visited by drivers frequently enough is it recognised as a landmark. In this project, the notion of frequency is given by Definition~\ref{Def:frequency}.
+\section{Landmark Frequency}
+Definition~\ref{Def:trip} states that whether recognising a particular road segment as a landmark or not is based on some notion of frequency. Only if a road segment is visited by drivers frequently enough is it recognised as a landmark. In this project, the notion of frequency is given by Definition~\ref{Def:frequency}.
 
 \begin{defn}[\emph{Frequency of a Road Segment}]\label{Def:frequency}
 The frequency of a road segment is the sum of \emph{unique} occurrences of that road segment in each trip. 
 \end{defn}
 
-Table~\ref{Ta:frequency_count} illustrates how the frequency of a road segment is calculated. In Trip 4552265, Street A occurs twice but \textbf{its frequency increases only by one}. Similarly, Street C occur three times and Street A occur twice in Trip 1, but \textbf{their occurrences only add one to their frequencies}. Therefore, even though Street B \emph{appears} less times than Street A or Street C, \textbf{all streets have the same frequency of 2}, based on this set of records.  
+
+
 \begin{table}[h]
 \centering
 \resizebox{\columnwidth}{!}{
@@ -70,48 +72,22 @@ Table~\ref{Ta:frequency_count} illustrates how the frequency of a road segment i
 \caption{An illustration of frequency counting}\label{Ta:frequency_count}
 \end{table}
 
-Currently, a number of online mapping platforms provide reverse geocoding services as part of their developer APIs. Amongst others, Google Maps and Baidu Maps offer relatively stable and fast reverse geocoding services. However, due to the ``China GPS shift problem''\cite{GSHF17} where coordinates encoded in WGS-84 format are required by regulations to be shifted by a large and variable amount when displayed on a street map, Google Maps is not able to display a GPS data point correctly because it only supports WGS-84 formats. Figure~\ref{Fig:gps_shift} illustrates the effect of such shift, with the correct location displayed on the right. 
+Table~\ref{Ta:frequency_count} illustrates how the frequency of a road segment is calculated. In Trip 4552265, Street A occurs twice but \textbf{its frequency increases only by one}. Similarly, Street C occur three times and Street A occur twice in Trip 1, but \textbf{their occurrences only add one to their frequencies}. Therefore, even though Street B \emph{appears} less times than Street A or Street C, \textbf{all streets have the same frequency of 2}, based on this set of records.  
 
-\begin{figure}[h]
-\includegraphics{gps_shift}
-\centering
-\caption{China GPS shift problem}\label{Fig:gps_shift}
-\end{figure}
+The algorithm for counting frequency of a road segment is rather straightforward as in Listing~\ref{List:code_frequency}.
 
-Baidu Maps, on the other hand, has been using their own coordinate system, BD-09, which is an improved version of the Chinese official coordinate system, GCJ-02. Baidu provides a set of APIs to convert WGS-84 coordinates into BD-09 ones. Therefore, to reverse-geocode the data points, the coordinates must be converted to BD-09 format. To store the converted coordinates as well as the street names obtained from reverse geocoding, four new fields were added to the original data set as shown in Table~\ref{Ta:addtional_field}.
+\begin{lstlisting}[language = Python, caption = {Pseudocode for counting road frequency}, label = {List:code_frequency} ,frame=single, numbers=left,stepnumber=1]
+frequencies = dict{}
+for trip in trips:
+	streets = unique(trip.streets) // get unique streets
+	for street in streets:
+		if street in frequencies:
+			++frequencies[street]
+		else:
+			frequencies[street] = 1
+\end{lstlisting}
 
-\begin{table}
-\centering
-\begin{tabular}{ | l | l | l | }
-\hline
-\textbf{Field} & \textbf{Explanation} \\ \hline
-DataUnitID & Nominal primary key for each record \\ \hline
-BD09\_LONG & Longitude encoded in BD-09 format\\ \hline
-BD09\_LAT & Latitude encoded in BD-09 format\\ \hline
-STREET & Street name\\ \hline
-\end{tabular}
-\caption{Additional fields added to data set}\label{Ta:addtional_field}
-\end{table}
-
-In order to use Baidu APIs for coordinate conversion, the following system architecture was set up as shown in Figure~\ref{Fig:basic_architecture}. The Apache HTTP server hides the MySQL database and sends HTTP POST request to Baidu Maps Web API to get converted coordinates. Then it updates the database through PHP \emph{mysqli} utilitity. 
-
-\begin{figure}[h]
-\includegraphics{basic_architecture}
-\centering
-\caption{Basic system architecture}\label{Fig:basic_architecture}
-\end{figure}
-
-After the coordinates were converted from WGS-84 format to BD-09 format, Baidu Maps Web API was used to reverse geocode all GPS data points. However, the system architecture was slightly changed, to accommodate the change in technology used. For reverse geocoding, AJAX\footnote{Asynchronous JavaScript and XML} was used to communicate with the Baidu Maps Web API for speed and unlimited number of requests per day. Therefore, one additional layer was added to the existing system architecture as shown in Figure~\ref{Fig:ajax_architecture}. 
-
-\begin{figure}[h]
-\includegraphics{ajax_architecture}
-\centering
-\caption{Augmented system architecture}\label{Fig:ajax_architecture}
-\end{figure}
-
-Executed in a web browser environment, AJAX sent HTTP POST requests to the Apache HTTP server to fetch the converted coordinates in BD-09 format which were subsequently sent to the Baidu Maps Web API server \emph{asynchronously} via HTTP GET requests. Once the server responded with the name of the road segment, AJAX updated the database by sending another HTTP POST request to the Apache HTTP server. The asynchronous nature of this architecture, however, caused a few problems which are addressed in Section~\ref{outlier_detecting}. 
-
-\section{Outlier Detection}\label{outlier_detecting}
+\section{Landmark Graph}\label{outlier_detecting}
 \subsection{Motivation for Outlier Detection}
 The Baidu Maps Web API for reverse geocoding is stable and fast, but does not produce no errors. Sometimes, a GPS data point may be mapped to a main road but actually it is on the side road, which is one of the limitations mentioned in Section~\ref{Sec:limitation} or it is actually mapped to a street that Baidu Maps does not recognise. In neither case will Baidu Maps produce a correct reverse geocoding. Moreover, the reverse geocoding process is asynchronous, which means that it is being performed in the background in parallel with the main application thread. Therefore, it is inevitable that some street names may get lost when the records are being updated or a record is updated with a wrong street name. Figure~\ref{Fig:exmp_outlier} shows a drastic example.
 

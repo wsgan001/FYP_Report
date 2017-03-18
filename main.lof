@@ -1,18 +1,17 @@
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1-1}{\ignorespaces Example of low sampling rate problem}}{16}
+\contentsline {figure}{\numberline {1-1}{\ignorespaces Example of low sampling rate problem}}{16}{figure.1.1}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2-1}{\ignorespaces China GPS shift problem}}{21}
-\contentsline {figure}{\numberline {2-2}{\ignorespaces Basic system architecture}}{22}
-\contentsline {figure}{\numberline {2-3}{\ignorespaces Augmented system architecture}}{23}
-\contentsline {figure}{\numberline {2-4}{\ignorespaces Example of outliers}}{24}
-\contentsline {figure}{\numberline {2-5}{\ignorespaces An example of SOFM}}{26}
-\contentsline {figure}{\numberline {2-6}{\ignorespaces Neuron positions after training}}{27}
-\contentsline {figure}{\numberline {2-7}{\ignorespaces Plot of data points after outlier removal}}{29}
+\contentsline {figure}{\numberline {2-1}{\ignorespaces China GPS shift problem}}{21}{figure.2.1}
+\contentsline {figure}{\numberline {2-2}{\ignorespaces Basic system architecture}}{22}{figure.2.2}
+\contentsline {figure}{\numberline {2-3}{\ignorespaces Augmented system architecture}}{23}{figure.2.3}
+\contentsline {figure}{\numberline {2-4}{\ignorespaces Example of outliers}}{24}{figure.2.4}
+\contentsline {figure}{\numberline {2-5}{\ignorespaces An example of SOFM}}{26}{figure.2.5}
+\contentsline {figure}{\numberline {2-6}{\ignorespaces Neuron positions after training}}{27}{figure.2.6}
+\contentsline {figure}{\numberline {2-7}{\ignorespaces Plot of data points after outlier removal}}{29}{figure.2.7}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3-1}{\ignorespaces China GPS shift problem}}{36}
-\contentsline {figure}{\numberline {3-2}{\ignorespaces Basic system architecture}}{37}
-\contentsline {figure}{\numberline {3-3}{\ignorespaces Augmented system architecture}}{37}
-\contentsline {figure}{\numberline {3-4}{\ignorespaces Example of outliers}}{38}
-\contentsline {figure}{\numberline {3-5}{\ignorespaces An example of SOFM}}{40}
-\contentsline {figure}{\numberline {3-6}{\ignorespaces Neuron positions after training}}{41}
-\contentsline {figure}{\numberline {3-7}{\ignorespaces Plot of data points after outlier removal}}{44}
+\contentsline {figure}{\numberline {3-1}{\ignorespaces Basic system architecture}}{36}{figure.3.1}
+\contentsline {figure}{\numberline {3-2}{\ignorespaces Augmented system architecture}}{37}{figure.3.2}
+\contentsline {figure}{\numberline {3-3}{\ignorespaces Example of outliers}}{38}{figure.3.3}
+\contentsline {figure}{\numberline {3-4}{\ignorespaces An example of SOFM}}{40}{figure.3.4}
+\contentsline {figure}{\numberline {3-5}{\ignorespaces Neuron positions after training}}{41}{figure.3.5}
+\contentsline {figure}{\numberline {3-6}{\ignorespaces Plot of data points after outlier removal}}{44}{figure.3.6}
