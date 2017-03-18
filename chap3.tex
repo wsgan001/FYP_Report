@@ -1,54 +1,74 @@
 \chapter{Landmark Graph Construction}
 \begin{defn}[\emph{Landmark}]\label{Def:ldmk}
-A landmark is a road segment that is frequently traversed by taxi drivers based on the taxi GPS trajectory database. \cite{TDR10}
+A landmark is a road segment that is frequently traversed by taxi drivers according to the taxi GPS trajectory database. \cite{TDR10}
 \end{defn}
-The concept of a landmark is proposed primarily for two reasons. First, as mentioned in the Section~\ref{Sec:limitation}, the taxi GPS trajectories do not necessarily cover every road segment in a city's road network and the low-sampling-rate problem makes determining the exact route that a taxi has traversed difficult. Therefore, it is not possible to estimate the time cost for each road segment. However, ignoring the length of a road segment and considering it as an abstract ``landmark'' make estimating the travel time between two \emph{landmarks} easy. 
+The concept of a landmark is proposed primarily for two reasons. First, as mentioned in the Section~\ref{Sec:limitation}, the taxi GPS trajectories do not necessarily cover every road segment in a city's road network and the low-sampling-rate problem makes determining the exact route on which a taxi traversed difficult. Therefore, it is not possible to estimate the time cost for each road segment. However, ignoring the length of a road segment and considering it as an abstract ``landmark'' make estimating the travel time between two \emph{landmarks} viable. 
 
-Moreover, the notion of a landmark closely follows the way how drivers remember the driving routes in daily life\cite{TDR10}. For instance, a driving route could be described as ``go straight on the 4th Avenue, turn right at the 7th Street and exit at the Smith Road''. Drivers tend to use familiar road segments as landmarks to guide their directions.
+Moreover, the notion of landmarks closely follows the way how drivers remember the driving routes in daily life\cite{TDR10}. For instance, a driving route could be described as ``go straight on the 4th Avenue, turn right at the 7th Street and exit at the Smith Road''. Drivers tend to use familiar road segments as landmarks to guide their directions.
 
-This chapter describes the procedures for constructing a landmark graph in order to estimate the time cost between two landmarks. But before that, the taxi GPS trajectories must be separated into a set of \emph{trip}s.
+This chapter describes the procedures for constructing a landmark graph in order to estimate the time cost between two landmarks. But before that, the taxi GPS trajectories must be separated into a set of \emph{trips}.
 
 \section{Trip Identification}
 \begin{defn}[\emph{Trip}]\label{Def:trip}
 A trip is a set of chronologically ordered GPS records belonging to one taxi that satisfies either condition:
 \begin{enumerate}
-\item A passenger is on the taxi, namely, the OCCUPIED field has a value of 1 for all the GPS records or, 
-\item No passenger is on the taxi, but the time difference between \emph{any} two consecutive GPS records is less than 3 minutes.
+\item A passenger is on the taxi, namely, all records in the set have an OCCUPIED field of value 1 or, 
+\item No passenger is on the taxi, but the time difference between \emph{any} two consecutive records is no larger than 3 minutes.
 \end{enumerate}
 \end{defn}
 
-\begin{table}
+Table~\ref{Ta:trip_identification} gives a tiny example of trip identification.
+
+\begin{table}[h]
 \centering
-\begin{tabular}{ | l | l | l | }
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{ | l | l | l | l | l | l | l | l | l | l | l | l | l | }
 \hline
-\textbf{Field} & \textbf{Explanation} \\ \hline
-DataUnitID & Nominal primary key for each record \\ \hline
-BD09\_LONG & Longitude encoded in BD-09 format\\ \hline
-BD09\_LAT & Latitude encoded in BD-09 format\\ \hline
-STREET & Street name\\ \hline
-\end{tabular}
-\caption{Additional fields added to data set}\label{Ta:addtional_field}
+\textbf{CUID} & \textbf{UTC} & \textbf{GPS\_LONG} & \textbf{GPS\_LAT} & \textbf{OCCUPIED} & \textbf{TRIP\_ID} \\\hline
+1	&	1/5/2009 0:02:00	&	116.39616	&	39.81294	&	0	&	4552265\\ \hline1	&	1/5/2009 0:04:00	&	116.39575	&	39.82296	&	0	&	4552265\\ \hline1	&	1/5/2009 0:07:00	&	116.39567	&	39.82774	&	0	&	4552265\\ \hline1	&	1/5/2009 17:08:00	&	116.30142	&	39.98105	&	1	&	1\\ \hline1	&	1/5/2009 17:10:00	&	116.29514	&	39.98419	&	1	&	1\\ \hline1	&	1/5/2009 17:11:00	&	116.28959	&	39.98289	&	1	&	1\\ \hline1	&	1/5/2009 17:12:00	&	116.28087	&	39.97552	&	1	&	1\\ \hline1	&	1/5/2009 17:16:00	&	116.26813	&	39.93537	&	1	&	1\\ \hline1	&	1/5/2009 18:11:00	&	116.36537	&	39.95019	&	0	&	4552271\\ \hline1	&	1/5/2009 18:12:00	&	116.36546	&	39.94886	&	0	&	4552271\\ \hline1	&	1/5/2009 18:13:00	&	116.35927	&	39.94528	&	0	&	4552271\\ \hline
+\end{tabular}}
+\caption{An example of trip identification}\label{Ta:trip_identification}
 \end{table}
 
-%\csvreader
-%[tabular= | l | l | l | l | l | l | l | l | l | l | l | l | l |
-%    table head=\hline & DataUnitID & CUID & UTC & UnixEpoch & GPS_LONG & GPS_LAT & BD09_LONG & BD09_LAT & Street & Head & Speed & Occupied & TripID\\\hline,
-%    late after line=\\\hline]%
-%{tripsample.csv}{DataUnitID=\DataUnitID, CUID & UTC & UnixEpoch & GPS_LONG & GPS_LAT & BD09_LONG & BD09_LAT & Street & Head & Speed & Occupied & TripID}%
-%{\thecsvrow & \surname~\name & \age}%
+Clearly, all records in Table~\ref{Ta:trip_identification} belong to one taxi (taxi with CUID = 1) and are sorted chronologically. The first three records, although no passengers are aboard, are considered to be in the same \emph{trip} because the time difference between any two consecutive records is no larger than 3 minute. The next five records constitute another trip, even though the last two records have a time difference of 4 minutes, since a passenger is on the taxi (OCCIPIED = 1). Following the same reasoning as the first three's, the last three records are treated as one trip. Listing~\ref{List:code_trip} gives the pseudocode for trip identification.
 
-%\csvreader[tabular=| l | l | l |,
-%    table head=\hline & Name & Age\\\hline,
-%    late after line=\\\hline]%
-%{scientists.csv}{name=\name,surname=\surname,age=\age}%
-%{\thecsvrow & \surname~\name & \age}%
+\begin{lstlisting}[language = Python, caption = {Pseudocode for trip identification}, label = {List:code_trip} ,frame=single, numbers=left,stepnumber=1]
+curr_tripid = 1
+last_occup = curr_occup = records[0].OCCUPIED
+last_unixepoch = curr_unixepoch = records[0].UNIX_EPOCH
+for recd in records:
+	curr_occup = recd.OCCUPIED
+	curr_unixepoch = recd.UNIX_EPOCH
+	if curr_occup != last_occup:
+		++curr_tripid
+	elif (curr_occup == 0) && \
+		(curr_unixepoch - last_unixepoch > threshold):
+			++curr_tripid
+	recd.TRIP_ID = curr_tripid
+	last_occup = curr_occup
+	last_unixepoch = curr_unixepoch
+\end{lstlisting}
 
-The original data set came in a binary file format. After the data set was decoded and imported into a MySQL database, the first step in data cleaning was \textbf{to delete all records with zero value in the SPEED field}, since when a taxi is stationary it yields no valuable information about the \emph{trajectory} it is moving along. While being stationary could be due to a traffic jam, this kind of information is well captured by the time difference between the last \emph{non-stationary} data point and the next \emph{non-stationary} data point. 
+It is noteworthy that although the middle five records with OCCUPIED = 1 come chronologically after the first three records, they are nevertheless assigned a smaller TRIP\_ID. This is due to an adjustment made to the actual implementation of the algorithm. The \emph{actual} algorithm operates in two stages. It first identifies trips for all records with OCCUPIED = 1; only in the second stage does it identify trips for records with OCCUPIED = 0. The rationale for this arrangement is to give priority to the records with passengers aboard, because \textbf{these records are guaranteed to belong to one trip}. In fact, the second condition for identifying trips in Definition~\ref{Def:trip} is more of a heuristic rather than a theorem. It is meant to provide sufficient data for subsequent machine learning tasks with reasonable accuracy.
 
-In addition, all records must have a \emph{unique} pair of CUID and UNIX\_EPOCH fields, since it is not possible for a taxi to appear in two different locations at the same moment in time. This kind of error is likely due to some errors in aggregating the original data set.
+\section{Landmark Counting}
+Definition~\ref{Def:trip} states that whether recognising a particular road segment as a landmark or not is based on some notions of frequency. Only if a road segment is visited by drivers frequently enough is it recognised as a landmark. In this project, the notion of frequency is given by Definition~\ref{Def:frequency}.
 
-\section{Reverse Geocoding}
-After the data set was cleaned, the next step was to map each GPS data point to a road segment, which is also known as \emph{reverse geocoding}. A number of algorithms\cite{MAP09} have been proposed for this purpose, but most of them require an additional GIS\footnote{Geographic Information System} database of the road network in Beijing. This project adopted an alternative strategy which leveraged on the existing public APIs\footnote{Application Programming Interface} for reverse geocoding. 
+\begin{defn}[\emph{Frequency of a Road Segment}]\label{Def:frequency}
+The frequency of a road segment is the sum of \emph{unique} occurrences of that road segment in each trip. 
+\end{defn}
+
+Table~\ref{Ta:frequency_count} illustrates how the frequency of a road segment is calculated. In Trip 4552265, Street A occurs twice but \textbf{its frequency increases only by one}. Similarly, Street C occur three times and Street A occur twice in Trip 1, but \textbf{their occurrences only add one to their frequencies}. Therefore, even though Street B \emph{appears} less times than Street A or Street C, \textbf{all streets have the same frequency of 2}, based on this set of records.  
+\begin{table}[h]
+\centering
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{ | l | l | l | l | l | l | l | l | l | l | l | l | l | }
+\hline
+\textbf{CUID} & \textbf{UTC} & \textbf{GPS\_LONG} & \textbf{GPS\_LAT} & \textbf{Street} & \textbf{TRIP\_ID} \\\hline
+1	&	1/5/2009 0:02:00	&	116.39616	&	39.81294	&	A	&	4552265\\ \hline1	&	1/5/2009 0:04:00	&	116.39575	&	39.82296	&	A	&	4552265\\ \hline1	&	1/5/2009 0:07:00	&	116.39567	&	39.82774	&	B	&	4552265\\ \hline1	&	1/5/2009 17:08:00	&	116.30142	&	39.98105	&	C	&	1\\ \hline1	&	1/5/2009 17:10:00	&	116.29514	&	39.98419	&	C	&	1\\ \hline1	&	1/5/2009 17:11:00	&	116.28959	&	39.98289	&	C	&	1\\ \hline1	&	1/5/2009 17:12:00	&	116.28087	&	39.97552	&	A	&	1\\ \hline1	&	1/5/2009 17:16:00	&	116.26813	&	39.93537	&	A	&	1\\ \hline1	&	1/5/2009 18:11:00	&	116.36537	&	39.95019	&	B	&	4552271\\ \hline1	&	1/5/2009 18:12:00	&	116.36546	&	39.94886	&	C	&	4552271\\ \hline1	&	1/5/2009 18:13:00	&	116.35927	&	39.94528	&	C	&	4552271\\ \hline
+\end{tabular}}
+\caption{An illustration of frequency counting}\label{Ta:frequency_count}
+\end{table}
 
 Currently, a number of online mapping platforms provide reverse geocoding services as part of their developer APIs. Amongst others, Google Maps and Baidu Maps offer relatively stable and fast reverse geocoding services. However, due to the ``China GPS shift problem''\cite{GSHF17} where coordinates encoded in WGS-84 format are required by regulations to be shifted by a large and variable amount when displayed on a street map, Google Maps is not able to display a GPS data point correctly because it only supports WGS-84 formats. Figure~\ref{Fig:gps_shift} illustrates the effect of such shift, with the correct location displayed on the right. 
 
