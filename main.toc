@@ -12,5 +12,10 @@
 \contentsline {subsection}{\numberline {2.3.1}Motivation for Outlier Detection}{23}
 \contentsline {subsection}{\numberline {2.3.2}Outlier Identification}{25}
 \contentsline {subsection}{\numberline {2.3.3}Outlier Removal}{27}
-\contentsline {chapter}{\numberline {A}Tables}{31}
-\contentsline {chapter}{\numberline {B}Figures}{33}
+\contentsline {chapter}{\numberline {3}Landmark Graph Construction}{31}
+\contentsline {section}{\numberline {3.1}Trip Identification}{32}
+\contentsline {section}{\numberline {3.2}Reverse Geocoding}{32}
+\contentsline {section}{\numberline {3.3}Outlier Detection}{35}
+\contentsline {subsection}{\numberline {3.3.1}Motivation for Outlier Detection}{35}
+\contentsline {subsection}{\numberline {3.3.2}Outlier Identification}{37}
+\contentsline {subsection}{\numberline {3.3.3}Outlier Removal}{40}

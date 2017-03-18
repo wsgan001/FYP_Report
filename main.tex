@@ -39,6 +39,7 @@
 \usepackage{ftnxtra}
 \usepackage{listings}
 \usepackage{mathcomp}
+\usepackage{csvsimple}
 \graphicspath{ {image/} }
 \pagestyle{headings}
 
@@ -51,7 +52,9 @@ process all files:}
 \def\all{all}
 \ifx\files\all \typeout{Including all files.} \else \typeout{Including only \files.} \includeonly{\files} \fi
 
-
+\makeatletter
+\renewcommand{\@biblabel}[1]{[#1]\hfill}
+\makeatother
 \theoremstyle{definition}
 \newtheorem{defn}{Definition}
 \newtheorem{theorem}{Theorem}
@@ -67,9 +70,10 @@ process all files:}
 \include{contents}
 \include{chap1}
 \include{chap2}
-\appendix
-\include{appa}
-\include{appb}
+\include{chap3}
+%\appendix
+%\include{appa}
+%\include{appb}
 %\bibliography{main}
 %\bibliographystyle{alpha}
 \include{biblio}

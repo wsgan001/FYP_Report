@@ -1,22 +1,47 @@
-\chapter{Preliminary Data Processing}
-\section{Data Collection and Cleaning}
-The taxi GPS data used in this project is collected from the Computational Sensing Lab\cite{BPLL13} at Tsinghua University, Beijing, China. The data set contains approximately 83 million time-stamped taxi GPS records collected from 8,602 taxis in Beijing, from 1 May 2009 to 30 May 2009. The original data set consists of seven fields as shown in Table~\ref{Ta:orig_field}. Longitude and latitude in the data set are defined in the WGS-84\footnote{World Geodetic System} standard coordinate system, which is the reference coordinate system used by the GPS.
+\chapter{Landmark Graph Construction}
+\begin{defn}[\emph{Landmark}]\label{Def:ldmk}
+A landmark is a road segment that is frequently traversed by taxi drivers based on the taxi GPS trajectory database. \cite{TDR10}
+\end{defn}
+The concept of a landmark is proposed primarily for two reasons. First, as mentioned in the Section~\ref{Sec:limitation}, the taxi GPS trajectories do not necessarily cover every road segment in a city's road network and the low-sampling-rate problem makes determining the exact route that a taxi has traversed difficult. Therefore, it is not possible to estimate the time cost for each road segment. However, ignoring the length of a road segment and considering it as an abstract ``landmark'' make estimating the travel time between two \emph{landmarks} easy. 
+
+Moreover, the notion of a landmark closely follows the way how drivers remember the driving routes in daily life\cite{TDR10}. For instance, a driving route could be described as ``go straight on the 4th Avenue, turn right at the 7th Street and exit at the Smith Road''. Drivers tend to use familiar road segments as landmarks to guide their directions.
+
+This chapter describes the procedures for constructing a landmark graph in order to estimate the time cost between two landmarks. But before that, the taxi GPS trajectories must be separated into a set of \emph{trip}s.
+
+\section{Trip Identification}
+\begin{defn}[\emph{Trip}]\label{Def:trip}
+A trip is a set of chronologically ordered GPS records belonging to one taxi that satisfies either condition:
+\begin{enumerate}
+\item A passenger is on the taxi, namely, the OCCUPIED field has a value of 1 for all the GPS records or, 
+\item No passenger is on the taxi, but the time difference between \emph{any} two consecutive GPS records is less than 3 minutes.
+\end{enumerate}
+\end{defn}
 
 \begin{table}
 \centering
 \begin{tabular}{ | l | l | l | }
 \hline
 \textbf{Field} & \textbf{Explanation} \\ \hline
-CUID & ID for each taxi \\ \hline
-UNIX\_EPOCH & Unix timestamp in milliseconds since 1 January 1970\\ \hline
-GPS\_LONG & Longitude encoded in WGS-84 multiplied by $10^{5}$\\ \hline
-GPS\_LAT & Latitude encoded in WGS-84 multiplied by $10^{5}$ \\ \hline
-HEAD & Heading direction in degrees with 0 denoting North\\ \hline
-SPEED & Instantaneous speed in metres/second (m/s)\\ \hline
-OCCUPIED & Binary indicator of whether the taxi is hired (1) or not (0)\\ \hline
+DataUnitID & Nominal primary key for each record \\ \hline
+BD09\_LONG & Longitude encoded in BD-09 format\\ \hline
+BD09\_LAT & Latitude encoded in BD-09 format\\ \hline
+STREET & Street name\\ \hline
 \end{tabular}
-\caption{Fields in the original data set}\label{Ta:orig_field}
+\caption{Additional fields added to data set}\label{Ta:addtional_field}
 \end{table}
+
+%\csvreader
+%[tabular= | l | l | l | l | l | l | l | l | l | l | l | l | l |
+%    table head=\hline & DataUnitID & CUID & UTC & UnixEpoch & GPS_LONG & GPS_LAT & BD09_LONG & BD09_LAT & Street & Head & Speed & Occupied & TripID\\\hline,
+%    late after line=\\\hline]%
+%{tripsample.csv}{DataUnitID=\DataUnitID, CUID & UTC & UnixEpoch & GPS_LONG & GPS_LAT & BD09_LONG & BD09_LAT & Street & Head & Speed & Occupied & TripID}%
+%{\thecsvrow & \surname~\name & \age}%
+
+%\csvreader[tabular=| l | l | l |,
+%    table head=\hline & Name & Age\\\hline,
+%    late after line=\\\hline]%
+%{scientists.csv}{name=\name,surname=\surname,age=\age}%
+%{\thecsvrow & \surname~\name & \age}%
 
 The original data set came in a binary file format. After the data set was decoded and imported into a MySQL database, the first step in data cleaning was \textbf{to delete all records with zero value in the SPEED field}, since when a taxi is stationary it yields no valuable information about the \emph{trajectory} it is moving along. While being stationary could be due to a traffic jam, this kind of information is well captured by the time difference between the last \emph{non-stationary} data point and the next \emph{non-stationary} data point. 
 
@@ -41,7 +66,6 @@ Baidu Maps, on the other hand, has been using their own coordinate system, BD-09
 \hline
 \textbf{Field} & \textbf{Explanation} \\ \hline
 DataUnitID & Nominal primary key for each record \\ \hline
-UTC & UNIX\_EPOCH in human readable format \\ \hline
 BD09\_LONG & Longitude encoded in BD-09 format\\ \hline
 BD09\_LAT & Latitude encoded in BD-09 format\\ \hline
 STREET & Street name\\ \hline

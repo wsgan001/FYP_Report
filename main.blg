@@ -8,52 +8,55 @@ A level-1 auxiliary file: chap2.aux
 A level-1 auxiliary file: appa.aux
 A level-1 auxiliary file: appb.aux
 A level-1 auxiliary file: biblio.aux
-The style file: plain.bst
+The style file: amsplain.bst
 Database file #1: main.bib
-Warning--entry type for "NASA16" isn't style-file defined
+Warning--entry type for "EAR17" isn't style-file defined
 --line 17 of file main.bib
+Warning--entry type for "NASA16" isn't style-file defined
+--line 26 of file main.bib
 Warning--entry type for "GSHF17" isn't style-file defined
---line 53 of file main.bib
-Warning--empty booktitle in TDR10
-You've used 11 entries,
-            2118 wiz_defined-function locations,
-            576 strings with 5686 characters,
-and the built_in function-call counts, 3641 in all, are:
-= -- 337
-> -- 173
-< -- 4
-+ -- 71
-- -- 58
-* -- 234
-:= -- 587
-add.period$ -- 31
-call.type$ -- 11
-change.case$ -- 61
+--line 64 of file main.bib
+Warning--can't use both author and editor fields in LO05
+Warning--missing booktitle in TDR10
+You've used 12 entries,
+            2213 wiz_defined-function locations,
+            581 strings with 5626 characters,
+and the built_in function-call counts, 3697 in all, are:
+= -- 302
+> -- 176
+< -- 0
++ -- 73
+- -- 59
+* -- 283
+:= -- 579
+add.period$ -- 12
+call.type$ -- 12
+change.case$ -- 68
 chr.to.int$ -- 0
-cite$ -- 12
-duplicate$ -- 154
-empty$ -- 308
-format.name$ -- 58
-if$ -- 790
+cite$ -- 14
+duplicate$ -- 165
+empty$ -- 338
+format.name$ -- 59
+if$ -- 787
 int.to.chr$ -- 0
-int.to.str$ -- 11
-missing$ -- 9
-newline$ -- 56
+int.to.str$ -- 12
+missing$ -- 22
+newline$ -- 47
 num.names$ -- 21
-pop$ -- 93
+pop$ -- 111
 preamble$ -- 2
-purify$ -- 52
+purify$ -- 55
 quote$ -- 0
-skip$ -- 103
+skip$ -- 110
 stack$ -- 0
 substring$ -- 167
-swap$ -- 38
-text.length$ -- 4
+swap$ -- 30
+text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 39
-warning$ -- 1
+type$ -- 43
+warning$ -- 2
 while$ -- 27
-width$ -- 13
-write$ -- 116
-(There were 3 warnings)
+width$ -- 14
+write$ -- 107
+(There were 5 warnings)
