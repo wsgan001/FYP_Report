@@ -39,6 +39,7 @@
 \usepackage{ftnxtra}
 \usepackage{listings}
 \usepackage{mathcomp}
+%\usepackage{float}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
@@ -48,7 +49,6 @@
 \urlstyle{same}
 \graphicspath{ {image/} }
 \pagestyle{headings}
-
 %% This bit allows you to either specify only the files which you wish to
 %% process, or `all' to process all files which you \include.
 %% Krishna Sethuraman (1990).
@@ -58,9 +58,9 @@ process all files:}
 \def\all{all}
 \ifx\files\all \typeout{Including all files.} \else \typeout{Including only \files.} \includeonly{\files} \fi
 
-\makeatletter
-\renewcommand{\@biblabel}[1]{[#1]\hfill}
-\makeatother
+%\makeatletter
+%\renewcommand{\@biblabel}[1]{[#1]\hfill}
+%\makeatother
 \theoremstyle{definition}
 \newtheorem{defn}{Definition}
 \newtheorem{theorem}{Theorem}
@@ -77,8 +77,9 @@ process all files:}
 \include{chap1}
 \include{chap2}
 \include{chap3}
-%\appendix
-%\include{appa}
+\include{chap4}
+\appendix
+\include{appa}
 %\include{appb}
 %\bibliography{main}
 %\bibliographystyle{alpha}

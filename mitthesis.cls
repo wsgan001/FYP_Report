@@ -220,9 +220,12 @@
 %	into 1in margin.
 %  Draft mode brings the header back down.
 
-\setlength{\oddsidemargin}{0.25in}	% 1.25in left margin 
-\setlength{\evensidemargin}{0.25in}	% 1.25in left margin (even pages)
+%\setlength{\oddsidemargin}{0.25in}	% 1.25in left margin 
+%\setlength{\evensidemargin}{0.25in}	% 1.25in left margin (even pages)
+\setlength{\oddsidemargin}{0.38in}	% 1.25in left margin 
+\setlength{\evensidemargin}{0.38in}	% 1.25in left margin (even pages)
 \setlength{\topmargin}{0.0in}		% 1in top margin
+%\setlength{\topmargin}{0.18in}		% 1in top margin
 \setlength{\textwidth}{6.0in}		% 6.0in text - 1.25in rt margin
 \setlength{\textheight}{9in}		% Body ht for 1in margins
 \addtolength{\topmargin}{-\headheight}	% No header, so compensate
@@ -458,7 +461,8 @@ reserved.\par\permission}}
 %\par
 %\@prevdegrees
 %\par
-\choosecase{Submitted in Partial Fulfillment of the Requirements\\for the} 
+\choosecase{Submitted in Partial Fulfillment of the Requirements\\
+for the} 
 %\choosecase{\@department} \\
 %\choosecase{in partial fulfillment of the requirements for the Degree of}
 %\choosecase{\@degreeword} 

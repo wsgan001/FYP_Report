@@ -9,9 +9,7 @@
 \contentsline {figure}{\numberline {2-6}{\ignorespaces Neuron positions after training}}{27}{figure.2.6}
 \contentsline {figure}{\numberline {2-7}{\ignorespaces Plot of data points after outlier removal}}{29}{figure.2.7}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3-1}{\ignorespaces Basic system architecture}}{36}{figure.3.1}
-\contentsline {figure}{\numberline {3-2}{\ignorespaces Augmented system architecture}}{37}{figure.3.2}
-\contentsline {figure}{\numberline {3-3}{\ignorespaces Example of outliers}}{38}{figure.3.3}
-\contentsline {figure}{\numberline {3-4}{\ignorespaces An example of SOFM}}{40}{figure.3.4}
-\contentsline {figure}{\numberline {3-5}{\ignorespaces Neuron positions after training}}{41}{figure.3.5}
-\contentsline {figure}{\numberline {3-6}{\ignorespaces Plot of data points after outlier removal}}{44}{figure.3.6}
+\contentsline {figure}{\numberline {3-1}{\ignorespaces A plot of landmarks when $k$ = 500}}{36}{figure.3.1}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4-1}{\ignorespaces A plot of landmarks when $k$ = 500}}{45}{figure.4.1}
+\addvspace {10\p@ }

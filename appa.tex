@@ -1,15 +1,26 @@
-\chapter{Tables}
-
-\begin{table}
-\caption{Armadillos}
-\label{arm:table}
-\begin{center}
-\begin{tabular}{||l|l||}\hline
-Armadillos & are \\\hline
-our	   & friends \\\hline
-\end{tabular}
-\end{center}
-\end{table}
+\chapter{Source Code}
+\begin{lstlisting}[language = Python, caption = {Pseudocode for constructing landmark graph}, label = {List:code_ldmk_graph}, frame=single, numbers=left, stepnumber=1]
+for trip in trips:
+   //get unique, chronologically ordered streets
+   streets = unique_ordered(trip.streets)
+   while j < len(streets):
+	//loop until a landmark is found
+	while j < len(streets) && !is_landmark(streets[j]):
+		j = j + 1
+		
+	intermediaries = []
+	//find another landmark
+	k = j + 1
+	while k < len(streets) && !is_landmark(streets[k]):
+		intermediaries.append(streets[k])
+		k = k + 1
+		
+	//insert edge (streets[j], intermediaries, streets[k])
+	insert(E, streets[j], intermediaries, streets[k])
+		
+	//next search starts from the second landmark
+	j = k
+\end{lstlisting}
 
 \clearpage
 \newpage

@@ -1,4 +1,11 @@
-\chapter{Landmark Graph Construction}\label{Ch:ldmk_graph}
+\chapter{Travel Time Estimation}
+Chapter~\ref{Ch:ldmk_graph} describes the general procedures for constructing a landmark graph. This chapter deals with how to estimate the travel time of each edge of a landmark graph at a particular moment in time. 
+
+Everyday experiences show that the travel time of a particular road usually has different time-varying patterns in weekdays as compared to that in weekends or public holidays. For instance, it is likely that, on weekdays, the travel time of a road has one \emph{peak} at 8 a.m. when people go to work and the other peak at 6 p.m. when people go home after work. But when it is weekends or public holidays, the travel time of that road may have a peak at 10 a.m. when people go for weekend shopping with families and the other peak at only 8 p.m. when the whole day's celebrations are over. 
+
+Based on this observation, two separate landmark graphs were built in this project, with one for weekdays and the other for weekends or public holidays. Moreover, as mentioned in Section~\ref{Subsec:outlier_removal}, 
+two data sets, bjtaxigps\_30m and bjtaxigps\_50m, remained after outlier removal based on different thresholds set for removing outliers. Therefore, in total \emph{four} landmark graphs were built in this project and they are summarised in Table~\ref{}.
+
 \begin{defn}[\emph{Landmark}]\label{Def:ldmk}
 A landmark is a road segment that is frequently traversed by taxi drivers according to the taxi GPS trajectory database. \cite{TDR10}
 \end{defn}
