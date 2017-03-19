@@ -475,11 +475,11 @@ for the}
 by\par
 {\Large  \choosecase{\@author}}
 \par
-\begin{flushleft}
+%\begin{flushleft}
 \choosecase{\@department}
-\choosecase{\\}
-\choosecase{\@degreeyear}
-\end{flushleft}
+%\choosecase{\\}
+%\choosecase{\@degreeyear}
+%\end{flushleft}
 %\par
 %at the
 
