@@ -56,12 +56,33 @@ Therefore, it is not possible to fit the scatter points with a single-valued fun
 
 One merit of SOFM clustering is \emph{feature extraction}. In this case, after the training is completed, the SOFM has learned some features about the travel time at different time of the day and expressed its understanding by moving its neurons to the centroids of the clusters. Now, \textbf{the data points can be represented by their respective centroids}. Figure~\ref{Fig:trvltime_neurons} shows the effect of replacing each data point's value with their centroids'. The clusters are clearly shown by the horizontal lines formed by those centroids. 
 
-Now that the clusters are identified, the next step is \textbf{to estimate the distributions of clusters within a specific time interval}. This is based on the assumption that within that interval the travel time patterns do not change; therefore, a distribution of clusters can be used to describe the pattern in that interval. In this project, an interval of 30 minutes was used. Figure~\ref{Fig:clus_histo} shows an example of a distribution of clusters within 10:00~a.m. to 10:30~a.m. interval.
+Representing data points with cluster centroids or features learned provides the benefit of \emph{generalisation}. The data set used in this project, albeit large in size, is nevertheless a small \emph{sample} of the \emph{population} of taxi trajectories over time. In other words, these trajectory records are only the \emph{observed} ones but there are potentially infinite number of trajectories that cannot be all observed. The only information known about them is that \textbf{they must fit into one of the clusters} after undergoing the same procedures described in the previous chapters. The use of centroids instead of real data points also takes into consideration the unobserved trajectories and reflects the real underlying patterns. In fact, generalisation is an advantage that all neural network-based methods share. 
 
 \begin{figure}[h!]
-\includegraphics{clus_histo}
+\includegraphics[scale=0.85]{clus_histo}
 \centering
 \caption{An example of distribution of clusters}\label{Fig:clus_histo}
 \end{figure}
 
-The distribution of clusters is then converted into a cumulative distribution
+Now that the clusters are identified, Figure~\ref{Fig:clus_histo} shows a histogram of clusters within the 10:00~a.m. to 10:30~a.m. interval. It can be observed that within a particular time interval, there are many clusters of travel time and each cluster has different sizes. To describe the travel time pattern within a particular time interval, the histogram is converted into a cumulative probability distribution of clusters which is then fitted with Weibull Distribution described in Theorem~\ref{Theorem: weibull_dist}. 
+
+\begin{theorem}[\emph{Weibull Distribution}]\label{Theorem: weibull_dist}
+A Weibull Distribution is described by two strictly positive parameters, the scale parameter $\alpha$ and the shape parameter $\beta$, and has a \textbf{probability distribution function} of \cite{WEDI}
+\begin{equation}
+f(x | \alpha, \beta) = \frac{\beta}{\alpha}\cdot(\frac{x}{\alpha})^{\beta - 1}\cdot e^{-(x / \alpha)^{\beta}}.
+\end{equation}
+Correspondingly, its \textbf{cumulative distribution function} is given by \cite{WEIB}
+\begin{equation}
+F(x | \alpha, \beta) = \int_{0}^{x} f(t | \alpha, \beta) dt = 1 - e^{-(x / \alpha)^{\beta}}.
+\end{equation}
+\end{theorem}
+
+\begin{figure}[h!]
+\includegraphics[scale=0.85]{weibull_fit}
+\centering
+\caption{Weibull Distribution Fit}\label{Fig:weibull_fit}
+\end{figure}
+
+Figure~\ref{Fig:weibull_fit} shows an example of fitting a cumulative probability distribution with Weibull Distribution. The red line represents the cumulative probability distribution and the blue line indicates the best Weibull Distribution fit estimated by maximum likelihood. 
+
+In the referencing paper \cite{TDR10}, it uses inverse Gaussian distribution to 
