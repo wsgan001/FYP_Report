@@ -1,192 +1,67 @@
-\chapter{Travel Time Estimation}
-Chapter~\ref{Ch:ldmk_graph} describes the general procedures for constructing a landmark graph. This chapter deals with how to estimate the travel time of each edge of a landmark graph at a particular moment in time. 
+\chapter{Time-dependent Edge Cost Estimation}
+Chapter~\ref{Ch:ldmk_graph} describes the general procedures for constructing a landmark graph. To find a time-dependent shortest route on a landmark graph, the time-dependent edge cost must be calculated. In this project, the time-dependent edge cost specifically refers to travel time, but in theory, it can refer to any quantity that can be described as a time-dependent edge cost function of the form $w : E,t \rightarrow \mathbb{R}$. In practice, it sometimes also refers to fuel consumptions or taxi fares. This chapter introduces a machine learning-based approach to estimate the travel time of each \emph{significant edge} in a landmark graph at a particular moment in time. 
 
-Everyday experiences show that the travel time of a particular road usually has different time-varying patterns in weekdays as compared to that in weekends or public holidays. For instance, it is likely that, on weekdays, the travel time of a road has one \emph{peak} at 8 a.m. when people go to work and the other peak at 6 p.m. when people go home after work. But when it is weekends or public holidays, the travel time of that road may have a peak at 10 a.m. when people go for weekend shopping with families and the other peak at only 8 p.m. when the whole day's celebrations are over. 
+\begin{defn}[\emph{Significant Edge}]
+A significant edge in a landmark graph $G=(V,E)$ is an edge $e \in E$ that appears at least $m$ times, where $m$ is a parameter specified in advance.
+\end{defn}
 
-Based on this observation, two separate landmark graphs were built in this project, with one for weekdays and the other for weekends or public holidays. Moreover, as mentioned in Section~\ref{Subsec:outlier_removal}, 
-two data sets, bjtaxigps\_30m and bjtaxigps\_50m, remained after outlier removal based on different thresholds set for removing outliers. Therefore, in total \emph{four} landmark graphs were built in this project and they are summarised in Table~\ref{Ta:ldmkgraphs}.
+The purpose of defining significant edges is to eliminate those edges that are seldom traversed by taxi drivers, as estimating the travel time of those edges will not be very accurate. The parameter $m$ also represents a level of \emph{confidence}\footnote{Sometimes it is also referred to as \emph{support}}, that is, to what extent it is true that this edge \emph{really} exists in the real world. 
+
+Everyday experiences show that the travel time of a particular road usually has different time-varying patterns in weekdays as compared to that in weekends or public holidays. For instance, it is likely that, on weekdays, the travel time of a particular road has one \emph{peak} at 8 a.m. when people travel to work and the other peak at 6 p.m. when people return home after work. But when it is weekends or public holidays, the travel time of that road may have a peak at 10 a.m. when people go for holiday activities with families and the other peak at only about 8 p.m. when the whole day's celebrations are over. 
+
+Based on this intuition, two separate landmark graphs were built in this project, with one for weekdays and the other for weekends or public holidays. Moreover, as mentioned in Section~\ref{Subsec:outlier_removal}, 
+two data sets, bjtaxigps\_30m and bjtaxigps\_50m, remained after outlier removal based on different thresholds set for removing outliers. Therefore, in total, \emph{four} landmark graphs were built in this project and they are summarised in Table~\ref{Ta:ldmkgraphs}, although their names are self-explanatory. 
 
 \begin{table}[h!]
 \centering
 \resizebox{\columnwidth}{!}{
-\begin{tabular}{ | c | c | c | c | }
+\begin{tabular}{ | c | c | }
 \hline
-\multicolumn{2}{| c |}{bjtaxigps\_30m} & 
-\multicolumn{2}{| c |}{bjtaxigps\_50m} \\ \hline
-wrkd\_ldmkgraph\_30m & 
-holi\_ldmkgraph\_30m &
-wrkd\_ldmkgraph\_50m & 
-holi\_ldmkgraph\_50m \\ \hline
+\textbf{Landmark Graph} & \textbf{Data Source} \\ \hline
+wrkd\_ldmkgraph\_30m & weekday trajectories in bjtaxigps\_30m\\\hline
+holi\_ldmkgraph\_30m & holiday trajectories in bjtaxigps\_30m \\\hline
+wrkd\_ldmkgraph\_50m & weekday trajectories in bjtaxigps\_50m\\\hline
+holi\_ldmkgraph\_50m  & holiday trajectories in bjtaxigps\_50m\\ \hline
 \end{tabular}}
 \caption{An summary of landmark graphs}\label{Ta:ldmkgraphs}
 \end{table}
 
-%\begin{table}[h!]
-%\centering
-%\resizebox{\columnwidth}{!}{
-%\begin{tabular}{ | l | l | l | }
-%\hline
-%\multirow{4}{*}{Data set} &
-%\multirow{2}{*}{bjtaxigps\_30m} & 
-%wrkd\_ldmkgraph\_30m \\ & & 
-%holi\_ldmkgraph\_30m \\ \hline &
-%
-%\multirow{2}{*}{bjtaxigps\_50m} &
-%wrkd\_ldmkgraph\_50m \\  & & 
-%holi\_ldmkgraph\_50m \\ \hline
-%
-%\end{tabular}}
-%\caption{An example of trip identification}\label{Ta:ldmkgraphs}
-%\end{table}
-
 \section{Travel Time Distribution}
 \begin{figure}[h!]
-\includegraphics{trvltime_scatter}
+\includegraphics[scale=0.85]{trvltime_scatter}
 \centering
 \caption{An example of travel time patterns}\label{Fig:wrkd_50m_trvltime}
 \end{figure}
 
-Figure~\ref{Fig:wrkd_50m_trvltime} illustrates a scatter plot of the travel time of a particular landmark graph edge during the course of a weekday. The travel time does not seem to be a single-valued function with respect to time of the day, as one may expect; rather, the scatter points tend to gather around some values and form some \emph{clusters}. For instance, when it is 500 minutes since midnight, namely 8:20~a.m., the travel time seems to have three main clusters which are represented by three horizontal lines formed by the scatter points. When it is 1,000 minutes since midnight, namely 4:40~p.m., there are about five such lines. This pattern is attributable to three possible reasons:
+Figure~\ref{Fig:wrkd_50m_trvltime} illustrates a scatter plot of the travel time of a particular landmark graph edge during the course of a weekday. It can be observed that the travel time does not seem to be a single-valued function with respect to time of the day, as one may expect; rather, the scatter points tend to gather around some values and form some \emph{clusters}. For instance, when it is 500 minutes since midnight, namely 8:20~a.m., the travel time seems to have three main clusters which are represented by three horizontal lines formed by the scatter points. When it is 1,000 minutes since midnight, namely 4:40~p.m., there are about five such lines. This pattern is attributable to three possible reasons:
 \begin{enumerate}
-\item Drivers may choose different routes to travel between the two landmarks. Different routes have different traffic conditions, therefore the travel time varies;
+\item Drivers may actually choose different routes to travel between the two landmarks, which cannot be captured by the landmark graph since it only knows a driver has traversed between the two landmarks but not the exact route. Different routes have different traffic conditions and speed limitations, therefore the travel time varies;
 \item Drivers have different driving skills, preferences and behaviours. Some drivers just drive faster than others, even if the road conditions are similar and;
-\item The GPS devices on taxis reported locations \emph{periodically}, therefore, durations like 60 seconds, 120 seconds and 180 seconds are very commonly seen in the landmark graphs. Even if the \emph{actual} travel time is 53 seconds, it is still recorded as 60 seconds. This corresponds to the low-sampling-rate problem mentioned in Section~\ref{Sec:limitation}. 
+\item The GPS devices on taxis reported locations \emph{periodically}, therefore, durations like 60 secondsr or120 seconds are very commonly seen in the landmark graphs. Even if the \emph{actual} travel time is 53 seconds, it is still recorded as 60 seconds. This corresponds to the low-sampling-rate problem mentioned in Section~\ref{Sec:limitation}. 
 \end{enumerate}
-
-Therefore, it is not possible to fit the scatter points with a single-valued function. Rather, the clustering technique should be used to identify travel time clusters. Like in Section~\ref{SubSec:outlier_identify}, a \textbf{self-organising feature map} is used to cluster the travel time. Figure~\ref{Fig:trvltime_clus} shows the final positions of the neurons at the end of the training.
 
 \begin{figure}[h!]
-\includegraphics{trvltime_clus}
 \centering
-\caption{An example of travel time patterns}\label{Fig:trvltime_clus}
+\includegraphics[scale=0.85]{trvltime_clus} 
+\caption{Final positions of the neurons}\label{Fig:trvltime_clus}
 \end{figure}
 
-One of the merits of clustering is \emph{dimension reduction} or \emph{feature extraction}. In this case, after the training is completed, the SOFM has learned some features about the travel time and expressed those features by moving its neurons to the centroids of the clusters. Now, \textbf{the data points can be represented by their respective centroids}, thus the dimension is reduced. Figure~\ref{Fig:trvltime_neurons} shows the effect of replacing each data point's value with their centroids'. 
+Therefore, it is not possible to fit the scatter points with a single-valued function. Rather, the clustering technique should first be employed to identify the travel time clusters. Like in Section~\ref{SubSec:outlier_identify}, a \textbf{self-organising feature map} is used to cluster the scatter points. Figure~\ref{Fig:trvltime_clus} shows the final positions of the neurons at the end of the training.
 
 \begin{figure}[h!]
-\includegraphics{trvltime_neurons}
+\includegraphics[scale=0.85]{trvltime_neurons}
 \centering
-\caption{An example of travel time patterns}\label{Fig:trvltime_neurons}
+\caption{An example of representing data points with centroids}\label{Fig:trvltime_neurons}
 \end{figure}
 
-\section{Trip Identification}
-\begin{defn}[\emph{Trip}]\label{Def:trip}
-A trip is a taxi trajectory that satisfies either condition:
-\begin{enumerate}
-\item A passenger is on the taxi, namely, all records in the set have an OCCUPIED field of value 1 or, 
-\item No passenger is on board, but the time span between \emph{any} two consecutive records is no larger than 3 minutes.
-\end{enumerate}
-\end{defn}
+One merit of SOFM clustering is \emph{feature extraction}. In this case, after the training is completed, the SOFM has learned some features about the travel time at different time of the day and expressed its understanding by moving its neurons to the centroids of the clusters. Now, \textbf{the data points can be represented by their respective centroids}. Figure~\ref{Fig:trvltime_neurons} shows the effect of replacing each data point's value with their centroids'. The clusters are clearly shown by the horizontal lines formed by those centroids. 
 
-Table~\ref{Ta:trip_identification} gives a tiny example of trip identification.
+Now that the clusters are identified, the next step is \textbf{to estimate the distributions of clusters within a specific time interval}. This is based on the assumption that within that interval the travel time patterns do not change; therefore, a distribution of clusters can be used to describe the pattern in that interval. In this project, an interval of 30 minutes was used. Figure~\ref{Fig:clus_histo} shows an example of a distribution of clusters within 10:00~a.m. to 10:30~a.m. interval.
 
-
-
-Clearly, all records in Table~\ref{Ta:trip_identification} belong to one taxi (taxi with CUID = 1) and are sorted chronologically. The first three records, although no passengers are aboard, are considered to be in the same \emph{trip} because the time span between any two consecutive records is no larger than 3 minute. The next five records constitute another trip, even though the last two records have a time difference of 4 minutes, since a passenger is on the taxi (OCCIPIED = 1). Following the same reasoning as the first three's, the last three records are treated as one trip. Listing~\ref{List:code_trip} gives the pseudocode for trip identification.
-
-\begin{lstlisting}[language = Python, caption = {Pseudocode for trip identification}, label = {List:code_trip} ,frame=single, numbers=left,stepnumber=1]
-curr_tripid = 1
-last_occup = curr_occup = records[0].OCCUPIED
-last_unixepoch = curr_unixepoch = records[0].UNIX_EPOCH
-for recd in records:
-	curr_occup = recd.OCCUPIED
-	curr_unixepoch = recd.UNIX_EPOCH
-	if curr_occup != last_occup:
-		++curr_tripid
-	elif (curr_occup == 0) && \
-	(curr_unixepoch - last_unixepoch > threshold):
-		++curr_tripid
-	recd.TRIP_ID = curr_tripid
-	last_occup = curr_occup
-	last_unixepoch = curr_unixepoch
-\end{lstlisting}
-
-It is noteworthy that although the middle five records with OCCUPIED = 1 come chronologically after the first three records, they are nevertheless assigned a smaller TRIP\_ID. This is due to an adjustment made to the actual implementation of the algorithm. The \emph{actual} algorithm operates in two stages. It first identifies trips for all records with OCCUPIED = 1; only in the second stage does it identify trips for records with OCCUPIED = 0. The rationale for this arrangement is to give priority to the records with passengers aboard, because \textbf{these records are guaranteed to belong to one trip}. In fact, the second condition for identifying trips in Definition~\ref{Def:trip} is more of a heuristic rather than a theorem. It is meant to provide sufficient data for subsequent machine learning tasks with reasonable accuracy.
-
-\section{Landmark Frequency}
-
-\begin{table}[h]
+\begin{figure}[h!]
+\includegraphics{clus_histo}
 \centering
-\resizebox{\columnwidth}{!}{
-\begin{tabular}{ | l | l | l | l | l | l | l | l | l | l | l | l | l | }
-\hline
-\textbf{CUID} & \textbf{UTC} & \textbf{GPS\_LONG} & \textbf{GPS\_LAT} & \textbf{Street} & \textbf{TRIP\_ID} \\\hline
-1	&	1/5/2009 0:02:00	&	116.39616	&	39.81294	&	A	&	4552265\\ \hline
-1	&	1/5/2009 0:04:00	&	116.39575	&	39.82296	&	A	&	4552265\\ \hline
-1	&	1/5/2009 0:07:00	&	116.39567	&	39.82774	&	B	&	4552265\\ \hline
-1	&	1/5/2009 17:08:00	&	116.30142	&	39.98105	&	C	&	1\\ \hline
-1	&	1/5/2009 17:10:00	&	116.29514	&	39.98419	&	C	&	1\\ \hline
-1	&	1/5/2009 17:11:00	&	116.28959	&	39.98289	&	C	&	1\\ \hline
-1	&	1/5/2009 17:12:00	&	116.28087	&	39.97552	&	A	&	1\\ \hline
-1	&	1/5/2009 17:16:00	&	116.26813	&	39.93537	&	A	&	1\\ \hline
-1	&	1/5/2009 18:11:00	&	116.36537	&	39.95019	&	B	&	4552271\\ \hline
-1	&	1/5/2009 18:12:00	&	116.36546	&	39.94886	&	C	&	4552271\\ \hline
-1	&	1/5/2009 18:13:00	&	116.35927	&	39.94528	&	C	&	4552271\\ \hline
-\end{tabular}}
-\caption{An illustration of frequency counting}\label{Ta:frequency_count}
-\end{table}
-
-Definition~\ref{Def:trip} states that whether recognising a particular road segment as a landmark or not is based on some notion of frequency. Only if a road segment is visited by drivers frequently enough is it recognised as a landmark. In this project, the notion of frequency is given by Definition~\ref{Def:frequency}.
-
-\begin{defn}[\emph{Frequency of a Road Segment}]\label{Def:frequency}
-The frequency of a road segment is the sum of \emph{unique} occurrences of that road segment in each trip. 
-\end{defn}
-
-Table~\ref{Ta:frequency_count} illustrates how the frequency of a road segment is calculated. In Trip 4552265, Street A occurs twice but \textbf{its frequency increases only by one}. Similarly, Street C occur three times and Street A occur twice in Trip 1, but \textbf{their occurrences only add one to their frequencies}. Therefore, even though Street B \emph{appears} less times than Street A or Street C, \textbf{all streets have the same frequency of 2}, based on this set of records.  
-
-The algorithm for counting frequency of a road segment is rather straightforward as in Listing~\ref{List:code_frequency}.
-
-\begin{lstlisting}[language = Python, caption = {Pseudocode for counting road frequency}, label = {List:code_frequency} ,frame=single, numbers=left, stepnumber=1]
-frequencies = dict{}
-for trip in trips:
- 	// get unique streets
-	streets = unique(trip.streets)
-	for street in streets:
-		if street in frequencies:
-			++frequencies[street]
-		else:
-			frequencies[street] = 1
-\end{lstlisting}
-
-After the frequency of each road segment is determined, a parameter $k$ is set to select the top $k$ frequent road segments as \emph{landmarks}. For this project, $k$ was chosen to be 500 to ensure the road segments are significant enough to be landmarks. When plotted on a map, these 500 landmarks cover most of the main streets in Beijing as shown in Figure~\ref{Fig:ldmk_500}. 
-
-\begin{figure}[h]
-\includegraphics{ldmk_plot}
-\centering
-\caption{A plot of landmarks when $k$ = 500}\label{Fig:ldmk_500}
+\caption{An example of distribution of clusters}\label{Fig:clus_histo}
 \end{figure}
 
-\section{Landmark Graph}\label{ldmk_graph}
-\begin{defn}[\emph{Landmark Graph}]\label{Def:ldmk_graph}
-A landmark graph is a weighted, directed graph $G=(V,E)$ where V is the set of landmarks defined by parameter $k$ and E is the set of taxi trajectories $T = (p_1,p_2,\textellipsis,p_n)$ that satisfy the following conditions:
-\begin{enumerate}
-\item $p_1$ and $p_n$ must be landmarks; 
-\item $p_2, p_3, \textellipsis , p_{n-1}$ must \textbf{not} be landmarks and;
-\item The duration of the trajectory must \textbf{not} exceed a threshold $t_{max}$.
-\end{enumerate}
-\end{defn}
-
-The threshold $t_{max}$ is used to eliminate trajectories with unreasonably long du\-rations\cite{TDR10}. Sometimes, a taxi may traverse several landmarks but only the first and the last landmarks are recorded, due to the low sampling rate, which cause the duration between the two recorded landmarks to be unreasonably long. For this project, $t_{max}$ was set to 20 minutes. The algorithm for constructing landmark graph is given in Listing~\ref{List:code_ldmk_graph}.
-
-\begin{lstlisting}[language = Python, caption = {Pseudocode for constructing landmark graph}, label = {List:code_ldmk_graph}, frame=single, numbers=left, stepnumber=1]
-for trip in trips:
-   //get unique, chronologically ordered streets
-   streets = unique_ordered(trip.streets)
-   while j < len(streets):
-	//loop until a landmark is found
-	while j < len(streets) && !is_landmark(streets[j]):
-		j = j + 1
-		
-	intermediaries = []
-	//find another landmark
-	k = j + 1
-	while k < len(streets) && !is_landmark(streets[k]):
-		intermediaries.append(streets[k])
-		k = k + 1
-		
-	//insert edge (streets[j], intermediaries, streets[k])
-	insert(E, streets[j], intermediaries, streets[k])
-		
-	//next search starts from the second landmark
-	j = k
-\end{lstlisting}
+The distribution of clusters is then converted into a cumulative distribution
