@@ -85,4 +85,41 @@ F(x | \alpha, \beta) = \int_{0}^{x} f(t | \alpha, \beta) dt = 1 - e^{-(x / \alph
 
 Figure~\ref{Fig:weibull_fit} shows an example of fitting a cumulative probability distribution with Weibull Distribution. The red line represents the cumulative probability distribution and the blue line indicates the best Weibull Distribution fit estimated by maximum likelihood. 
 
-In the referencing paper \cite{TDR10}, it uses inverse Gaussian distribution to 
+In the referencing paper \cite{TDR10}, it uses inverse Gaussian distribution to fit the centroid distribution. However, as some experiments showed, inverse Gaussian distribution does not always work, especially when the centroids actually have a uniform distribution, namely, when only one cluster appears in the time interval. In that case, Weibull distribution will have the shape parameter $\beta = \infty$ but it still can give the correct result. 
+
+The cumulative distribution function of Weibull distribution is good at calculating the probability whereby the travel time $t$ is less than a particular value. For instance, the probability of the travel time for this landmark graph edge being less than or equal to 100 seconds is approximately $P(t\leq100) = 0.7$ according to the Weibull distribution curve in Figure~\ref{Fig:weibull_fit}. But to estimate the travel time of a landmark graph edge is in fact the \emph{reverse}: given a known probability $P$, find the corresponding travel time $t$, which is exactly the inverse Weibull cumulative distribution function does. 
+
+\begin{theorem}[\emph{Inverse Weibull Cumulative Distribution Function}]\label{Theorem: weibull_inverse_dist}
+The inverse Weibull cumulative distribution function is defined as
+\begin{equation}
+F^{-1}(x | \alpha, \beta) = G(p) = \alpha(-ln(1 - p)) ^ {1/\beta}
+\end{equation}
+where $p$ is the given probability.
+\end{theorem}
+
+In practice, the probability $p$ corresponds to some subjective measures of a driver's driving skill. It represents how fast a driver drives as compared to other drivers. If a driver has a $p$ value of 0.2, it means that this driver usually drives faster than 80\% ($1 - 0.2$) drivers. This concept is formally defined in Definition~\ref{Def:opti_index}.
+
+\begin{defn}[\emph{Optimism Index}]\label{Def:opti_index}
+A optimism index $p$ indicates how optimistic a driver feels about his or her driving skills \cite{TDR10}. A driver with an optimism index of $p_{0}$ usually drives faster than $(1 - p_{0})\%$ drivers. 
+\end{defn}
+
+The optimism index of a driver can be set by the driver in advance, although it may be subject to illusory superiority\footnote{In a 1986 experiment, \emph{80\%} participants rated their driving skills \emph{above-average} \cite{IFD86}.}. It can also be set to the mean value by default or learned from the driver's trajectory history. 
+
+With optimism index defined, it is easy to estimate the travel time using Theorem~\ref{Theorem: weibull_inverse_dist}. However, it is worth mentioning that for a cumulative probability distribution function $F(x)$, the probability of a single value is zero, namely, $F(x_{0}) = 0$; only a range of values can have positive probabilities. Therefore, the travel time calculated from optimism index should really be a \emph{range} of travel time. For instance, if the optimism index is $p = 0.7$, the correct result should be $t \leq 100$ based on Figure~\ref{Fig:weibull_fit}, which means that for a driver with an optimism index of 0.7, his or her travel time is \emph{at most} 100 seconds. No exact value can be determined. However, in the context of this project, only the \emph{worst-case} travel time is considered; therefore, the driver is said to have an expected travel time of 100 seconds. 
+
+\section{Travel Time Evaluation}
+After the travel time distributions for each significant edge were calculated, an evaluation was conducted to ascertain the accuracy of the travel time estimate. The evaluation method used in this project was to compare this project's estimates with real-time estimates made by Baidu Maps at various times of the day. 
+
+Some complications do arise, because the two vertices of each edge are actually two \emph{landmarks}. Definition~\ref{Def:ldmk} states that a landmark is essentially a road segment with its length ignored. But in estimating the travel time between two landmarks, the length of the landmarks cannot be ignored and it has profound effects on how the travel time should be calculated. 
+
+\begin{figure}[h!]
+\includegraphics[scale=0.8]{ldmk_travel}
+\centering
+\caption{An example of different landmark travel time}\label{Fig:ldmk_travel}
+\end{figure}
+
+Imagine there are two landmarks $u$ and $v$, respectively, and each has a length of $L$ as shown in Figure~\ref{Fig:ldmk_travel}. Then, there are potentially infinite number of ways of `traveling from $u$ to $v$', because the starting point could be any points on $u$ and the ending point could be any points on $v$. If a driver starts at the red point on $u$ and stops at the red point on $v$, the total distance is $2L$ and the total time is $T$. But if the driver had stopped at the yellow mid-point on $v$, the total distance would be $1.5L$ and the total time would be $3T/4$, assuming the speed is constant. 
+
+Therefore, it is difficult to give a \emph{definite} estimate of the travel time between two landmarks. In this project, the \textbf{median travel time} is used to represent the travel time between two landmarks. It describes the \emph{typical} travel time a driver should expect. An example of a median case is starting at the yellow mid-point on $u$ and ending at the yellow mid-point on $v$. But there are in fact infinite number of median cases. 
+
+The most significant 150 edges were selected to be evaluated from \emph{each} of the four landmark graphs listed in Table~\ref{Ta:ldmkgraphs}. For each edge $(u, v)$, 20\% of the trajectories with $u$ and $v$ as the two end points were randomly sampled. These trajectories represent some random trips between $u$ and $v$, and their distances vary. Baidu Maps API was then used to calculate the estimated travel time for each trajectory in real time, after which the median travel time amongst all trajectories between $u$ and $v$ was selected as Baidu's estimate for travel time between $u$ and $v$. 

@@ -18,6 +18,12 @@ Thomas~H. Cormen, Charles~E. Leiserson, Ronald~L. Rivest, and Clifford Stein,
 E.~W. Dijkstra, \emph{A note on two problems in connections with graphs},
   Numerische Mathematik \textbf{1} (1959), 269--271.
 
+\bibitem{WEIB}
+The~MathWorks Inc., \emph{Weibull cumulative distribution function}.
+
+\bibitem{WEDI}
+\bysame, \emph{Weibull distribution}.
+
 \bibitem{TK82}
 Teuvo Kohonen, \emph{Self-organized formation of topologically correct feature
   maps}, Biological Cybernetics (1982), 43, 59--69.
@@ -27,6 +33,11 @@ Yin Lou, Chengyang Zhang, Yu~Zheng, Xing Xie, Wei Wang, and Yan Huang,
   \emph{Map-matching for low-sampling-rate gps trajectories}, ACM SIGSPATIAL
   GIS 2009, ACM SIGSPATIAL GIS 2009, November 2009.
 
+\bibitem{IFD86}
+Iain~A. McCormick, Frank~H. Walkey, and Dianne~E. Green, \emph{Comparative
+  perceptions of driver ability---a confirmation and expansion}, Accident
+  Analysis and Prevention \textbf{18} (1986), 205--208.
+
 \bibitem{FI06}
 NorthEast SAS Users Group, \emph{Calculating geographic distance: Concepts and
   methods}, 2006.
@@ -34,12 +45,6 @@ NorthEast SAS Users Group, \emph{Calculating geographic distance: Concepts and
 \bibitem{LO05}
 Lior Rokach and Oded Maimon, \emph{Data mining and knowledge discovery
   handbook}, ch.~15, pp.~321--352, Springer US, 2005.
-
-\bibitem{WEIB}
-Inc. The~MathWorks, \emph{Weibull cumulative distribution function}.
-
-\bibitem{WEDI}
-\bysame, \emph{Weibull distribution}.
 
 \bibitem{FP15}
 Frank van Diggelen and Per Enge, \emph{The world's first gps mooc and worldwide
