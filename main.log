@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.22)  20 MAR 2017 23:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.22)  21 MAR 2017 16:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -408,12 +408,12 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip51
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 49.
+Package hyperref Info: Option `colorlinks' set `true' on input line 50.
 
 Enter file names to process, (chap1,chap2 ...), or `all' to process all files:
 
-\files=all
-Including all files.
+\files=chap4
+Including only chap4.
 \c@defn=\count124
 \c@theorem=\count125
 (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
@@ -424,26 +424,26 @@ LaTeX Warning: Label `List:code_ldmk_graph' multiply defined.
 ) (./biblio.aux))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 69.
-LaTeX Font Info:    ... okay on input line 69.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 69.
-LaTeX Font Info:    ... okay on input line 69.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 69.
-LaTeX Font Info:    ... okay on input line 69.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 69.
-LaTeX Font Info:    ... okay on input line 69.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 69.
-LaTeX Font Info:    ... okay on input line 69.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 69.
-LaTeX Font Info:    ... okay on input line 69.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 69.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 69.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 70.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 70.
  (/usr/local/texlive/2016/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 69.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 69.
-LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
 (/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count126
@@ -483,7 +483,7 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 144.
 )
-Package hyperref Info: Link coloring ON on input line 69.
+Package hyperref Info: Link coloring ON on input line 70.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -493,36 +493,31 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count133
 )
-LaTeX Info: Redefining \ref on input line 69.
-LaTeX Info: Redefining \pageref on input line 69.
-LaTeX Info: Redefining \nameref on input line 69.
+LaTeX Info: Redefining \ref on input line 70.
+LaTeX Info: Redefining \pageref on input line 70.
+LaTeX Info: Redefining \nameref on input line 70.
 
 (./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
-\openout2 = `cover.aux'.
+\openout2 = `chap4.aux'.
 
- (./cover.tex [1
-
-
-
-{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2
-
-] (./abstract.tex) [3
-
-] [4
-
-]) [5]
-\openout2 = `contents.aux'.
-
-
-(./contents.tex [6
+ (./chap4.tex [38{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdf
+tex.map}
 
 
 
-] (./main.toc<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
+
+
+
+
+
+]
+Chapter 4.
+<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
 LaTeX Font Info:    Try loading font information for U+msa on input line 2.
+
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
@@ -530,304 +525,134 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 2.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [7])
-\tf@toc=\write4
-\openout4 = `main.toc'.
-
- [8]
-(./main.lof)
-\tf@lof=\write5
-\openout5 = `main.lof'.
-
- [9
-
-] [10
-
-] (./main.lot)
-\tf@lot=\write6
-\openout6 = `main.lot'.
-
-) [11]
-\openout2 = `chap1.aux'.
-
- (./chap1.tex [12
-
-
-
-]
-Chapter 1.
-[13] [14]
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 37.
-
-[15] <image/low_sample_rate.png, id=248, 290.0436pt x 129.6042pt>
-File: image/low_sample_rate.png Graphic file (type png)
-
-<use image/low_sample_rate.png>
-Package pdftex.def Info: image/low_sample_rate.png used on input line 49.
-(pdftex.def)             Requested size: 290.04288pt x 129.60387pt.
- [16 <./image/low_sample_rate.png>]) [17]
-\openout2 = `chap2.aux'.
-
-
-(./chap2.tex [18
-
-
-
-]
-Chapter 2.
-[19] [20] <image/gps_shift.png, id=291, 433.1382pt x 169.5936pt>
-File: image/gps_shift.png Graphic file (type png)
-
-<use image/gps_shift.png>
-Package pdftex.def Info: image/gps_shift.png used on input line 31.
-(pdftex.def)             Requested size: 433.13715pt x 169.59317pt.
-
-<image/basic_architecture.png, id=294, 321.8424pt x 81.906pt>
-File: image/basic_architecture.png Graphic file (type png)
-
-<use image/basic_architecture.png>
-Package pdftex.def Info: image/basic_architecture.png used on input line 55.
-(pdftex.def)             Requested size: 321.84161pt x 81.90579pt.
- [21 <./image/gps_shift.png>]
-<image/ajax_architecture.png, id=303, 438.438pt x 81.906pt>
-File: image/ajax_architecture.png Graphic file (type png)
-
-<use image/ajax_architecture.png>
-Package pdftex.def Info: image/ajax_architecture.png used on input line 63.
-(pdftex.def)             Requested size: 438.43692pt x 81.90579pt.
-
-Overfull \hbox (4.81693pt too wide) in paragraph at lines 63--65
- [][] 
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[22 <./image/basic_architecture.png>]
-<image/long_lat_plot.png, id=313, 421.575pt x 316.18124pt>
-File: image/long_lat_plot.png Graphic file (type png)
-
-<use image/long_lat_plot.png>
-Package pdftex.def Info: image/long_lat_plot.png used on input line 75.
-(pdftex.def)             Requested size: 421.57396pt x 316.18047pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[23 <./image/ajax_architecture.png>] [24 <./image/long_lat_plot.png (PNG copy)>
-] <image/neighbour_connections.png, id=332, 421.575pt x 316.18124pt>
-File: image/neighbour_connections.png Graphic file (type png)
-
-<use image/neighbour_connections.png>
-Package pdftex.def Info: image/neighbour_connections.png used on input line 100
-.
-(pdftex.def)             Requested size: 421.57396pt x 316.18047pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[25] <image/sofm_weights.png, id=343, 421.575pt x 316.18124pt>
-File: image/sofm_weights.png Graphic file (type png)
-
-<use image/sofm_weights.png>
-Package pdftex.def Info: image/sofm_weights.png used on input line 108.
-(pdftex.def)             Requested size: 421.57396pt x 316.18047pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \vbox (badness 2460) has occurred while \output is active []
-
- [26 <./image/neighbour_connections.png (PNG copy)>] [27 <./image/sofm_weights.
-png (PNG copy)>] (/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang
-1.sty
-File: lstlang1.sty 2015/06/04 1.6 listings language file
-)
-[28] <image/30m_50m.png, id=375, 438.9198pt x 171.5208pt>
-File: image/30m_50m.png Graphic file (type png)
-
-<use image/30m_50m.png>
-Package pdftex.def Info: image/30m_50m.png used on input line 152.
-(pdftex.def)             Requested size: 438.91872pt x 171.52037pt.
-
-Overfull \hbox (5.29872pt too wide) in paragraph at lines 152--154
- [][] 
- []
-
-) [29 <./image/30m_50m.png>] [30]
-\openout2 = `chap3.aux'.
-
- (./chap3.tex
-Chapter 3.
-[31
-
-
-
-] [32] [33] [34] <image/ldmk_plot.png, id=439, 336.2964pt x 274.1442pt>
-File: image/ldmk_plot.png Graphic file (type png)
-
-<use image/ldmk_plot.png>
-Package pdftex.def Info: image/ldmk_plot.png used on input line 113.
-(pdftex.def)             Requested size: 336.29558pt x 274.14351pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 120.
-
-[35]
-
-LaTeX Warning: Command \textellipsis invalid in math mode on input line 123.
-
-[36 <./image/ldmk_plot.png>]
-Overfull \hbox (3.37708pt too wide) in paragraph at lines 146--147
-[][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-) [37]
-\openout2 = `chap4.aux'.
-
- (./chap4.tex [38
-
-
-
-]
-Chapter 4.
-[39] <image/trvltime_scatter.png, id=506, 421.575pt x 316.18124pt>
+) [39]
+<image/trvltime_scatter.png, id=44, 421.575pt x 316.18124pt>
 File: image/trvltime_scatter.png Graphic file (type png)
 
 <use image/trvltime_scatter.png>
-Package pdftex.def Info: image/trvltime_scatter.png used on input line 31.
+Package pdftex.def Info: image/trvltime_scatter.png used on input line 35.
 (pdftex.def)             Requested size: 358.34042pt x 268.75533pt.
-
-Underfull \vbox (badness 1122) has occurred while \output is active []
-
- [40]
-[41 <./image/trvltime_scatter.png (PNG copy)>]
-<image/trvltime_clus.png, id=520, 421.575pt x 316.5426pt>
+ [40] [41 <./image/trvltime_scatter.png (PNG copy)>] <image/trvltime_clus.png, 
+id=61, 421.575pt x 316.5426pt>
 File: image/trvltime_clus.png Graphic file (type png)
 
 <use image/trvltime_clus.png>
-Package pdftex.def Info: image/trvltime_clus.png used on input line 45.
+Package pdftex.def Info: image/trvltime_clus.png used on input line 49.
 (pdftex.def)             Requested size: 358.34042pt x 269.06247pt.
  [42 <./image/trvltime_clus.png>]
-<image/trvltime_neurons.png, id=530, 421.575pt x 316.5426pt>
+<image/trvltime_neurons.png, id=74, 421.575pt x 316.5426pt>
 File: image/trvltime_neurons.png Graphic file (type png)
 
 <use image/trvltime_neurons.png>
-Package pdftex.def Info: image/trvltime_neurons.png used on input line 52.
+Package pdftex.def Info: image/trvltime_neurons.png used on input line 56.
 (pdftex.def)             Requested size: 358.34042pt x 269.06247pt.
  [43 <./image/trvltime_neurons.png>]
-<image/clus_histo.png, id=538, 421.575pt x 316.18124pt>
+<image/clus_histo.png, id=83, 421.575pt x 316.18124pt>
 File: image/clus_histo.png Graphic file (type png)
 
 <use image/clus_histo.png>
-Package pdftex.def Info: image/clus_histo.png used on input line 62.
+Package pdftex.def Info: image/clus_histo.png used on input line 66.
 (pdftex.def)             Requested size: 358.34042pt x 268.75533pt.
  [44 <./image/clus_histo.png (PNG copy)>]
-<image/weibull_fit.png, id=548, 421.575pt x 316.18124pt>
+<image/weibull_fit.png, id=94, 421.575pt x 316.18124pt>
 File: image/weibull_fit.png Graphic file (type png)
 
 <use image/weibull_fit.png>
-Package pdftex.def Info: image/weibull_fit.png used on input line 81.
+Package pdftex.def Info: image/weibull_fit.png used on input line 85.
 (pdftex.def)             Requested size: 358.34042pt x 268.75533pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [45]
-Overfull \hbox (0.90947pt too wide) in paragraph at lines 93--94
+Overfull \hbox (0.90947pt too wide) in paragraph at lines 97--98
 [][]\T1/cmr/bx/n/12 Theorem 5 \T1/cmr/m/n/12 (\T1/cmr/m/it/12 In-verse Weibull 
 Cu-mu-la-tive Dis-tri-bu-tion Func-tion\T1/cmr/m/n/12 )\T1/cmr/bx/n/12 . []\T1/
 cmr/m/n/12 The in-verse Weibull
  []
 
 [46 <./image/weibull_fit.png (PNG copy)>] [47]
-<image/ldmk_travel.png, id=582, 367.1316pt x 322.3242pt>
+<image/ldmk_travel.png, id=139, 367.1316pt x 322.3242pt>
 File: image/ldmk_travel.png Graphic file (type png)
 
 <use image/ldmk_travel.png>
-Package pdftex.def Info: image/ldmk_travel.png used on input line 116.
+Package pdftex.def Info: image/ldmk_travel.png used on input line 120.
 (pdftex.def)             Requested size: 293.70567pt x 257.85971pt.
- [48 <./image/ldmk_travel.png>]) [49]
-\openout2 = `appa.aux'.
+ [48 <./image/ldmk_travel.png>] [49]) [50]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 89.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 89.
 
- (./appa.tex
-[50
-
-
-
-]
-Appendix A.
-
-Overfull \hbox (3.37708pt too wide) in paragraph at lines 18--19
-[][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-[51] [52])
-\openout2 = `biblio.aux'.
-
- (./biblio.tex (./main.bbl [53
-
-
-
-
-])) [54]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 88.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 88.
- (./main.aux (./cover.aux)
-(./contents.aux) (./chap1.aux) (./chap2.aux) (./chap3.aux) (./chap4.aux)
-(./appa.aux) (./biblio.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 88.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 88.
+(./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
+(./chap3.aux) (./chap4.aux) (./appa.aux) (./biblio.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 89.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 89.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: B6745BA14F042BBCED6D216ADC7EAFA5;1268.
+(rerunfilecheck)             Checksum: D48E952974A34F5CF743D732A3DEB740;211.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 88.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 89.
  ) 
 Here is how much of TeX's memory you used:
- 8904 strings out of 493014
- 126665 string characters out of 6133351
- 240482 words of memory out of 5000000
- 11947 multiletter control sequences out of 15000+600000
- 24206 words of font info for 62 fonts, out of 8000000 for 9000
+ 8380 strings out of 493014
+ 120003 string characters out of 6133351
+ 207783 words of memory out of 5000000
+ 11654 multiletter control sequences out of 15000+600000
+ 21128 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 30i,12n,44p,1068b,1755s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<
-/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
-usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></u
-sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr
-/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/l
-ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loc
-al/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/
-texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/t
-exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/tex
-live/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local
-/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/l
-ocal/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/loc
-al/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local
-/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/t
-exlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/tex
-live/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texli
-ve/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive
-/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2
-016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/201
-6/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2016/
-texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2016/te
-xmf-dist/fonts/type1/public/cm-super/sfsl1200.pfb></usr/local/texlive/2016/texm
-f-dist/fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2016/texmf-
-dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on main.pdf (54 pages, 1697549 bytes).
+ 29i,9n,32p,955b,406s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{defn.5} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{cite.IFD86} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.TDR10} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.WEIB} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.WEDI} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.2.3.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{section.1.2} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.2.3.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{chapter.3} has been referenced but does not exist, 
+replaced by a fixed one
+
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</
+usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></u
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></us
+r/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/
+local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/lo
+cal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loca
+l/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/t
+exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texl
+ive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/
+texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texl
+ive/2016/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texliv
+e/2016/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/
+2016/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/20
+16/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2016
+/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2016/t
+exmf-dist/fonts/type1/public/cm-super/sfsl1200.pfb></usr/local/texlive/2016/tex
+mf-dist/fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2016/texmf
+-dist/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on main.pdf (13 pages, 489856 bytes).
 PDF statistics:
- 766 PDF objects out of 1000 (max. 8388607)
- 651 compressed objects within 7 object streams
- 230 named destinations out of 1000 (max. 500000)
- 248 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 242 PDF objects out of 1000 (max. 8388607)
+ 192 compressed objects within 2 object streams
+ 48 named destinations out of 1000 (max. 500000)
+ 75 words of extra memory for PDF output out of 10000 (max. 10000000)
 

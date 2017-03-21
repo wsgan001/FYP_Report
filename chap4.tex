@@ -1,11 +1,15 @@
 \chapter{Time-dependent Edge Cost Estimation}
 Chapter~\ref{Ch:ldmk_graph} describes the general procedures for constructing a landmark graph. To find a time-dependent shortest route on a landmark graph, the time-dependent edge cost must be calculated. In this project, the time-dependent edge cost specifically refers to travel time, but in theory, it can refer to any quantity that can be described as a time-dependent edge cost function of the form $w : E,t \rightarrow \mathbb{R}$. In practice, it sometimes also refers to fuel consumptions or taxi fares. This chapter introduces a machine learning-based approach to estimate the travel time of each \emph{significant edge} in a landmark graph at a particular moment in time. 
 
-\begin{defn}[\emph{Significant Edge}]
-A significant edge in a landmark graph $G=(V,E)$ is an edge $e \in E$ that appears at least $m$ times, where $m$ is a parameter specified in advance.
+\begin{defn}[\emph{Support}]
+A support for an edge $e$ in a landmark graph $G=(V,E)$ is the number of times that $e$ appears. 
 \end{defn}
 
-The purpose of defining significant edges is to eliminate those edges that are seldom traversed by taxi drivers, as estimating the travel time of those edges will not be very accurate. The parameter $m$ also represents a level of \emph{confidence}\footnote{Sometimes it is also referred to as \emph{support}}, that is, to what extent it is true that this edge \emph{really} exists in the real world. 
+\begin{defn}[\emph{Significant Edge}]
+A significant edge in a landmark graph $G=(V,E)$ is an edge $e \in E$ that has a support at least $m$, where $m$ is a parameter specified in advance.
+\end{defn}
+
+The purpose of defining significant edges is to eliminate those edges that are seldom traversed by taxi drivers, as estimating the travel time of those edges will not be very accurate. The parameter $m$ also represents a level of \emph{confidence}, that is, to what extent it is true that this edge \emph{really} exists in the real world. 
 
 Everyday experiences show that the travel time of a particular road usually has different time-varying patterns in weekdays as compared to that in weekends or public holidays. For instance, it is likely that, on weekdays, the travel time of a particular road has one \emph{peak} at 8 a.m. when people travel to work and the other peak at 6 p.m. when people return home after work. But when it is weekends or public holidays, the travel time of that road may have a peak at 10 a.m. when people go for holiday activities with families and the other peak at only about 8 p.m. when the whole day's celebrations are over. 
 
@@ -37,7 +41,7 @@ Figure~\ref{Fig:wrkd_50m_trvltime} illustrates a scatter plot of the travel time
 \begin{enumerate}
 \item Drivers may actually choose different routes to travel between the two landmarks, which cannot be captured by the landmark graph since it only knows a driver has traversed between the two landmarks but not the exact route. Different routes have different traffic conditions and speed limitations, therefore the travel time varies;
 \item Drivers have different driving skills, preferences and behaviours. Some drivers just drive faster than others, even if the road conditions are similar and;
-\item The GPS devices on taxis reported locations \emph{periodically}, therefore, durations like 60 secondsr or120 seconds are very commonly seen in the landmark graphs. Even if the \emph{actual} travel time is 53 seconds, it is still recorded as 60 seconds. This corresponds to the low-sampling-rate problem mentioned in Section~\ref{Sec:limitation}. 
+\item The GPS devices on taxis reported locations \emph{periodically}, therefore, durations like 60 seconds or 120 seconds are very commonly seen in the landmark graphs. Even if the \emph{actual} travel time is 53 seconds, it is still recorded as 60 seconds. This corresponds to the low-sampling-rate problem mentioned in Section~\ref{Sec:limitation}. 
 \end{enumerate}
 
 \begin{figure}[h!]
@@ -108,9 +112,9 @@ The optimism index of a driver can be set by the driver in advance, although it 
 With optimism index defined, it is easy to estimate the travel time using Theorem~\ref{Theorem: weibull_inverse_dist}. However, it is worth mentioning that for a cumulative probability distribution function $F(x)$, the probability of a single value is zero, namely, $F(x_{0}) = 0$; only a range of values can have positive probabilities. Therefore, the travel time calculated from optimism index should really be a \emph{range} of travel time. For instance, if the optimism index is $p = 0.7$, the correct result should be $t \leq 100$ based on Figure~\ref{Fig:weibull_fit}, which means that for a driver with an optimism index of 0.7, his or her travel time is \emph{at most} 100 seconds. No exact value can be determined. However, in the context of this project, only the \emph{worst-case} travel time is considered; therefore, the driver is said to have an expected travel time of 100 seconds. 
 
 \section{Travel Time Evaluation}
-After the travel time distributions for each significant edge were calculated, an evaluation was conducted to ascertain the accuracy of the travel time estimate. The evaluation method used in this project was to compare this project's estimates with real-time estimates made by Baidu Maps at various times of the day. 
+After the travel time distributions for each significant edge were determined, an eva\-luation was conducted to ascertain the accuracy of the travel time estimates. In this project, the estimates made by Theorem~\ref{Theorem: weibull_inverse_dist} were compared against real-time estimates made by Baidu Maps at various times of the day. 
 
-Some complications do arise, because the two vertices of each edge are actually two \emph{landmarks}. Definition~\ref{Def:ldmk} states that a landmark is essentially a road segment with its length ignored. But in estimating the travel time between two landmarks, the length of the landmarks cannot be ignored and it has profound effects on how the travel time should be calculated. 
+Some complications do arise, however, because the two vertices of each significant edge are actually two \emph{landmarks}. Definition~\ref{Def:ldmk} states that a landmark is essentially a road segment with its length ignored. But in estimating the travel time between two landmarks, the length of the landmarks cannot be ignored and has profound effects on how the travel time should be calculated. 
 
 \begin{figure}[h!]
 \includegraphics[scale=0.8]{ldmk_travel}
@@ -118,8 +122,37 @@ Some complications do arise, because the two vertices of each edge are actually 
 \caption{An example of different landmark travel time}\label{Fig:ldmk_travel}
 \end{figure}
 
-Imagine there are two landmarks $u$ and $v$, respectively, and each has a length of $L$ as shown in Figure~\ref{Fig:ldmk_travel}. Then, there are potentially infinite number of ways of `traveling from $u$ to $v$', because the starting point could be any points on $u$ and the ending point could be any points on $v$. If a driver starts at the red point on $u$ and stops at the red point on $v$, the total distance is $2L$ and the total time is $T$. But if the driver had stopped at the yellow mid-point on $v$, the total distance would be $1.5L$ and the total time would be $3T/4$, assuming the speed is constant. 
+Imagine there are two landmarks $u$ and $v$, respectively, and each has a length of $L$ as shown in Figure~\ref{Fig:ldmk_travel}. Then, there are potentially infinite number of ways of `traveling from $u$ to $v$', because the starting point could be any points on $u$ and the ending point could be any points on $v$. If a driver starts at the red point on $u$ and stops at the red point on $v$, the total distance is $2L$ and the total time is $T$. But had the driver stopped at the yellow mid-point on $v$, the total distance would be $1.5L$ and the total time would be $3T/4$, assuming the speed is constant. 
 
-Therefore, it is difficult to give a \emph{definite} estimate of the travel time between two landmarks. In this project, the \textbf{median travel time} is used to represent the travel time between two landmarks. It describes the \emph{typical} travel time a driver should expect. An example of a median case is starting at the yellow mid-point on $u$ and ending at the yellow mid-point on $v$. But there are in fact infinite number of median cases. 
+Therefore, it is difficult to give a \emph{definite} estimate of the travel time between two landmarks. In this project, the \textbf{median travel time} is instead used to represent the travel time between two landmarks. It describes the \emph{typical} travel time a driver should expect. An example of a median case is that the diver starts at the yellow mid-point on $u$ and ends at the yellow mid-point on $v$. But there are in fact infinite number of median cases. 
 
-The most significant 150 edges were selected to be evaluated from \emph{each} of the four landmark graphs listed in Table~\ref{Ta:ldmkgraphs}. For each edge $(u, v)$, 20\% of the trajectories with $u$ and $v$ as the two end points were randomly sampled. These trajectories represent some random trips between $u$ and $v$, and their distances vary. Baidu Maps API was then used to calculate the estimated travel time for each trajectory in real time, after which the median travel time amongst all trajectories between $u$ and $v$ was selected as Baidu's estimate for travel time between $u$ and $v$. 
+The most significant 150 edges were selected to be evaluated, from \emph{each} of the four landmark graphs listed in Table~\ref{Ta:ldmkgraphs}. For each edge $(u, v)$, 20\% of the trajectories with $u$ as starting point and $v$ as ending point were randomly sampled. These trajectories represent some random trips between $u$ and $v$ with varying distances. Baidu Maps API was then used to estimate the travel time for each trajectory in real time, after which the median of all the estimates was selected as Baidu's estimate for the travel time between $u$ and $v$. Finally, Theorem~\ref{Theorem: weibull_inverse_dist} was used to calculate its own the travel time estimate which was then compared against Baidu's. Table~\ref{Ta:eval_res} summarises the evaluation results for all 150 significant edges. 
+
+\begin{table}[h!]
+\centering
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{ | c | c | c | c |}
+\hline
+\textbf{Landmark Graph} & \textbf{RMSE} & \textbf{Mean Error Ratio} & \textbf{Mean No. of Samples Per Edge} \\ \hline
+wrkd\_ldmkgraph\_50m & 78.58 & -0.009 & 1824.60 \\ \hline
+wrkd\_ldmkgraph\_30m & & & 1507.56 \\ \hline
+holi\_ldmkgraph\_50m & 87.39 & -0.16 & 832.96 \\ \hline
+holi\_ldmkgraph\_30m & 76.41 & -0.14 & 681.89 \\ \hline
+\end{tabular}}
+\caption{Summary of Evaluation Results}\label{Ta:eval_res}
+\end{table}
+
+Assuming a Baidu's estimate is $b_{i}$ and the corresponding project's estimate is $\hat{b}_{i}$, then the Root Mean Square Error (RMSE) is given by:
+\begin{equation}
+RMSE = \sqrt{\frac{\sum_{i = 1}^{N}(\hat{b}_{i} - b_{i})^{2}}{N}}
+\end{equation}
+where $N$ is the total number of estimates; and the Mean Error Ratio (MER) is given by:
+\begin{equation}
+MER = \frac{1}{N}\sum_{i = 1}^{N}\frac{\hat{b}_{i} - b_{i}}{b_{i}}
+\end{equation}
+
+The RMSE gives an overall measure of accuracy. For instance, the RMSE for landmark graph \emph{wrkd\_ldmkgraph\_50m} turned out to be 78.58, which means that on average, the difference between Baidu's estimates and Theorem~\ref{Theorem: weibull_inverse_dist}'s estimate was 78.58 seconds. But whether this difference is significant or not depends on the scale of Baidu's estimates. For a Baidu's estimate of 30 seconds, 78.58 seconds may be considered significant, but for an estimate of 200 seconds, it may be acceptable. 
+
+Therefore, MER is designed to take into account the scale of Baidu's estimates. It computes the ratio between the error and Baidu's estimate. A positive MER indicates that on average Theorem~\ref{Theorem: weibull_inverse_dist} tends to have larger estimates than Baidu's; on the other hand, a negative MER indicates that on average, Theorem~\ref{Theorem: weibull_inverse_dist} tends to have smaller estimates than Baidu's. 
+
+Another technique to gauge Theorem~\ref{Theorem: weibull_inverse_dist}'s performance is linear regression. An ordered pair of estimates $(b_{i}, \hat{b}_{i})$ can be treated as a point in a 2-D Cartesian system. In the \emph{ideal} case, $\hat{b}_{i}$ should be equal to $b_{i}$, therefore, all points should form a straight line with a slope of 1 and an intercept of 0 when plotted. In the general cases, linear 
