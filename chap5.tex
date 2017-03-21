@@ -1,9 +1,5 @@
-\chapter{Time-dependent Edge Cost Estimation}\label{Chap:edge_cost}
-Chapter~\ref{Ch:ldmk_graph} describes the general procedures for constructing a landmark graph. To find a time-dependent shortest route on a landmark graph, the time-dependent edge cost must be calculated. In this project, the time-dependent edge cost specifically refers to travel time, but in theory, it can refer to any quantity that can be described as a time-dependent edge cost function of the form $w : E,t \rightarrow \mathbb{R}$. In practice, it sometimes also refers to fuel consumptions or taxi fares. This chapter introduces a machine learning-based approach to estimate the travel time of each \emph{significant edge} in a landmark graph at a particular moment in time. 
+\chapter{Shortest Path Calculation}
 
-\begin{defn}[\emph{Support}]
-A support for an edge $e$ in a landmark graph $G=(V,E)$ is the number of times that $e$ appears. 
-\end{defn}
 
 \begin{defn}[\emph{Significant Edge}]
 A significant edge in a landmark graph $G=(V,E)$ is an edge $e \in E$ that has a support at least $m$, where $m$ is a parameter specified in advance.
@@ -190,58 +186,4 @@ In summary, the estimates Theorem~\ref{Theorem: weibull_inverse_dist} gave were 
 \label{Fig:regression_plot}
 \end{figure}
 
-\section{Shortest Path Calculation}
-\begin{defn}[\emph{FIFO Graph}]\label{Def:fifo_graph}
-A time-dependent graph $G=(V,E)$ with a dynamic weight function $w : E,t \rightarrow \mathbb{R}$ is a FIFO graph \cite{TDS08} iff for every edge $(u, v) \in E$
-\begin{equation}
-w(u, v, t_{0}) \leq \Delta t + w(u, v, t_{0} + \Delta t), \forall \Delta t \geq 0
-\end{equation}
-\end{defn}
 
-Once the time-varying patterns of edge costs are determined, calculating a shortest path in a landmark graph is straightforward, provided the landmark graph is a FIFO graph\footnote{If the graph is not a FIFO graph, the problem is NP-hard if waiting is not allowed at any vertices} as defined in Definition~\ref{Def:fifo_graph}. 
-
-An equivalent way of expressing FIFO property is that, if a person leaves vertex $u$ at time $t_{0}$, then any persons who leave vertex $u$ at a later time $t_{0} + \Delta t$ will not be able to reach vertex $v$ earlier than the first person. In practice, transport networks are said to have FIFO property \cite{TDR10}, therefore, a landmark graph can be considered as a FIFO graph. Then the Dijkstra's shortest path algorithm can be applied directly but with a modification that the edge costs are computed dynamically as the algorithm proceeds. Figure~\ref{Fig:dynamic_update} shows an example of dynamically updating edge costs. 
-
-\begin{figure}[h!]
-\includegraphics[scale=1]{shortest_path_demo}
-\centering
-\caption{An example of updating edge costs dynamically}\label{Fig:dynamic_update}
-\end{figure}
-
-If a taxi leaves $s$ at time $t = 0$, the edge $(s, v_{1})$ and $(s, v_{2})$ will have a time-dependent travel time of 3 and 2, respectively. If the taxi follows the current fastest edge $(s, v_{2})$, when it arrives at $v_{2}$ the time-dependent travel time of the edge $(v_{2}, d)$ at time $t = 2$ will be 4, giving a total travel time 6. But should the taxi follow the edge $(s, v_{1})$, the time-dependent travel time of the edge $(v_{1}, d)$ at $t = 3$ would be 1, giving a total travel time of 4. Therefore, path $s \leadsto v_{1} \leadsto d$ is the time-dependent shortest path. The same process applies when the taxi leaves $s$ at time $t = 1$, but the time-dependent shortest path will be path $s \leadsto v_{2} \leadsto d$. This example is also a FIFO graph: path $s \leadsto v_{1} \leadsto d$ would still be the shortest path, should another taxi \emph{wait} at $s$ until $t = 1$. Listing~\ref{List:code_dijkstra} gives the pseudocode for the modified Dijkstra's Algorithm. 
-
-\begin{lstlisting}[language = Python, caption = {Pseudocode for Modified Dijkstra's Algorithm}, label = {List:code_dijkstra} ,frame=single, numbers=left,stepnumber=1, mathescape=true, escapeinside={(*}{*)}]
-Input: a landmark graph $G=(V, E)$, source $s$ (*and*) destination $d$
-Ouput: a predecessor graph $G_{p}=(V_{p}, E_{p})$
-// EAT = Earliest Arrival Time
-predecessor = dict{s : None}
-pq = queue.PriorityQueue()
-s.EAT = 0
-pq.put(s)
-for vertex in $G.V - \{s\}$:
-    vertex.EAT = $\infty$
-    pq.put(vertex)
-while not pq.empty():
-    hd = pq.get()
-    for v in hd.neighbours:
-    	if hd.EAT + $w(s, v, hd.EAT)$ < v.EAT:
-	    v.EAT = hd.EAT + $w(s, v, hd.EAT)$
-	    predecessor[v] = hd
-\end{lstlisting}
-
-Upon termination of the algorithm in Listing~\ref{List:code_dijkstra}, a predecessor graph whose edges are \emph{reversed} shortest paths from $s$ to other vertices are constructed. Listing~\ref{List:code_printpath} provides a recursive method to print out the shortest path from $s$ to $d$. 
-
-\begin{lstlisting}[language = Python, caption = {Pseudocode for Printing Shortest Paths}, label = {List:code_printpath} ,frame=single, numbers=left,stepnumber=1, mathescape=true, escapeinside={(*}{*)}]
-Input: a predecessor graph $G_{p}=(V_{p}, E_{p})$ (*and*) a destination $d$
-Ouput: a shortest path $s \leadsto d$
-
-def print_path(predecessor, dst):
-    pred = predecessor[dst]
-    if pred is None:
-    	print(dst.name)
-    else:
-    	print_path(predecessor, pred)
-	print('$\rightarrow$' + dst.name)
-	
-print_path(predecessor, d)
-\end{lstlisting}

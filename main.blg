@@ -7,61 +7,62 @@ A level-1 auxiliary file: chap1.aux
 A level-1 auxiliary file: chap2.aux
 A level-1 auxiliary file: chap3.aux
 A level-1 auxiliary file: chap4.aux
+A level-1 auxiliary file: chap5.aux
 A level-1 auxiliary file: appa.aux
 A level-1 auxiliary file: biblio.aux
 The style file: amsplain.bst
 Database file #1: main.bib
 Warning--entry type for "WEDI" isn't style-file defined
---line 28 of file main.bib
+--line 42 of file main.bib
 Warning--entry type for "WEIB" isn't style-file defined
---line 36 of file main.bib
+--line 50 of file main.bib
 Warning--entry type for "EAR17" isn't style-file defined
---line 44 of file main.bib
+--line 58 of file main.bib
 Warning--entry type for "NASA16" isn't style-file defined
---line 54 of file main.bib
+--line 68 of file main.bib
 Warning--entry type for "GSHF17" isn't style-file defined
---line 92 of file main.bib
+--line 106 of file main.bib
 Warning--can't use both author and editor fields in LO05
 Warning--missing booktitle in TDR10
-You've used 15 entries,
+You've used 16 entries,
             2213 wiz_defined-function locations,
-            597 strings with 5915 characters,
-and the built_in function-call counts, 4435 in all, are:
-= -- 364
-> -- 205
+            606 strings with 6138 characters,
+and the built_in function-call counts, 4896 in all, are:
+= -- 408
+> -- 223
 < -- 0
-+ -- 85
-- -- 68
-* -- 333
-:= -- 690
-add.period$ -- 15
-call.type$ -- 15
-change.case$ -- 82
++ -- 92
+- -- 74
+* -- 365
+:= -- 755
+add.period$ -- 16
+call.type$ -- 16
+change.case$ -- 88
 chr.to.int$ -- 0
-cite$ -- 17
-duplicate$ -- 198
-empty$ -- 414
-format.name$ -- 68
-if$ -- 944
+cite$ -- 18
+duplicate$ -- 220
+empty$ -- 454
+format.name$ -- 74
+if$ -- 1052
 int.to.chr$ -- 0
-int.to.str$ -- 15
-missing$ -- 26
-newline$ -- 56
-num.names$ -- 26
-pop$ -- 138
+int.to.str$ -- 16
+missing$ -- 28
+newline$ -- 59
+num.names$ -- 28
+pop$ -- 146
 preamble$ -- 2
-purify$ -- 66
+purify$ -- 71
 quote$ -- 0
-skip$ -- 133
+skip$ -- 155
 stack$ -- 0
-substring$ -- 207
-swap$ -- 33
+substring$ -- 240
+swap$ -- 42
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 55
+type$ -- 59
 warning$ -- 2
-while$ -- 34
-width$ -- 17
-write$ -- 127
+while$ -- 38
+width$ -- 18
+write$ -- 137
 (There were 7 warnings)

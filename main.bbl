@@ -18,6 +18,11 @@ Thomas~H. Cormen, Charles~E. Leiserson, Ronald~L. Rivest, and Clifford Stein,
 E.~W. Dijkstra, \emph{A note on two problems in connections with graphs},
   Numerische Mathematik \textbf{1} (1959), 269--271.
 
+\bibitem{TDS08}
+Bolin Ding, Jeffrey~Xu Yu, and Lu~Qin, \emph{Finding time-dependent shortest
+  paths over large graphs}, Proceedings of the 11th International Conference on
+  Extending Database Technology (EDBT 2008), ACM, January 2008, pp.~205--216.
+
 \bibitem{WEIB}
 The~MathWorks Inc., \emph{Weibull cumulative distribution function}.
 
