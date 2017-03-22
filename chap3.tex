@@ -61,7 +61,7 @@ for recd in records:
     curr_unixepoch = recd.UNIX_EPOCH
     if curr_occup != last_occup:
 	++curr_tripid
-    elif (curr_occup == 0) && (curr_unixepoch - last_unixepoch > $t_{max}$):
+    elif (curr_occup == 0) and (curr_unixepoch - last_unixepoch > $t_{max}$):
 	++curr_tripid
     recd.TRIP_ID = curr_tripid
     last_occup = curr_occup
@@ -72,7 +72,7 @@ It is noteworthy that although the middle five records with OCCUPIED = 1 come ch
 
 \section{Landmark Frequency}
 
-\begin{table}[h]
+\begin{table}[h!]
 \centering
 \resizebox{\columnwidth}{!}{
 \begin{tabular}{ | l | l | l | l | l | l | l | l | l | l | l | l | l | }
@@ -101,18 +101,20 @@ The frequency of a road segment is the sum of \emph{unique} occurrences of that 
 
 Table~\ref{Ta:frequency_count} illustrates how the frequency of a road segment is calculated. In Trip 4552265, Street A occurs twice but \textbf{its frequency increases only by one}. Similarly, Street C occur three times and Street A occur twice in Trip 1, but \textbf{their occurrences only add one to their frequencies}. Therefore, even though Street B \emph{appears} less times than Street A or Street C, \textbf{all streets have the same frequency of 2}, based on this set of records.  
 
-The algorithm for counting frequency of a road segment is rather straightforward as in Listing~\ref{List:code_frequency}.
+The algorithm for counting frequency of a road segment is rather straightforward as in Listing~\ref{List:code_frequency}. Source code is listed in Appendix~\ref{AList:ldmk_frequency}.
 
-\begin{lstlisting}[language = Python, caption = {Pseudocode for counting road frequency}, label = {List:code_frequency} ,frame=single, numbers=left, stepnumber=1]
+\begin{lstlisting}[language = Python, caption = {Pseudocode for counting road frequency}, label = {List:code_frequency} ,frame=single, numbers=left, stepnumber=1, mathescape=true, escapeinside={(*}{*)}]
+Input: a (*set*) of (*\textbf{trips}*)
+Output: a (*set*) of frequencies for each street
+
 frequencies = dict{}
 for trip in trips:
- 	// get unique streets
-	streets = unique(trip.streets)
-	for street in streets:
-		if street in frequencies:
-			++frequencies[street]
-		else:
-			frequencies[street] = 1
+    streets = unique(trip.streets) // get unique streets
+    for street in streets:
+    	if street in frequencies:
+	    ++frequencies[street]
+	else:
+	    frequencies[street] = 1
 \end{lstlisting}
 
 After the frequency of each road segment is determined, a parameter $k$ is set to select the top $k$ frequent road segments as \emph{landmarks}. For this project, $k$ was chosen to be 500 to ensure the road segments are significant enough to be landmarks. When plotted on a map, these 500 landmarks cover most of the main streets in Beijing as shown in Figure~\ref{Fig:ldmk_500}. 
@@ -133,27 +135,27 @@ A landmark graph is a weighted, directed graph $G=(V,E)$ where V is the set of l
 \end{enumerate}
 \end{defn}
 
-The threshold $t_{max}$ is used to eliminate trajectories with unreasonably long du\-rations\cite{TDR10}. Sometimes, a taxi may traverse several landmarks but only the first and the last landmarks are recorded, due to the low sampling rate, which cause the duration between the two recorded landmarks to be unreasonably long. For this project, $t_{max}$ was set to 20 minutes. The algorithm for constructing landmark graph is given in Listing~\ref{List:code_ldmk_graph}.
+The threshold $t_{max}$ is used to eliminate trajectories with unreasonably long du\-rations \cite{TDR10}. Sometimes, a taxi may consecutively traverse several landmarks but only the first and the last landmarks are recorded, due to the low sampling rate, which causes the time span between the two recorded landmarks to be unreasonably long. For this project, $t_{max}$ was set to 20 minutes. The algorithm for constructing landmark graph is given in Listing~\ref{List:code_ldmk_graph}. Source code is given in Appendix~\ref{AList:ldmk_construction}. For each edge $(u, v)$, the arrival time at $u$ and the arrival time at $v$ are also recorded for the subsequent task of estimating travel time. 
 
-\begin{lstlisting}[language = Python, caption = {Pseudocode for constructing landmark graph}, label = {List:code_ldmk_graph}, frame=single, numbers=left, stepnumber=1]
+\begin{lstlisting}[language = Python, caption = {Pseudocode for constructing landmark graph}, label = {List:code_ldmk_graph}, frame=single, numbers=left, stepnumber=1, mathescape=true, escapeinside={(*}{*)}]
+Input: a (*set*) of (*\textbf{trips}*)
+Output: a landmark graph $G = (V, E)$
 for trip in trips:
    //get unique, chronologically ordered streets
    streets = unique_ordered(trip.streets)
    while j < len(streets):
-	//loop until a landmark is found
-	while j < len(streets) && !is_landmark(streets[j]):
-		j = j + 1
+	//loop until a landmark (*is*) found
+	while j < len(streets) and not is_landmark(streets[j]):
+	    j = j + 1
 		
-	intermediaries = []
 	//find another landmark
+	intermediaries = []
 	k = j + 1
-	while k < len(streets) && !is_landmark(streets[k]):
-		intermediaries.append(streets[k])
-		k = k + 1
-		
-	//insert edge (streets[j], intermediaries, streets[k])
-	insert(E, streets[j], intermediaries, streets[k])
-		
-	//next search starts from the second landmark
+	while k < len(streets) and not is_landmark(streets[k]):
+	    intermediaries.append(streets[k])
+	    k = k + 1
+	//insert edge
+	E.insert(streets[j], intermediaries, streets[k])
+	//(*next*) search starts (*from*) the second landmark
 	j = k
 \end{lstlisting}
