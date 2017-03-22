@@ -3,18 +3,24 @@
 A landmark is a road segment that is frequently traversed by taxi drivers according to the taxi GPS trajectory database. \cite{TDR10}
 \end{defn}
 
-The concept of a landmark is proposed primarily for two reasons. First, as mentioned in Section~\ref{Sec:limitation}, the taxi GPS trajectories do not necessarily cover every road segment in a city's road network and the low-sampling-rate problem makes determining the exact route on which a taxi traversed difficult. Therefore, it is not possible to estimate the time cost for each road segment. However, ignoring the length of a road segment and considering it as an abstract ``landmark'' make estimating the travel time between two \emph{landmarks} viable. 
+The concept of a landmark is proposed primarily for two reasons. First, as mentioned in Section~\ref{Sec:limitation}, the taxi GPS trajectories do not necessarily cover every road segment in a city's road network and the low-sampling-rate problem makes it difficult to determine the exact route on which a taxi traversed. Therefore, it is not possible to estimate the time-dependent travel cost for each road segment. However, ignoring the length of a road segment and considering it as an abstract ``landmark'' make estimating the travel cost between two \emph{landmarks} feasible. 
 
-Moreover, the notion of landmarks closely follows the way how drivers remember the driving routes in daily life\cite{TDR10}. For instance, a driving route could be described as ``go straight on the 4th Avenue, turn right at the 7th Street and exit at the Smith Road''. Drivers tend to use familiar road segments as landmarks to guide their directions.
+Moreover, the notion of landmarks closely follows the way how drivers remember driving routes in daily life \cite{TDR10}. For instance, a driving route could be described as ``go straight on the 4th Avenue, turn right at the 7th Street and exit at the Smith Road''. Drivers tend to use familiar road segments as landmarks to guide their directions.
 
-This chapter describes the procedures for constructing a landmark graph in order to estimate the time cost between two landmarks. But before that, the taxi GPS trajectories must be separated into a set of \emph{trips}.
+This chapter describes the procedures for constructing an abstract ``landmark graph'' in order to estimate the travel cost between two landmarks. But before that, the taxi GPS trajectories must be separated into a set of \emph{trips}.
 
 \section{Trip Identification}
 \begin{defn}[\emph{Trip}]\label{Def:trip}
-A trip is a taxi trajectory that satisfies either condition:
+A trip is a taxi trajectory $T = (p_1,p_2,\textellipsis,p_n)$ that satisfies either condition:
 \begin{enumerate}
-\item A passenger is on the taxi, namely, all records in the set have an OCCUPIED field of value 1 or, 
-\item No passenger is on board, but the time span between \emph{any} two consecutive records is no larger than 3 minutes.
+\item A passenger is on the taxi, namely, 
+\begin{equation}
+\forall i \leq |T|, \quad p_{i}.OCCUPIED = 1;
+\end{equation}
+\item No passenger is on board, but the time span between \emph{any} two consecutive records is no longer than 3 minutes, namely, 
+\begin{equation}
+\forall i \leq |T| - 1, \quad p_{i + 1}.UTC - p_{i}.UTC \leq 3 mins.
+\end{equation}
 \end{enumerate}
 \end{defn}
 
@@ -41,23 +47,25 @@ Table~\ref{Ta:trip_identification} gives a tiny example of trip identification.
 \caption{An example of trip identification}\label{Ta:trip_identification}
 \end{table}
 
-Clearly, all records in Table~\ref{Ta:trip_identification} belong to one taxi (taxi with CUID = 1) and are sorted chronologically. The first three records, although no passengers are aboard, are considered to be in the same \emph{trip} because the time span between any two consecutive records is no larger than 3 minute. The next five records constitute another trip, even though the last two records have a time difference of 4 minutes, since a passenger is on the taxi (OCCIPIED = 1). Following the same reasoning as the first three's, the last three records are treated as one trip. Listing~\ref{List:code_trip} gives the pseudocode for trip identification.
+Clearly, all records in Table~\ref{Ta:trip_identification} belong to one taxi (taxi with CUID = 1) and are sorted chronologically. The first three records, although no passengers are aboard, are considered to be in the same \emph{trip} because the time span between any two consecutive records is no longer than 3 minute. The next five records constitute another trip, even though the last two records have a time span of 4 minutes, since a passenger is on the taxi (OCCIPIED = 1). Following the same reasoning as the first three's, the last three records are treated as one trip. Listing~\ref{List:code_trip} gives the pseudocode for trip identification. Source code is shown in Appendix~\ref{AList:trip_identification}.
 
-\begin{lstlisting}[language = Python, caption = {Pseudocode for trip identification}, label = {List:code_trip} ,frame=single, numbers=left,stepnumber=1]
+\begin{lstlisting}[language = Python, caption = {Pseudocode for trip identification}, label = {List:code_trip} ,frame=single, numbers=left,stepnumber=1, mathescape=true, escapeinside={(*}{*)}]
+Input: a (*set*) of GPS (*\textbf{records}*) (*and*) a time span threshold $t_{max}$
+Output: a (*set*) of GPS (*\textbf{records}*) with each record assigned a trip ID
+
 curr_tripid = 1
 last_occup = curr_occup = records[0].OCCUPIED
 last_unixepoch = curr_unixepoch = records[0].UNIX_EPOCH
 for recd in records:
-	curr_occup = recd.OCCUPIED
-	curr_unixepoch = recd.UNIX_EPOCH
-	if curr_occup != last_occup:
-		++curr_tripid
-	elif (curr_occup == 0) && \
-	(curr_unixepoch - last_unixepoch > threshold):
-		++curr_tripid
-	recd.TRIP_ID = curr_tripid
-	last_occup = curr_occup
-	last_unixepoch = curr_unixepoch
+    curr_occup = recd.OCCUPIED
+    curr_unixepoch = recd.UNIX_EPOCH
+    if curr_occup != last_occup:
+	++curr_tripid
+    elif (curr_occup == 0) && (curr_unixepoch - last_unixepoch > $t_{max}$):
+	++curr_tripid
+    recd.TRIP_ID = curr_tripid
+    last_occup = curr_occup
+    last_unixepoch = curr_unixepoch
 \end{lstlisting}
 
 It is noteworthy that although the middle five records with OCCUPIED = 1 come chronologically after the first three records, they are nevertheless assigned a smaller TRIP\_ID. This is due to an adjustment made to the actual implementation of the algorithm. The \emph{actual} algorithm operates in two stages. It first identifies trips for all records with OCCUPIED = 1; only in the second stage does it identify trips for records with OCCUPIED = 0. The rationale for this arrangement is to give priority to the records with passengers aboard, because \textbf{these records are guaranteed to belong to one trip}. In fact, the second condition for identifying trips in Definition~\ref{Def:trip} is more of a heuristic rather than a theorem. It is meant to provide sufficient data for subsequent machine learning tasks with reasonable accuracy.
