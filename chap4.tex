@@ -1,4 +1,4 @@
-\chapter{Time-dependent Edge Cost Estimation}\label{Chap:edge_cost}
+\chapter{Time-dependent Edge Cost Estimation}\label{Chap:4}
 Chapter~\ref{Ch:ldmk_graph} describes the general procedures for constructing a landmark graph. To find a time-dependent shortest route on a landmark graph, the time-dependent edge cost must be calculated. In this project, the time-dependent edge cost specifically refers to travel time, but in theory, it can refer to any quantity that can be described as a time-dependent edge cost function of the form $w : E,t \rightarrow \mathbb{R}$. In practice, it sometimes also refers to fuel consumptions or taxi fares. This chapter introduces a machine learning-based approach to estimate the travel time of each \emph{significant edge} in a landmark graph at a particular moment in time. 
 
 \begin{defn}[\emph{Support}]
