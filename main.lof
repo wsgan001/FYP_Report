@@ -6,18 +6,19 @@
 \contentsline {figure}{\numberline {2-3}{\ignorespaces System architecture for reverse geocoding\relax }}{23}{figure.caption.14}
 \contentsline {figure}{\numberline {2-4}{\ignorespaces An example of outliers\relax }}{24}{figure.caption.15}
 \contentsline {figure}{\numberline {2-5}{\ignorespaces An example of SOFM\relax }}{26}{figure.caption.16}
-\contentsline {figure}{\numberline {2-6}{\ignorespaces Neuron positions after training\relax }}{27}{figure.caption.17}
-\contentsline {figure}{\numberline {2-7}{\ignorespaces Plot of data points after outlier removal\relax }}{29}{figure.caption.18}
+\contentsline {figure}{\numberline {2-6}{\ignorespaces A plot of neuron positions after training\relax }}{27}{figure.caption.17}
+\contentsline {figure}{\numberline {2-7}{\ignorespaces A plot of data points after outlier removal\relax }}{29}{figure.caption.18}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3-1}{\ignorespaces A plot of landmarks when $k$ = 500\relax }}{36}{figure.caption.21}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4-1}{\ignorespaces An example of travel time patterns\relax }}{41}{figure.caption.23}
-\contentsline {figure}{\numberline {4-2}{\ignorespaces Final positions of the neurons\relax }}{42}{figure.caption.24}
+\contentsline {figure}{\numberline {4-2}{\ignorespaces A plot of neurons' final positions\relax }}{42}{figure.caption.24}
 \contentsline {figure}{\numberline {4-3}{\ignorespaces An example of representing data points with centroids\relax }}{43}{figure.caption.25}
 \contentsline {figure}{\numberline {4-4}{\ignorespaces An example of distribution of clusters\relax }}{44}{figure.caption.26}
 \contentsline {figure}{\numberline {4-5}{\ignorespaces An example of fitting data with Weibull Distribution\relax }}{46}{figure.caption.27}
 \contentsline {figure}{\numberline {4-6}{\ignorespaces An example of different landmark travel time\relax }}{48}{figure.caption.28}
-\contentsline {figure}{\numberline {4-7}{\ignorespaces Regression Plots\relax }}{51}{figure.caption.30}
+\contentsline {figure}{\numberline {4-7}{\ignorespaces A plot of regressions\relax }}{51}{figure.caption.30}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {5-1}{\ignorespaces An example of updating edge costs dynamically\relax }}{54}{figure.caption.31}
+\addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -15,7 +15,7 @@ HEAD & Heading direction in degrees with 0 denoting North\\ \hline
 SPEED & Instantaneous speed in metres/second (m/s)\\ \hline
 OCCUPIED & Binary indicator of whether the taxi is hired (1) or not (0)\\ \hline
 \end{tabular}
-\caption{Seven original fields in the data set}\label{Ta:orig_field}
+\caption{A summary of the seven original fields}\label{Ta:orig_field}
 \end{table}
 
 The original data set came in a binary file format. After it was decoded and imported into a MySQL database, the first step in data cleaning was \textbf{to delete all records with zero value in the SPEED field}, since when a taxi is stationary it yields no valuable information about the \emph{trajectory} it is moving along. While being stationary could be due to a traffic jam, this kind of information is well captured by the time span between the last and the next \emph{non-stationary} data point. 
@@ -46,7 +46,7 @@ BD09\_LONG & Longitude encoded in BD-09 format\\ \hline
 BD09\_LAT & Latitude encoded in BD-09 format\\ \hline
 STREET & Street name\\ \hline
 \end{tabular}
-\caption{Additional fields added to data set}\label{Ta:addtional_field}
+\caption{A summary of additional fields}\label{Ta:addtional_field}
 \end{table}
 
 In order to use Baidu Maps APIs for coordinate conversion, the following system architecture was set up as shown in Figure~\ref{Fig:basic_architecture}. The Apache HTTP server hides the MySQL database and sends HTTP POST requests containing the original coordinates to Baidu Maps Web API to get the converted coordinates. Then it updates the database through PHP \emph{mysqli} utility. 
@@ -68,7 +68,7 @@ After longitudes and latitudes were converted from WGS-84 format to BD-09 format
 Executed in a web browser environment, AJAX sent HTTP POST requests to the Apache HTTP server to fetch the converted coordinates in BD-09 format which were subsequently sent to the Baidu Maps Web API server \emph{asynchronously} via HTTP GET requests. Once the server responded with the name of the street, AJAX updated the database by sending another HTTP POST request to the Apache HTTP server. The asynchronous nature of this architecture, however, caused a few problems which are addressed in Section~\ref{outlier_detecting}. 
 
 \section{Outlier Detection}\label{outlier_detecting}
-\subsection{Motivation for Outlier Detection}
+\subsection{Motivations for Outlier Detection}
 The Baidu Maps Web API for reverse geocoding is stable and fast, but does not produce no errors. Sometimes, a GPS data point may be mapped to a main road but actually it is on the side road, which is one of the limitations mentioned in Section~\ref{Sec:limitation}, or it is actually mapped to a street that Baidu Maps does not recognise. In neither case will Baidu Maps produce a correct reverse geocoding. Moreover, the reverse geocoding process is asynchronous, which means that it is being performed in the background in parallel with the main application thread. Therefore, it is inevitable that some street names may get lost when the records are being updated or a record is updated with a wrong street name. Figure~\ref{Fig:exmp_outlier} shows a drastic example.
 
 \begin{figure}[h!]
@@ -107,7 +107,7 @@ A self-organising feature map is a form of artificial neural network. It consist
 \begin{figure}[h]
 \includegraphics{sofm_weights}
 \centering
-\caption{Neuron positions after training}\label{Fig:sofm_weights}
+\caption{A plot of neuron positions after training}\label{Fig:sofm_weights}
 \end{figure}
 
 It is clear from the figure that while some neurons represent the clusters of outliers, majority of the neurons are clustered to \emph{cover} the correct street they should represent. A $10\times10$ SOFM was used in this project, so there were at most 100 neurons or equivalently, 100 clusters. Each cluster had a different size. To ensure a thorough removal of the outliers, \textbf{only the top 50\% largest clusters were considered as clusters of correct data points which are called ``legal clusters''. All other clusters were deemed as clusters of outliers}. 
@@ -153,7 +153,7 @@ It is known that $R_{e} = 6,378,137$ metres and $R_{p} = 6,356,752$ metres on th
 \begin{figure}[h]
 \includegraphics{30m_50m}
 \centering
-\caption{Plot of data points after outlier removal}\label{Fig:after_removal}
+\caption{A plot of data points after outlier removal}\label{Fig:after_removal}
 \end{figure}
 
 After the outliers were removed, two data sets remained. They are hereinafter referred to as \textbf{bjtaxigps\_30m}, where outliers were filtered by a distance threshold of 30 metres and \textbf{bjtaxigps\_50m}, where outliers were filtered by a distance threshold of 50 metres, respectively. bjtaxigps\_30m contains approximately 51 million records while bjtaxigps\_50m has 59 million. All algorithms and procedures described hereinafter are applicable to both data sets. Figure~\ref{Fig:after_removal} gives a plot of the GPS data points after outliers were removed from both data sets. Clearly, the longitude and latitude now have a much smaller \emph{range} and the data points roughly form a shape similar to that of the street they are supposed to be mapped to. 

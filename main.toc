@@ -9,7 +9,7 @@
 \contentsline {section}{\numberline {2.1}Data Collection and Cleaning}{19}{section.2.1}
 \contentsline {section}{\numberline {2.2}Reverse Geocoding}{20}{section.2.2}
 \contentsline {section}{\numberline {2.3}Outlier Detection}{23}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}Motivation for Outlier Detection}{23}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.1}Motivations for Outlier Detection}{23}{subsection.2.3.1}
 \contentsline {subsection}{\numberline {2.3.2}Outlier Identification}{25}{subsection.2.3.2}
 \contentsline {subsection}{\numberline {2.3.3}Outlier Removal}{27}{subsection.2.3.3}
 \contentsline {chapter}{\numberline {3}Landmark Graph Construction}{31}{chapter.3}
@@ -20,7 +20,8 @@
 \contentsline {section}{\numberline {4.1}Travel Time Distribution}{41}{section.4.1}
 \contentsline {section}{\numberline {4.2}Travel Time Evaluation}{47}{section.4.2}
 \contentsline {chapter}{\numberline {5}Time-Dependent Shortest Path Calculation}{53}{chapter.5}
-\contentsline {chapter}{\numberline {A}Source Code}{57}{appendix.A}
-\contentsline {section}{\numberline {A.1}Database Utilities}{57}{section.A.1}
-\contentsline {section}{\numberline {A.2}Data Pre-processing}{60}{section.A.2}
-\contentsline {section}{\numberline {A.3}Landmark Graph Construction}{64}{section.A.3}
+\contentsline {chapter}{\numberline {6}Conclusion}{57}{chapter.6}
+\contentsline {chapter}{\numberline {A}Source Code}{59}{appendix.A}
+\contentsline {section}{\numberline {A.1}Database Utilities}{59}{section.A.1}
+\contentsline {section}{\numberline {A.2}Data Pre-processing}{62}{section.A.2}
+\contentsline {section}{\numberline {A.3}Landmark Graph Construction}{66}{section.A.3}

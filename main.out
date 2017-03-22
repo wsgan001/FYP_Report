@@ -6,7 +6,7 @@
 \BOOKMARK [1][-]{section.2.1}{Data Collection and Cleaning}{chapter.2}% 6
 \BOOKMARK [1][-]{section.2.2}{Reverse Geocoding}{chapter.2}% 7
 \BOOKMARK [1][-]{section.2.3}{Outlier Detection}{chapter.2}% 8
-\BOOKMARK [2][-]{subsection.2.3.1}{Motivation for Outlier Detection}{section.2.3}% 9
+\BOOKMARK [2][-]{subsection.2.3.1}{Motivations for Outlier Detection}{section.2.3}% 9
 \BOOKMARK [2][-]{subsection.2.3.2}{Outlier Identification}{section.2.3}% 10
 \BOOKMARK [2][-]{subsection.2.3.3}{Outlier Removal}{section.2.3}% 11
 \BOOKMARK [0][-]{chapter.3}{Landmark Graph Construction}{}% 12
@@ -17,7 +17,8 @@
 \BOOKMARK [1][-]{section.4.1}{Travel Time Distribution}{chapter.4}% 17
 \BOOKMARK [1][-]{section.4.2}{Travel Time Evaluation}{chapter.4}% 18
 \BOOKMARK [0][-]{chapter.5}{Time-Dependent Shortest Path Calculation}{}% 19
-\BOOKMARK [0][-]{appendix.A}{Source Code}{}% 20
-\BOOKMARK [1][-]{section.A.1}{Database Utilities}{appendix.A}% 21
-\BOOKMARK [1][-]{section.A.2}{Data Pre-processing}{appendix.A}% 22
-\BOOKMARK [1][-]{section.A.3}{Landmark Graph Construction}{appendix.A}% 23
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 20
+\BOOKMARK [0][-]{appendix.A}{Source Code}{}% 21
+\BOOKMARK [1][-]{section.A.1}{Database Utilities}{appendix.A}% 22
+\BOOKMARK [1][-]{section.A.2}{Data Pre-processing}{appendix.A}% 23
+\BOOKMARK [1][-]{section.A.3}{Landmark Graph Construction}{appendix.A}% 24
