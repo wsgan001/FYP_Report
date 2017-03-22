@@ -1,5 +1,5 @@
-\chapter{Time-dependent Edge Cost Estimation}\label{Chap:4}
-Chapter~\ref{Ch:ldmk_graph} describes the general procedures for constructing a landmark graph. To find a time-dependent shortest route on a landmark graph, the time-dependent edge cost must be calculated. In this project, the time-dependent edge cost specifically refers to travel time, but in theory, it can refer to any quantity that can be described as a time-dependent edge cost function of the form $w : E,t \rightarrow \mathbb{R}$. In practice, it sometimes also refers to fuel consumptions or taxi fares. This chapter introduces a machine learning-based approach to estimate the travel time of each \emph{significant edge} in a landmark graph at a particular moment in time. 
+\chapter{Time-Dependent Edge Cost Estimation}\label{Chap:4}
+Chapter~\ref{Chap:3} describes the general procedures for constructing a landmark graph. To find a time-dependent shortest route on a landmark graph, the time-dependent edge cost must be calculated. In this project, the time-dependent edge cost specifically refers to travel time, but in theory, it can refer to any quantity that can be described as a time-dependent edge cost function of the form $w : E,t \rightarrow \mathbb{R}$. In practice, it sometimes also refers to fuel consumptions or taxi fares. This chapter introduces a machine learning-based approach to estimate the travel time of each \emph{significant edge} in a landmark graph at a particular moment in time. 
 
 \begin{defn}[\emph{Support}]
 A support for an edge $e$ in a landmark graph $G=(V,E)$ is the number of times that $e$ appears. 
@@ -39,7 +39,7 @@ holi\_ldmkgraph\_50m  & holiday trajectories in bjtaxigps\_50m\\ \hline
 
 Figure~\ref{Fig:wrkd_50m_trvltime} illustrates a scatter plot of the travel time of a particular landmark graph edge during the course of a weekday. It can be observed that the travel time does not seem to be a single-valued function with respect to time of the day, as one may expect; rather, the scatter points tend to gather around some values and form some \emph{clusters}. For instance, when it is 500 minutes since midnight, namely 8:20~a.m., the travel time seems to have three main clusters which are represented by three horizontal lines formed by the scatter points. When it is 1,000 minutes since midnight, namely 4:40~p.m., there are about five such lines. This pattern is attributable to three possible reasons:
 \begin{enumerate}
-\item Drivers may actually choose different routes to travel between the two landmarks, which cannot be captured by the landmark graph since it only knows a driver has traversed between the two landmarks but not the exact route. Different routes have different traffic conditions and speed limitations, therefore the travel time varies;
+\item Drivers may actually choose different routes to travel between the two landmarks, which cannot be captured by the landmark graph since it only knows a driver has traversed from one landmark to the other but not the exact route. Different routes have different traffic conditions and speed limitations, therefore the travel time varies;
 \item Drivers have different driving skills, preferences and behaviours. Some drivers just drive faster than others, even if the road conditions are similar and;
 \item The GPS devices on taxis reported locations \emph{periodically}, therefore, durations like 60 seconds or 120 seconds are very commonly seen in the landmark graphs. Even if the \emph{actual} travel time is 53 seconds, it is still recorded as 60 seconds. This corresponds to the low-sampling-rate problem mentioned in Section~\ref{Sec:limitation}. 
 \end{enumerate}
@@ -58,7 +58,7 @@ Therefore, it is not possible to fit the scatter points with a single-valued fun
 \caption{An example of representing data points with centroids}\label{Fig:trvltime_neurons}
 \end{figure}
 
-One merit of SOFM clustering is \emph{feature extraction}. In this case, after the training is completed, the SOFM has learned some features about the travel time at different time of the day and expressed its understanding by moving its neurons to the centroids of the clusters. Now, \textbf{the data points can be represented by their respective centroids}. Figure~\ref{Fig:trvltime_neurons} shows the effect of replacing each data point's value with their centroids'. The clusters are clearly shown by the horizontal lines formed by those centroids. 
+One merit of SOFM clustering is \emph{feature extraction}. In this case, after the training is completed, the SOFM has learned some features about the travel time at different times of the day and expressed its understanding by moving its neurons to the centroids of the clusters. Now, \textbf{the data points can be represented by their respective centroids}. Figure~\ref{Fig:trvltime_neurons} shows the effect of replacing each data point's value with their centroids'. The clusters are clearly shown by the horizontal lines formed by those centroids. 
 
 Representing data points with cluster centroids or features learned provides the benefit of \emph{generalisation}. The data set used in this project, albeit large in size, is nevertheless a small \emph{sample} of the \emph{population} of taxi trajectories over time. In other words, these trajectory records are only the \emph{observed} ones but there are potentially infinite number of trajectories that cannot be all observed. The only information known about them is that \textbf{they must fit into one of the clusters} after undergoing the same procedures described in the previous chapters. The use of centroids instead of real data points also takes into consideration the unobserved trajectories and reflects the real underlying patterns. In fact, generalisation is an advantage that all neural network-based methods share. 
 
@@ -84,14 +84,14 @@ F(x | \alpha, \beta) = \int_{0}^{x} f(t | \alpha, \beta) dt = 1 - e^{-(x / \alph
 \begin{figure}[h!]
 \includegraphics[scale=0.85]{weibull_fit}
 \centering
-\caption{Weibull Distribution Fit}\label{Fig:weibull_fit}
+\caption{An example of fitting data with Weibull Distribution}\label{Fig:weibull_fit}
 \end{figure}
 
-Figure~\ref{Fig:weibull_fit} shows an example of fitting a cumulative probability distribution with Weibull Distribution. The red line represents the cumulative probability distribution and the blue line indicates the best Weibull Distribution fit estimated by maximum likelihood. 
+Figure~\ref{Fig:weibull_fit} shows an example of fitting a cumulative probability distribution of clusters with Weibull Distribution. The red line represents the cumulative probability distribution of clusters and the blue line indicates the best Weibull Distribution fit estimated by maximum likelihood. 
 
-In the referencing paper \cite{TDR10}, it uses inverse Gaussian distribution to fit the centroid distribution. However, as some experiments showed, inverse Gaussian distribution does not always work, especially when the centroids actually have a uniform distribution, namely, when only one cluster appears in the time interval. In that case, Weibull distribution will have the shape parameter $\beta = \infty$ but it still can give the correct result. 
+In the referencing paper \cite{TDR10}, it uses Inverse Gaussian Distribution to fit the centroid distribution. However, as some experiments showed, Inverse Gaussian Distribution does not always work, especially when the centroids actually have a uniform distribution, namely, when only one cluster appears in the time interval. In that case, Weibull distribution will have the shape parameter $\beta = \infty$ but it still can give the correct result. 
 
-The cumulative distribution function of Weibull distribution is good at calculating the probability whereby the travel time $t$ is less than a particular value. For instance, the probability of the travel time for this landmark graph edge being less than or equal to 100 seconds is approximately $P(t\leq100) = 0.7$ according to the Weibull distribution curve in Figure~\ref{Fig:weibull_fit}. But to estimate the travel time of a landmark graph edge is in fact the \emph{reverse}: given a known probability $P$, find the corresponding travel time $t$, which is exactly the inverse Weibull cumulative distribution function does. 
+The cumulative distribution function of Weibull Distribution is good at calculating the probability whereby the travel time $t$ is less than a particular value. For instance, the probability of the travel time for this landmark graph edge being less than or equal to 100 seconds is approximately $P(t\leq100) = 0.7$ according to the Weibull Distribution curve in Figure~\ref{Fig:weibull_fit}. But to estimate the travel time of a landmark graph edge is in fact the \emph{reverse}: given a known probability $p$, find the corresponding travel time $t$, which is exactly the inverse Weibull cumulative distribution function does. 
 
 \begin{theorem}[\emph{Inverse Weibull Cumulative Distribution Function}]\label{Theorem: weibull_inverse_dist}
 The inverse Weibull cumulative distribution function is defined as
@@ -104,10 +104,10 @@ where $p$ is the given probability.
 In practice, the probability $p$ corresponds to some subjective measures of a driver's driving skill. It represents how fast a driver drives as compared to other drivers. If a driver has a $p$ value of 0.2, it means that this driver usually drives faster than 80\% ($1 - 0.2$) drivers. This concept is formally defined in Definition~\ref{Def:opti_index}.
 
 \begin{defn}[\emph{Optimism Index}]\label{Def:opti_index}
-A optimism index $p$ indicates how optimistic a driver feels about his or her driving skills \cite{TDR10}. A driver with an optimism index of $p_{0}$ usually drives faster than $(1 - p_{0})\%$ drivers. 
+An optimism index $p$ indicates how optimistic a driver feels about his or her driving skills \cite{TDR10}. A driver with an optimism index of $p_{0}$ usually drives faster than $(1 - p_{0})\%$ drivers under similar road conditions.
 \end{defn}
 
-The optimism index of a driver can be set by the driver in advance, although it may be subject to illusory superiority\footnote{In a 1986 experiment, \emph{80\%} participants rated their driving skills \emph{above-average} \cite{IFD86}.}. It can also be set to the mean value by default or learned from the driver's trajectory history. 
+The optimism index of a driver can be set by the driver in advance, although it may be subject to the illusory superiority problem\footnote{In a 1986 experiment, \emph{80\%} participants rated their driving skills \emph{above-average} \cite{IFD86}.}. It can also be set to the mean value by default or learned from the driver's trajectory history. 
 
 With optimism index defined, it is easy to estimate the travel time using Theorem~\ref{Theorem: weibull_inverse_dist}. However, it is worth mentioning that for a cumulative probability distribution function $F(x)$, the probability of a single value is zero, namely, $F(x_{0}) = 0$; only a range of values can have positive probabilities. Therefore, the travel time calculated from optimism index should really be a \emph{range} of travel time. For instance, if the optimism index is $p = 0.7$, the correct result should be $t \leq 100$ based on Figure~\ref{Fig:weibull_fit}, which means that for a driver with an optimism index of 0.7, his or her travel time is \emph{at most} 100 seconds. No exact value can be determined. However, in the context of this project, only the \emph{worst-case} travel time is considered; therefore, the driver is said to have an expected travel time of 100 seconds. 
 
@@ -122,11 +122,11 @@ Some complications do arise, however, because the two vertices of each significa
 \caption{An example of different landmark travel time}\label{Fig:ldmk_travel}
 \end{figure}
 
-Imagine there are two landmarks $u$ and $v$, respectively, and each has a length of $L$ as shown in Figure~\ref{Fig:ldmk_travel}. Then, there are potentially infinite number of ways of `traveling from $u$ to $v$', because the starting point could be any points on $u$ and the ending point could be any points on $v$. If a driver starts at the red point on $u$ and stops at the red point on $v$, the total distance is $2L$ and the total time is $T$. But had the driver stopped at the yellow mid-point on $v$, the total distance would be $1.5L$ and the total time would be $3T/4$, assuming the speed is constant. 
+Imagine there are two landmarks $u$ and $v$, respectively, and each has a length of $L$ as shown in Figure~\ref{Fig:ldmk_travel}. Then, there are potentially infinite number of ways of `travelling from $u$ to $v$', because the starting point could be any points on $u$ and the ending point could be any points on $v$. If a driver starts at the red point on $u$ and stops at the red point on $v$, the total distance is $2L$ and the total time is $T$. But had the driver stopped at the yellow mid-point on $v$, the total distance would be $1.5L$ and the total time would be $3T/4$, assuming the speed is constant. 
 
 Therefore, it is difficult to give a \emph{definite} estimate of the travel time between two landmarks. In this project, the \textbf{median travel time} is instead used to represent the travel time between two landmarks. It describes the \emph{typical} travel time a driver should expect. An example of a median case is that the diver starts at the yellow mid-point on $u$ and ends at the yellow mid-point on $v$. But there are in fact infinite number of median cases. 
 
-The most significant 150 edges were selected to be evaluated, from \emph{each} of the four landmark graphs listed in Table~\ref{Ta:ldmkgraphs}. For each edge $(u, v)$, 20\% of the trajectories with $u$ as starting point and $v$ as ending point were randomly sampled. These trajectories represent some random trips between $u$ and $v$ with varying distances. Baidu Maps API was then used to estimate the travel time for each trajectory in real time, after which the median of all the estimates was selected as Baidu's estimate for the travel time between $u$ and $v$. Finally, Theorem~\ref{Theorem: weibull_inverse_dist} was used to calculate its own the travel time estimate which was then compared against Baidu's. Table~\ref{Ta:eval_res} summarises the evaluation results for all 150 significant edges. 
+The most significant 150 edges were selected to be evaluated, from \emph{each} of the four landmark graphs listed in Table~\ref{Ta:ldmkgraphs}. For each edge $(u, v)$, 20\% of the trajectories with $u$ as starting point and $v$ as ending point were randomly sampled. These trajectories represent some random trips between $u$ and $v$ with varying distances. Baidu Maps API was then used to estimate the travel time of each trajectory in real time, after which the median of all the estimates was selected as Baidu's estimate for the travel time between $u$ and $v$. Finally, Theorem~\ref{Theorem: weibull_inverse_dist} was used to calculate its own the travel time estimate which was then compared against Baidu's. Table~\ref{Ta:eval_res} summarises the evaluation results for the 150 significant edges selected from each landmark graph. 
 
 \begin{table}[h!]
 \centering
@@ -151,7 +151,7 @@ where $N$ is the total number of estimates; and the Mean Error Ratio (MER) is gi
 MER = \frac{1}{N}\sum_{i = 1}^{N}\frac{\hat{b}_{i} - b_{i}}{b_{i}}
 \end{equation}
 
-The RMSE gives an overall measure of accuracy. For instance, the RMSE for landmark graph \emph{wrkd\_ldmkgraph\_50m} turned out to be 78.58, which means that on average, the difference between Baidu's estimates and Theorem~\ref{Theorem: weibull_inverse_dist}'s estimate was 78.58 seconds. But whether this difference is significant or not depends on the scale of Baidu's estimates. For a Baidu's estimate of 30 seconds, 78.58 seconds may be considered significant, but for an estimate of 200 seconds, it may be acceptable. 
+The RMSE gives an overall measure of accuracy. For instance, the RMSE for landmark graph \emph{wrkd\_ldmkgraph\_50m} turned out to be 78.84, which means that on average, the difference between Baidu's estimates and Theorem~\ref{Theorem: weibull_inverse_dist}'s estimate was 78.84 seconds. But whether this difference is significant or not depends on the scale of Baidu's estimates. For a Baidu's estimate of 30 seconds, 78.84 seconds may be considered significantly high, but for an estimate of 200 seconds, it may be acceptable. 
 
 Therefore, MER is designed to take into account the scale of Baidu's estimates. It computes the ratio between the error and Baidu's estimate. A positive MER indicates that on average Theorem~\ref{Theorem: weibull_inverse_dist} tends to have larger estimates than Baidu's; on the other hand, a negative MER indicates that on average, Theorem~\ref{Theorem: weibull_inverse_dist} tends to have smaller estimates than Baidu's. 
 
@@ -189,59 +189,3 @@ In summary, the estimates Theorem~\ref{Theorem: weibull_inverse_dist} gave were 
 \caption{Regression Plots}
 \label{Fig:regression_plot}
 \end{figure}
-
-\section{Shortest Path Calculation}
-\begin{defn}[\emph{FIFO Graph}]\label{Def:fifo_graph}
-A time-dependent graph $G=(V,E)$ with a dynamic weight function $w : E,t \rightarrow \mathbb{R}$ is a FIFO graph \cite{TDS08} iff for every edge $(u, v) \in E$
-\begin{equation}
-w(u, v, t_{0}) \leq \Delta t + w(u, v, t_{0} + \Delta t), \forall \Delta t \geq 0
-\end{equation}
-\end{defn}
-
-Once the time-varying patterns of edge costs are determined, calculating a shortest path in a landmark graph is straightforward, provided the landmark graph is a FIFO graph\footnote{If the graph is not a FIFO graph, the problem is NP-hard if waiting is not allowed at any vertices} as defined in Definition~\ref{Def:fifo_graph}. 
-
-An equivalent way of expressing FIFO property is that, if a person leaves vertex $u$ at time $t_{0}$, then any persons who leave vertex $u$ at a later time $t_{0} + \Delta t$ will not be able to reach vertex $v$ earlier than the first person. In practice, transport networks are said to have FIFO property \cite{TDR10}, therefore, a landmark graph can be considered as a FIFO graph. Then the Dijkstra's shortest path algorithm can be applied directly but with a modification that the edge costs are computed dynamically as the algorithm proceeds. Figure~\ref{Fig:dynamic_update} shows an example of dynamically updating edge costs. 
-
-\begin{figure}[h!]
-\includegraphics[scale=1]{shortest_path_demo}
-\centering
-\caption{An example of updating edge costs dynamically}\label{Fig:dynamic_update}
-\end{figure}
-
-If a taxi leaves $s$ at time $t = 0$, the edge $(s, v_{1})$ and $(s, v_{2})$ will have a time-dependent travel time of 3 and 2, respectively. If the taxi follows the current fastest edge $(s, v_{2})$, when it arrives at $v_{2}$ the time-dependent travel time of the edge $(v_{2}, d)$ at time $t = 2$ will be 4, giving a total travel time 6. But should the taxi follow the edge $(s, v_{1})$, the time-dependent travel time of the edge $(v_{1}, d)$ at $t = 3$ would be 1, giving a total travel time of 4. Therefore, path $s \leadsto v_{1} \leadsto d$ is the time-dependent shortest path. The same process applies when the taxi leaves $s$ at time $t = 1$, but the time-dependent shortest path will be path $s \leadsto v_{2} \leadsto d$. This example is also a FIFO graph: path $s \leadsto v_{1} \leadsto d$ would still be the shortest path, should another taxi \emph{wait} at $s$ until $t = 1$. Listing~\ref{List:code_dijkstra} gives the pseudocode for the modified Dijkstra's Algorithm. 
-
-\begin{lstlisting}[language = Python, caption = {Pseudocode for Modified Dijkstra's Algorithm}, label = {List:code_dijkstra} ,frame=single, numbers=left,stepnumber=1, mathescape=true, escapeinside={(*}{*)}]
-Input: a landmark graph $G=(V, E)$, source $s$ (*and*) destination $d$
-Ouput: a predecessor graph $G_{p}=(V_{p}, E_{p})$
-// EAT = Earliest Arrival Time
-predecessor = dict{s : None}
-pq = queue.PriorityQueue()
-s.EAT = 0
-pq.put(s)
-for vertex in $G.V - \{s\}$:
-    vertex.EAT = $\infty$
-    pq.put(vertex)
-while not pq.empty():
-    hd = pq.get()
-    for v in hd.neighbours:
-    	if hd.EAT + $w(s, v, hd.EAT)$ < v.EAT:
-	    v.EAT = hd.EAT + $w(s, v, hd.EAT)$
-	    predecessor[v] = hd
-\end{lstlisting}
-
-Upon termination of the algorithm in Listing~\ref{List:code_dijkstra}, a predecessor graph whose edges are \emph{reversed} shortest paths from $s$ to other vertices are constructed. Listing~\ref{List:code_printpath} provides a recursive method to print out the shortest path from $s$ to $d$. 
-
-\begin{lstlisting}[language = Python, caption = {Pseudocode for Printing Shortest Paths}, label = {List:code_printpath} ,frame=single, numbers=left,stepnumber=1, mathescape=true, escapeinside={(*}{*)}]
-Input: a predecessor graph $G_{p}=(V_{p}, E_{p})$ (*and*) a destination $d$
-Ouput: a shortest path $s \leadsto d$
-
-def print_path(predecessor, dst):
-    pred = predecessor[dst]
-    if pred is None:
-    	print(dst.name)
-    else:
-    	print_path(predecessor, pred)
-	print('$\rightarrow$' + dst.name)
-	
-print_path(predecessor, d)
-\end{lstlisting}

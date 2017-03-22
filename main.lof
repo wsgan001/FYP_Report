@@ -1,10 +1,10 @@
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1-1}{\ignorespaces Example of low sampling rate problem\relax }}{16}{figure.caption.8}
+\contentsline {figure}{\numberline {1-1}{\ignorespaces An example of low-sampling-rate problem\relax }}{16}{figure.caption.8}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2-1}{\ignorespaces China GPS shift problem\relax }}{21}{figure.caption.11}
-\contentsline {figure}{\numberline {2-2}{\ignorespaces Basic system architecture\relax }}{22}{figure.caption.13}
-\contentsline {figure}{\numberline {2-3}{\ignorespaces Augmented system architecture\relax }}{22}{figure.caption.14}
-\contentsline {figure}{\numberline {2-4}{\ignorespaces Example of outliers\relax }}{24}{figure.caption.15}
+\contentsline {figure}{\numberline {2-1}{\ignorespaces An example of China GPS shift problem\relax }}{21}{figure.caption.11}
+\contentsline {figure}{\numberline {2-2}{\ignorespaces System architecture for coordinate conversion\relax }}{22}{figure.caption.13}
+\contentsline {figure}{\numberline {2-3}{\ignorespaces System architecture for reverse geocoding\relax }}{23}{figure.caption.14}
+\contentsline {figure}{\numberline {2-4}{\ignorespaces An example of outliers\relax }}{24}{figure.caption.15}
 \contentsline {figure}{\numberline {2-5}{\ignorespaces An example of SOFM\relax }}{26}{figure.caption.16}
 \contentsline {figure}{\numberline {2-6}{\ignorespaces Neuron positions after training\relax }}{27}{figure.caption.17}
 \contentsline {figure}{\numberline {2-7}{\ignorespaces Plot of data points after outlier removal\relax }}{29}{figure.caption.18}
@@ -15,8 +15,9 @@
 \contentsline {figure}{\numberline {4-2}{\ignorespaces Final positions of the neurons\relax }}{42}{figure.caption.24}
 \contentsline {figure}{\numberline {4-3}{\ignorespaces An example of representing data points with centroids\relax }}{43}{figure.caption.25}
 \contentsline {figure}{\numberline {4-4}{\ignorespaces An example of distribution of clusters\relax }}{44}{figure.caption.26}
-\contentsline {figure}{\numberline {4-5}{\ignorespaces Weibull Distribution Fit\relax }}{46}{figure.caption.27}
+\contentsline {figure}{\numberline {4-5}{\ignorespaces An example of fitting data with Weibull Distribution\relax }}{46}{figure.caption.27}
 \contentsline {figure}{\numberline {4-6}{\ignorespaces An example of different landmark travel time\relax }}{48}{figure.caption.28}
 \contentsline {figure}{\numberline {4-7}{\ignorespaces Regression Plots\relax }}{51}{figure.caption.30}
-\contentsline {figure}{\numberline {4-8}{\ignorespaces An example of updating edge costs dynamically\relax }}{52}{figure.caption.31}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5-1}{\ignorespaces An example of updating edge costs dynamically\relax }}{54}{figure.caption.31}
 \addvspace {10\p@ }
