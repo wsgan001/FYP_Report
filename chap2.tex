@@ -113,13 +113,12 @@ A self-organising feature map is a form of artificial neural network. It consist
 It is clear from the figure that while some neurons represent the clusters of outliers, majority of the neurons are clustered to \emph{cover} the correct street they should represent. A $10\times10$ SOFM was used in this project, so there were at most 100 neurons or equivalently, 100 clusters. Each cluster had a different size. To ensure a thorough removal of the outliers, \textbf{only the top 50\% largest clusters were considered as clusters of correct data points which are called ``legal clusters''. All other clusters were deemed as clusters of outliers}. 
 
 \subsection{Outlier Removal}\label{Subsec:outlier_removal}
-Once the legal clusters were identified, a distance threshold was set to remove outliers so that \textbf{whenever the minimum distance between a data point and all centroids of the legal clusters was above the threshold, that data point would be considered as an outlier and removed}. The python-like pseudocode in Listing~\ref{List:code_outlier} describes this idea with more clarity.
+Once the legal clusters were identified, a distance threshold was set to remove outliers so that \textbf{whenever the minimum distance between a data point and all centroids of the legal clusters was above the threshold, that data point would be considered as an outlier and removed}. The python-like pseudocode in Listing~\ref{List:code_outlier} describes this idea with more clarity. Source code is listed in Appendix~\ref{AList:outlier_rmvl}.
 
 %\begin{minipage}{\linewidth}
 \begin{lstlisting}[language = Python, caption = {Pseudocode for outlier removal}, label = {List:code_outlier} ,frame=single, numbers=left,stepnumber=1, mathescape=true, escapeinside={(*}{*)}]
-Input: a (*set*) of GPS (*\emph{records}*), a (*set*) of (*\emph{centroids}*) (*and*) a distance 
-    threshold $d_{max}$
-Output: a (*set*) of GPS (*\emph{records}*) with (*all*) outliers removed
+Input: a (*set*) of GPS (*\textbf{records}*), a (*set*) of (*\textbf{centroids}*) (*and*) a distance threshold $d_{max}$
+Output: a (*set*) of GPS (*\textbf{records}*) with (*all*) outliers removed
 
 for recd in records:
     min_dist = $\infty$

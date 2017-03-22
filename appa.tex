@@ -1,26 +1,204 @@
 \chapter{Source Code}
-\begin{lstlisting}[language = Python, caption = {Pseudocode for constructing landmark graph}, label = {List:code_ldmk_graph}, frame=single, numbers=left, stepnumber=1]
-for trip in trips:
-   //get unique, chronologically ordered streets
-   streets = unique_ordered(trip.streets)
-   while j < len(streets):
-	//loop until a landmark is found
-	while j < len(streets) && !is_landmark(streets[j]):
-		j = j + 1
-		
-	intermediaries = []
-	//find another landmark
-	k = j + 1
-	while k < len(streets) && !is_landmark(streets[k]):
-		intermediaries.append(streets[k])
-		k = k + 1
-		
-	//insert edge (streets[j], intermediaries, streets[k])
-	insert(E, streets[j], intermediaries, streets[k])
-		
-	//next search starts from the second landmark
-	j = k
+\section{Database Utilities}
+The source code listed in this section provides utility functions for general database operations, such as \textbf{select} and \textbf{update}. It is to be used in other modules. 
+
+\begin{lstlisting}[language = PHP, caption = {Database Utilities}, label = {AList:db_utilities}, frame=single, numbers=left, stepnumber=1]
+<?php
+include "../inc/jingodbinfo.inc";
+
+function connect_db(){
+    $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
+    if($conn->connect_error){
+	die("Connection failed: " . $conn->connect_error);
+    }
+    $conn->select_db(DB_DATABASE);
+    $conn->set_charset("utf8");
+    return $conn;
+}
+
+function disconnect_db($conn){ $conn->close(); }
+
+function db_select($conn, $table, $cols, $cond = "true", $distinct = "")
+{
+    $sql_select = "SELECT {$distinct} ";
+    if(count($cols) == 0){
+        $sql_select .= "*,";
+    }
+    foreach ($cols as $col) {
+        $sql_select .= "{$col},";
+    }
+    $sql_select = rtrim($sql_select, ",");
+    $sql_select .= " FROM {$table} WHERE {$cond};";
+    $ret = $conn->query($sql_select);
+    $res = array();
+    if($ret->num_rows > 0){
+        while($row = $ret->fetch_assoc()){
+            $curr = array();
+            foreach ($cols as $col) {
+                $curr[$col] = $row[$col];
+            }
+            $res[] = $curr;
+	}
+    }
+    return $res;
+}
+
+function db_update($conn, $table, $values, $cond){
+    $sql_update = "UPDATE {$table} SET ";
+    foreach ($values as $key => $value) {
+        if(is_numeric($value)){
+            $sql_update .= "{$key} = {$value},";
+        }else{
+            $sql_update .= "{$key} = '{$value}',";
+        }
+    }
+    $sql_update = rtrim($sql_update, ",");
+    $sql_update .= " WHERE {$cond};";
+    $succ = $conn->query($sql_update);
+    return $succ;
+}
+
+function db_insert($conn, $table, $values, $cond = "", $ignore = ""){
+    $sql_insert = "INSERT {$ignore} INTO {$table} ";
+    $cols = "";
+    $vals = "";
+    foreach ($values as $key => $value) {
+        $cols .= "{$key},";
+        $vals .= (is_numeric($value) ? "{$value}," : "'{$value}',");
+    }
+    $cols = rtrim($cols, ",");
+    $vals = rtrim($vals, ",");
+    $sql_insert .= "({$cols}) VALUES ({$vals}) {$cond};";
+    echo "{$sql_insert}\n";
+    $conn->query($sql_insert);
+}
+
+function db_delete($conn, $table, $cond){
+    $sql_delete = "DELETE FROM {$table} WHERE {$cond};";
+}
+?>
 \end{lstlisting}
 
 \clearpage
 \newpage
+
+\section{Data Pre-processing}
+This section lists down the source code used in data pre-processing. 
+
+\begin{lstlisting}[language = PHP, caption = {Outlier Removal}, label = {AList:outlier_rmvl}, frame=single, numbers=left, stepnumber=1]
+<?php
+include "db_utilities.php";
+
+class Filter{
+    private $ldmk_start;
+    private $ldmk_end;
+    private $ldmk_table;
+    private $data_table;
+    private $update_table;
+    private $path;
+    private $bchmk;
+    
+    private $conn;
+    private $num_dele;
+    
+    public function __construct($ldmk_start, $ldmk_end, $ldmk_table, $data_table, $path, $bchmk, $update_table){
+        $this->ldmk_start = $ldmk_start;
+        $this->ldmk_end = $ldmk_end;
+        $this->ldmk_table = $ldmk_table;
+        $this->data_table = $data_table;
+        $this->update_table = $update_table;
+        $this->path = $path;
+        $this->bchmk = $bchmk;
+        $this->conn = connect_db();
+        $this->num_dele = 0;
+    }
+    
+    public function __destruct(){ disconnect_db($this->conn); }
+    
+    private function getCentres($ldmk){
+        $filename = "{$this->path}{$ldmk}.csv";
+        $centres = array();
+        if(($handle = fopen($filename, 'r')) !== FALSE){
+            while(($line = fgetcsv($handle, 0, ',')) !== FALSE){
+                $centres[] = array($line[0], $line[1]);
+            }
+	}
+	return $centres;
+    }
+    
+    private function getRecords($ldmk){
+        $ldmk_cols = array('LandmarkName');
+        $ldmk_cond = "LandmarkID = {$ldmk}";
+        $ret = db_select($this->conn, $this->ldmk_table, $ldmk_cols, $ldmk_cond);
+        $data_cols = array('DataUnitID', 'BD09_LONG', 'BD09_LAT');
+        $data_cond = "Street = '{$ret[0][$ldmk_cols[0]]}'";
+        $ret = db_select($this->conn, $this->data_table, $data_cols, $data_cond);
+        $records = array();
+        foreach ($ret as $item) {
+            $records[] = array($item[$data_cols[0]], $item[$data_cols[1]], $item[$data_cols[2]]);
+        }
+        return $records;
+    }
+    
+    
+    private function removeRecord($centres, $records){
+        foreach ($records as $recd) {
+            $min_dist = INF;
+            foreach ($centres as $centre) {
+                $min_dist = min($min_dist, $this->getHaversineDist
+                ($centre[0], $centre[1], $recd[1], $recd[2]));
+            }
+            if($min_dist > $this->bchmk){
+                $cond = "DataUnitID = {$recd[0]}";
+                db_delete($this->conn, $this->data_table, $cond);
+                ++$this->num_dele;
+            }
+	}
+    }
+    
+    private function toRadian($degree){ return $degree * M_PI / 180; }
+    
+    private function getHaversineDist($long1, $lat1, $long2, $lat2){
+        $BJ_LAT = $this->toRadian(39);
+        $EQ_R = 6378137; // equatorial radius in metres
+        $POL_R = 6356752; // polar radius in metres
+
+	$BJ_R = sqrt((pow($EQ_R * $EQ_R * cos($BJ_LAT), 2) + pow($POL_R * $POL_R * sin($BJ_LAT), 2)) / (pow($EQ_R * cos($BJ_LAT), 2) + pow($EQ_R * sin($BJ_LAT), 2)));
+	$long1 = $this->toRadian($long1);
+	$lat1 = $this->toRadian($lat1);
+	$long2 = $this->toRadian($long2);
+	$lat2 = $this->toRadian($lat2);
+	$d = 2 * $BJ_R * asin(sqrt(pow(sin(($lat1 - $lat2) / 2), 2) + 
+	cos($lat1) * cos($lat2) * pow(sin(($long1 - $long2) / 2), 2)));
+	return $d; }
+    private function getWithin($ldmk, $centres, $records){
+        foreach ($records as $recd) {
+	    $min_dist = INF;
+	    foreach ($centres as $centre) {
+	        $min_dist = min($min_dist, 
+		$this->getHaversineDist($centre[0], $centre[1], $recd[1], $recd[2]));
+	    }
+	    if($min_dist <= $this->bchmk){
+	        db_insert($this->conn, $this->update_table, 
+			array('LandmarkID' => $ldmk, 'BD09_LONG' => $recd[1], 'BD09_LAT' => $recd[2]));
+	    }
+	}
+    }
+    
+    public function doFiltering(){
+	for($ldmk = $this->ldmk_start; $ldmk != $this->ldmk_end; 
+		++$ldmk){
+	    $centres = $this->getCentres($ldmk);
+	    $records = $this->getRecords($ldmk);
+	    $this->getWithin($ldmk, $centres, $records);
+	}
+    }
+}
+set_time_limit(0);
+ini_set('memory_limit','2048M');
+$filter = new Filter($_POST['ldmk_start'], $_POST['ldmk_end'], 
+	$_POST['ldmk_table'], $_POST['data_table'], $_POST['path'], 
+	$_POST['bchmk'], $_POST['update_table']);
+$filter->doFiltering();
+?>
+\end{lstlisting}
