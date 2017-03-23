@@ -104,7 +104,7 @@ where $p$ is the given probability.
 In practice, the probability $p$ corresponds to some subjective measures of a driver's driving skill. It represents how fast a driver drives as compared to other drivers. If a driver has a $p$ value of 0.2, it means that this driver usually drives faster than 80\% ($1 - 0.2$) drivers. This concept is formally defined in Definition~\ref{Def:opti_index}.
 
 \begin{defn}[\emph{Optimism Index}]\label{Def:opti_index}
-An optimism index $p$ indicates how optimistic a driver feels about his or her driving skills \cite{TDR10}. A driver with an optimism index of $p_{0}$ usually drives faster than $(1 - p_{0})\%$ drivers under similar road conditions.
+An optimism index $p$ indicates how optimistic a driver feels about his or her driving skills \cite{TDR10}. A driver with an optimism index of $p_{0}\%$ usually drives faster than $(1 - p_{0})\%$ drivers under similar road conditions.
 \end{defn}
 
 The optimism index of a driver can be set by the driver in advance, although it may be subject to the illusory superiority problem\footnote{In a 1986 experiment, \emph{80\%} participants rated their driving skills \emph{above-average} \cite{IFD86}.}. It can also be set to the mean value by default or learned from the driver's trajectory history. 
@@ -157,7 +157,7 @@ Therefore, MER is designed to take into account the scale of Baidu's estimates. 
 
 Another technique to gauge Theorem~\ref{Theorem: weibull_inverse_dist}'s performance is linear regression. An ordered pair of estimates $(b_{i}, \hat{b}_{i})$ can be treated as a point in a 2-D Cartesian system. In the \emph{ideal} case, $\hat{b}_{i}$ should be equal to $b_{i}$, therefore, all points should form a straight line with a slope of 1 and an intercept of 0 when plotted. In the general cases, the regression equation gives the relationship between $b_{i}$ and $\hat{b}_{i}$. If the slope of the regression equation is less than 1, then $\hat{b}_{i}$ is expected to be less than $b_{i}$ in \emph{most} cases depending on the intercept. Figure~\ref{Fig:regression_plot} shows the regression plots. 
 
-In summary, the estimates Theorem~\ref{Theorem: weibull_inverse_dist} gave were smaller than Baidu's estimates in most cases, which to some extent, was actually expected. The data set was collected in 2009 but Baidu Maps was giving \emph{real-time} estimates. Eight years since then, the travel time in the entire road network should have increased in general, due to increase in car ownership. Nevertheless, it still provides reasonable estimates with RMSE around 90 seconds. 
+In summary, the estimates Theorem~\ref{Theorem: weibull_inverse_dist} gave were smaller than Baidu's estimates in most cases, which to some extent, was actually expected. The data set was collected in 2009 but Baidu Maps was giving \emph{real-time} estimates. Eight years since then, the travel time in the entire road network should have increased in general, due to increase in car ownership. Nevertheless, it still provides reasonable estimates with a worst-case RMSE of 87.96 seconds. 
 
 \begin{figure}[h!]
 \begin{subfigure}{.5\textwidth}

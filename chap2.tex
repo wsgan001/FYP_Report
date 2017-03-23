@@ -1,6 +1,6 @@
 \chapter{Preliminary Data Processing}\label{Chap:2}
 \section{Data Collection and Cleaning}
-The taxi GPS data used in this project is collected from the Computational Sensing Lab \cite{BPLL13} at Tsinghua University, Beijing, China. The data set contains approximately 83 million time-stamped taxi GPS records collected from 8,602 taxis in Beijing, from 1 May 2009 to 30 May 2009. The data set consists of seven original fields as shown in Table~\ref{Ta:orig_field}. Longitude and latitude in the data set are defined in the WGS-84\footnote{World Geodetic System} standard coordinate system, which is the reference coordinate system used by the GPS.
+The taxi GPS data used in this project is collected from the Computational Sensing Lab \cite{BPLL13} at Tsinghua University, Beijing, China. The data set contains approximately 83 million time-stamped taxi GPS records collected from 8,602 taxis in Beijing, from 1 May 2009 to 30 May 2009. Originally, the data set consists of seven fields as shown in Table~\ref{Ta:orig_field}. Longitude and latitude in the data set are defined in the WGS-84\footnote{World Geodetic System} standard coordinate system, which is the reference coordinate system used by the GPS.
 
 \begin{table}[h!]
 \centering
@@ -8,7 +8,7 @@ The taxi GPS data used in this project is collected from the Computational Sensi
 \hline
 \textbf{Field} & \textbf{Explanation} \\ \hline
 CUID & ID for each taxi \\ \hline
-UNIX\_EPOCH & Unix timestamp in milliseconds since 1 January 1970\\ \hline
+UNIX\_EPOCH & Unix timestamp in seconds since 1 January 1970\\ \hline
 GPS\_LONG & Longitude encoded in WGS-84 multiplied by $10^{5}$\\ \hline
 GPS\_LAT & Latitude encoded in WGS-84 multiplied by $10^{5}$ \\ \hline
 HEAD & Heading direction in degrees with 0 denoting North\\ \hline
